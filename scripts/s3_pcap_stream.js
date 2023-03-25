@@ -1,7 +1,7 @@
-// Upload PCAP File of a Stream to an AWS S3 Bucket If Response Status Code is 500
+// Upload PCAP File of a Stream to an AWS S3 Bucket If HTTP Status Code is 500
 
 function onItemCaptured(data) {
-  if (data.response.status === 500) {
+  if (data.protocol.name === "http" && data.response.status === 500) {
     // Get PCAP file path of the TCP/UDP stream
     var pcapPath = pcap.path(data.stream);
 

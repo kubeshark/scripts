@@ -1,4 +1,4 @@
-// Report To a Slack Channel If Response Status Code is 500
+// Report To a Slack Channel If Status Code is 500
 
 function onItemCaptured(data) {
   // Check if it's an HTTP request and the response status is 500

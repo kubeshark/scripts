@@ -1,7 +1,7 @@
-// Upload a PCAP Snapshot to an AWS S3 Bucket If Response Status Code is 500
+// Upload a PCAP Snapshot to an AWS S3 Bucket If HTTP Status Code is 500
 
 function onItemCaptured(data) {
-  if (data.response.status === 500) {
+  if (data.protocol.name === "http" && data.response.status === 500) {
     // Create a temporary directory
     var dir = file.mkdirTemp("snapshot");
 
