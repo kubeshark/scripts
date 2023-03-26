@@ -6,8 +6,8 @@ This is the telemetry script folder. Here you can find scripts that can be used 
 
 ### Stream Metrics to InfluxDB and Visualize in Grafana
 
-**Script**: [influx_db_kpis.js](./influx_db_kpis.js)
-**Grafana JSON Model**: [Grafana dashboard JSON model](assets/influx_db_kpis_grafana.json)
+- **Script**: [influx_db_kpis.js](./influx_db_kpis.js)
+- **Grafana JSON Model**: [Grafana dashboard JSON model](assets/influx_db_kpis_grafana.json)
 
 #### Description
 
