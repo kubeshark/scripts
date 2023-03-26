@@ -1,0 +1,730 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "grafana",
+            "uid": "-- Grafana --"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "target": {
+            "limit": 100,
+            "matchAny": false,
+            "tags": [],
+            "type": "dashboard"
+          },
+          "type": "dashboard"
+        }
+      ]
+    },
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 0,
+    "id": 3,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+      {
+        "datasource": {
+          "type": "influxdb",
+          "uid": "4M35W_x4z"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "series",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "fillOpacity": 80,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineWidth": 1,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "ms"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 0,
+          "y": 0
+        },
+        "id": 6,
+        "options": {
+          "barRadius": 0,
+          "barWidth": 0.97,
+          "groupWidth": 0.7,
+          "legend": {
+            "calcs": [
+              "last"
+            ],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": false
+          },
+          "orientation": "auto",
+          "showValue": "auto",
+          "stacking": "none",
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          },
+          "xTickLabelRotation": 0,
+          "xTickLabelSpacing": 0
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "influxdb",
+              "uid": "4M35W_x4z"
+            },
+            "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => r[\"_field\"] == \"latency\")\n  |> filter(fn: (r) => contains(value: r[\"namespace\"], set: ${Namespace:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_name\"], set: ${DstName:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_name\"], set: ${SrcName:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_ip\"], set: ${DstIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_ip\"], set: ${SrcIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"path\"], set: ${Path:json}))\n  |> aggregateWindow(every: ${AggPer}, fn: sum, createEmpty: false)\n  |> yield(name: \"aggregated latency\")\n",
+            "refId": "A"
+          }
+        ],
+        "title": "Aggregated Latency per Time Period",
+        "type": "barchart"
+      },
+      {
+        "datasource": {
+          "type": "influxdb",
+          "uid": "4M35W_x4z"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "series",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "fillOpacity": 80,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineWidth": 1,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "decbytes"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 8,
+          "w": 12,
+          "x": 12,
+          "y": 0
+        },
+        "id": 7,
+        "options": {
+          "barRadius": 0,
+          "barWidth": 0.97,
+          "groupWidth": 0.7,
+          "legend": {
+            "calcs": [
+              "last"
+            ],
+            "displayMode": "list",
+            "placement": "bottom",
+            "showLegend": false
+          },
+          "orientation": "auto",
+          "showValue": "auto",
+          "stacking": "none",
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          },
+          "xTickLabelRotation": 0,
+          "xTickLabelSpacing": 0
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "influxdb",
+              "uid": "4M35W_x4z"
+            },
+            "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => r[\"_field\"] == \"bandwidth\")\n  |> filter(fn: (r) => contains(value: r[\"namespace\"], set: ${Namespace:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_name\"], set: ${DstName:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_name\"], set: ${SrcName:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_ip\"], set: ${DstIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_ip\"], set: ${SrcIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"path\"], set: ${Path:json}))\n  |> aggregateWindow(every: ${AggPer}, fn: sum, createEmpty: false)\n  |> yield(name: \"aggregated bandwidth\")\n",
+            "refId": "A"
+          }
+        ],
+        "title": "Aggregated Bandwidth per Time Period",
+        "type": "barchart"
+      },
+      {
+        "datasource": {
+          "type": "influxdb",
+          "uid": "4M35W_x4z"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "linear",
+              "lineStyle": {
+                "fill": "solid"
+              },
+              "lineWidth": 2,
+              "pointSize": 4,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "ms"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 7,
+          "w": 12,
+          "x": 0,
+          "y": 8
+        },
+        "id": 4,
+        "options": {
+          "legend": {
+            "calcs": [],
+            "displayMode": "table",
+            "placement": "bottom",
+            "showLegend": false
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "targets": [
+          {
+            "datasource": {
+              "type": "influxdb",
+              "uid": "4M35W_x4z"
+            },
+            "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => r[\"_field\"] == \"latency\")\n  |> filter(fn: (r) => contains(value: r[\"namespace\"], set: ${Namespace:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_name\"], set: ${DstName:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_name\"], set: ${SrcName:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_ip\"], set: ${DstIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_ip\"], set: ${SrcIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"path\"], set: ${Path:json}))\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"latency\")\n\n\n\n\n  ",
+            "refId": "A"
+          }
+        ],
+        "title": "API Call Latency Over Time",
+        "transparent": true,
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "influxdb",
+          "uid": "4M35W_x4z"
+        },
+        "description": "",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "fixed",
+              "seriesBy": "last"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "Status Codes",
+              "axisPlacement": "auto",
+              "axisSoftMax": 500,
+              "axisSoftMin": 200,
+              "barAlignment": 0,
+              "drawStyle": "points",
+              "fillOpacity": 0,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "linear",
+              "lineWidth": 1,
+              "pointSize": 10,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": false,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "dashed+area"
+              }
+            },
+            "decimals": 0,
+            "mappings": [
+              {
+                "options": {
+                  "from": 200,
+                  "result": {
+                    "color": "green",
+                    "index": 0,
+                    "text": "200"
+                  },
+                  "to": 299
+                },
+                "type": "range"
+              },
+              {
+                "options": {
+                  "from": 300,
+                  "result": {
+                    "color": "yellow",
+                    "index": 1,
+                    "text": "300"
+                  },
+                  "to": 399
+                },
+                "type": "range"
+              },
+              {
+                "options": {
+                  "from": 400,
+                  "result": {
+                    "color": "orange",
+                    "index": 2,
+                    "text": "400"
+                  },
+                  "to": 499
+                },
+                "type": "range"
+              },
+              {
+                "options": {
+                  "from": 500,
+                  "result": {
+                    "color": "red",
+                    "index": 3,
+                    "text": "500"
+                  },
+                  "to": 1000
+                },
+                "type": "range"
+              }
+            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 300
+                },
+                {
+                  "color": "orange",
+                  "value": 400
+                },
+                {
+                  "color": "red",
+                  "value": 500
+                }
+              ]
+            },
+            "unit": "string"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 7,
+          "w": 12,
+          "x": 12,
+          "y": 8
+        },
+        "id": 8,
+        "options": {
+          "legend": {
+            "calcs": [
+              "last"
+            ],
+            "displayMode": "table",
+            "placement": "bottom",
+            "showLegend": false
+          },
+          "tooltip": {
+            "mode": "multi",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "9.3.6",
+        "targets": [
+          {
+            "datasource": {
+              "type": "influxdb",
+              "uid": "4M35W_x4z"
+            },
+            "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => r[\"_field\"] == \"status\")\n  |> filter(fn: (r) => contains(value: r[\"namespace\"], set: ${Namespace:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_name\"], set: ${DstName:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_name\"], set: ${SrcName:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_ip\"], set: ${DstIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_ip\"], set: ${SrcIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"path\"], set: ${Path:json}))\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"code\")\n\n\n\n\n  ",
+            "refId": "A"
+          }
+        ],
+        "title": "API Call Status Codes Over Time",
+        "transparent": true,
+        "type": "timeseries"
+      }
+    ],
+    "refresh": "10s",
+    "schemaVersion": 37,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": [
+        {
+          "current": {
+            "selected": false,
+            "text": "Kubeshark",
+            "value": "Kubeshark"
+          },
+          "datasource": {
+            "type": "influxdb",
+            "uid": "4M35W_x4z"
+          },
+          "definition": "buckets()\n  |> filter(fn: (r) => r.name !~ /^_/)\n  |> rename(columns: {name: \"_value\"})\n  |> keep(columns: [\"_value\"])\n",
+          "hide": 0,
+          "includeAll": false,
+          "label": "Bucket",
+          "multi": false,
+          "name": "Bucket",
+          "options": [],
+          "query": "buckets()\n  |> filter(fn: (r) => r.name !~ /^_/)\n  |> rename(columns: {name: \"_value\"})\n  |> keep(columns: [\"_value\"])\n",
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "type": "query"
+        },
+        {
+          "current": {
+            "selected": false,
+            "text": "callKPIs",
+            "value": "callKPIs"
+          },
+          "datasource": {
+            "type": "influxdb",
+            "uid": "4M35W_x4z"
+          },
+          "definition": "import \"influxdata/influxdb/schema\"\n\nschema.measurements(bucket: ${Bucket:doublequote})",
+          "hide": 0,
+          "includeAll": false,
+          "label": "Measurement",
+          "multi": false,
+          "name": "Measurement",
+          "options": [],
+          "query": "import \"influxdata/influxdb/schema\"\n\nschema.measurements(bucket: ${Bucket:doublequote})",
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "type": "query"
+        },
+        {
+          "current": {
+            "selected": true,
+            "text": [
+              "All"
+            ],
+            "value": [
+              "$__all"
+            ]
+          },
+          "datasource": {
+            "type": "influxdb",
+            "uid": "4M35W_x4z"
+          },
+          "definition": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: ${Bucket:doublequote}, tag: \"namespace\")",
+          "hide": 0,
+          "includeAll": true,
+          "label": "Namespace",
+          "multi": true,
+          "name": "Namespace",
+          "options": [],
+          "query": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: ${Bucket:doublequote}, tag: \"namespace\")",
+          "refresh": 2,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 1,
+          "type": "query"
+        },
+        {
+          "current": {
+            "selected": true,
+            "text": [
+              "All"
+            ],
+            "value": [
+              "$__all"
+            ]
+          },
+          "datasource": {
+            "type": "influxdb",
+            "uid": "4M35W_x4z"
+          },
+          "definition": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"namespace\"], set: ${Namespace:json}))\n  |> keyValues(keyColumns: [\"dst_name\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"dst_name\"])\n  |> distinct(column: \"dst_name\")\n",
+          "hide": 0,
+          "includeAll": true,
+          "label": "Destination Name",
+          "multi": true,
+          "name": "DstName",
+          "options": [],
+          "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"namespace\"], set: ${Namespace:json}))\n  |> keyValues(keyColumns: [\"dst_name\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"dst_name\"])\n  |> distinct(column: \"dst_name\")\n",
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 1,
+          "type": "query"
+        },
+        {
+          "current": {
+            "selected": true,
+            "text": [
+              "All"
+            ],
+            "value": [
+              "$__all"
+            ]
+          },
+          "datasource": {
+            "type": "influxdb",
+            "uid": "4M35W_x4z"
+          },
+          "definition": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"namespace\"], set: ${Namespace:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_name\"], set: ${DstName:json}))\n  |> keyValues(keyColumns: [\"dst_ip\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"dst_ip\"])\n  |> distinct(column: \"dst_ip\")\n",
+          "hide": 0,
+          "includeAll": true,
+          "label": "Destination IP",
+          "multi": true,
+          "name": "DstIP",
+          "options": [],
+          "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"namespace\"], set: ${Namespace:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_name\"], set: ${DstName:json}))\n  |> keyValues(keyColumns: [\"dst_ip\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"dst_ip\"])\n  |> distinct(column: \"dst_ip\")\n",
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 1,
+          "type": "query"
+        },
+        {
+          "current": {
+            "selected": true,
+            "text": [
+              "All"
+            ],
+            "value": [
+              "$__all"
+            ]
+          },
+          "datasource": {
+            "type": "influxdb",
+            "uid": "4M35W_x4z"
+          },
+          "definition": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"namespace\"], set: ${Namespace:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_name\"], set: ${DstName:json}))\n  |> keyValues(keyColumns: [\"src_name\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"src_name\"])\n  |> distinct(column: \"src_name\")\n",
+          "hide": 0,
+          "includeAll": true,
+          "label": "Source Name",
+          "multi": true,
+          "name": "SrcName",
+          "options": [],
+          "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"namespace\"], set: ${Namespace:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_name\"], set: ${DstName:json}))\n  |> keyValues(keyColumns: [\"src_name\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"src_name\"])\n  |> distinct(column: \"src_name\")\n",
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 1,
+          "type": "query"
+        },
+        {
+          "current": {
+            "selected": true,
+            "text": [
+              "All"
+            ],
+            "value": [
+              "$__all"
+            ]
+          },
+          "datasource": {
+            "type": "influxdb",
+            "uid": "4M35W_x4z"
+          },
+          "definition": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"namespace\"], set: ${Namespace:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_name\"], set: ${DstName:json}))\n  |> keyValues(keyColumns: [\"src_ip\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"src_ip\"])\n  |> distinct(column: \"src_ip\")\n",
+          "hide": 0,
+          "includeAll": true,
+          "label": "Source IP",
+          "multi": true,
+          "name": "SrcIP",
+          "options": [],
+          "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"namespace\"], set: ${Namespace:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_name\"], set: ${DstName:json}))\n  |> keyValues(keyColumns: [\"src_ip\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"src_ip\"])\n  |> distinct(column: \"src_ip\")\n",
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 1,
+          "type": "query"
+        },
+        {
+          "current": {
+            "selected": true,
+            "text": [
+              "All"
+            ],
+            "value": [
+              "$__all"
+            ]
+          },
+          "datasource": {
+            "type": "influxdb",
+            "uid": "4M35W_x4z"
+          },
+          "definition": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"dst_name\"], set: ${DstName:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_name\"], set: ${SrcName:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_ip\"], set: ${DstIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_ip\"], set: ${SrcIP:json}))\n  |> keyValues(keyColumns: [\"path\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"path\"])\n  |> distinct(column: \"path\")",
+          "hide": 0,
+          "includeAll": true,
+          "label": "Path",
+          "multi": true,
+          "name": "Path",
+          "options": [],
+          "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"dst_name\"], set: ${DstName:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_name\"], set: ${SrcName:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_ip\"], set: ${DstIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_ip\"], set: ${SrcIP:json}))\n  |> keyValues(keyColumns: [\"path\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"path\"])\n  |> distinct(column: \"path\")",
+          "refresh": 2,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 1,
+          "type": "query"
+        },
+        {
+          "current": {
+            "selected": false,
+            "text": "1m",
+            "value": "1m"
+          },
+          "hide": 0,
+          "includeAll": false,
+          "label": "Aggregation Period",
+          "multi": false,
+          "name": "AggPer",
+          "options": [
+            {
+              "selected": true,
+              "text": "1m",
+              "value": "1m"
+            },
+            {
+              "selected": false,
+              "text": "1h",
+              "value": "1h"
+            },
+            {
+              "selected": false,
+              "text": "1d",
+              "value": "1d"
+            },
+            {
+              "selected": false,
+              "text": "1w",
+              "value": "1w"
+            }
+          ],
+          "query": "1m, 1h, 1d, 1w",
+          "queryValue": "",
+          "skipUrlSync": false,
+          "type": "custom"
+        }
+      ]
+    },
+    "time": {
+      "from": "now-1h",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "Kubeshark",
+    "uid": "nByE79b4z",
+    "version": 138,
+    "weekStart": ""
+  }

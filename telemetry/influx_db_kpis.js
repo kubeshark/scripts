@@ -21,13 +21,13 @@
  * 
  * How to use:
  * -----------
- * - Include this file in the scripts folder.
+ * - Include this file in the scripts folder
  * - Make sure the environment variables are present in the config file
+ * - Build a Grafana dashboard based on the JSON model
  * 
  * Assets:
  * -------
- * InfluxDb JSON file   - TBD
- * Grafana JSON file    - TBD
+ * ./influx_db_kpis_grafana.json - Grafana's dashboard JSON model
 */
 
 // Use environment variables (recommended) or change these variables locally

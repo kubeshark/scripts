@@ -8,7 +8,7 @@ This repository contains the example scripts that can be used in Kubeshark's scr
 - [Empty](/examples/empty.js)
 - [Error Handling](/examples/error_handling.js)
 - [Aggregate the HTTP Status Codes and Push Them to InfluxDB Every Minute](/examples/influxdb.js)
-- [Log Total Captured Packet and KB Every Minute](/scriexamplespts/packet_byte_counter.js)
+- [Log Total Captured Packet and KB Every Minute](/examples/packet_byte_counter.js)
 - [Monitoring: Fail HTTP Status Code is 500, Pass Anything Else](/examples/pass_fail.js)
 - [Print Environment Variables](/examples/print_env.js)
 - [Selective, File-system Based PCAP Snapshotting](/examples/s3_pcap_snapshot_selective_fs.js)
