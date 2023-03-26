@@ -1,4 +1,4 @@
-# Kubeshark Public Scripts Repository
+# Kubeshark's Public Scripts Repository
 
 This repository contains scripts that can be used in Kubeshark's scripting system.
 
