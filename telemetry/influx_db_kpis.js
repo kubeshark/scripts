@@ -34,8 +34,8 @@
 var infUrl      = env.INFLUXDB_URL;
 var infToken    = env.INFLUXDB_TOKEN;
 var infOrg      = env.INFLUXDB_ORG;
-var infBucket   = "Kubeshark";
-var infMeasurement = "callKPIs";
+var infBucket   = env.INFLUXDB_BUCKET ?  env.INFLUXDB_BUCKET : "Kubeshark";
+var infMeasurement = env.INFLUXDB_MEASUREMENT ? "callKPIs";
 var ACTIVE     = true;  // change to false to disable this script
 console.log(JSON.stringify(this));
 
