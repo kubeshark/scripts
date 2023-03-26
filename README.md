@@ -1,19 +1,28 @@
-# Example Scripts
+# Kubeshark Public Scripts Repository
 
-This repository contains the example scripts that can be used in Kubeshark's scripting system.
+This repository contains scripts that can be used in Kubeshark's scripting system.
 
-## List of example scripts
+Kubeshark supports custom-logic scripts that use [hooks](https://docs.kubeshark.co/en/automation_hooks) and [helpers](https://docs.kubeshark.co/en/automation_helpers) to trigger actions, supported by the available integrations, and based on programmatic decisions and/or on a schedule.
 
-- [Aggregate the HTTP Status Codes and Push Them to Elastic Cloud Every Minute](/scripts/elastic.js)
-- [Empty](/scripts/empty.js)
-- [Error Handling](/scripts/error_handling.js)
-- [Aggregate the HTTP Status Codes and Push Them to InfluxDB Every Minute](/scripts/influxdb.js)
-- [Log Total Captured Packet and KB Every Minute](/scripts/packet_byte_counter.js)
-- [Monitoring: Fail HTTP Status Code is 500, Pass Anything Else](/scripts/pass_fail.js)
-- [Print Environment Variables](/scripts/print_env.js)
-- [Selective, File-system Based PCAP Snapshotting](/scripts/s3_pcap_snapshot_selective_fs.js)
-- [Selective PCAP Snapshotting](/scripts/s3_pcap_snapshot_selective.js)
-- [Upload a PCAP Snapshot to an AWS S3 Bucket If HTTP Status Code is 500](/scripts/s3_pcap_snapshot.js)
-- [Upload PCAP File of a Stream to an AWS S3 Bucket If HTTP Status Code is 500](/scripts/s3_pcap_stream.js)
-- [Report To a Slack Channel If HTTP Status Code is 500](/scripts/slack_bot.js)
-- [Call a Webhook For Each Health Check](/scripts/webhook.js)
+**Kubeshark** scripting language is based on [Javascript ES5](https://262.ecma-international.org/5.1/).
+
+The following script example calculates the number of packets and overall traffic processed per minute using an L4 network hook ([`onPacketCaptured`](/en/automation_hooks#onpacketcapturedinfo-object)), some helpers and a job.
+
+```js
+var packetCount = 0;
+var totalKB = 0;
+
+function onPacketCaptured(info) {
+  packetCount++;
+  totalKB += info.length / 1000;
+}
+
+function logPacketCountTotalBytes() {
+  console.log("Captured packet count per minute:", packetCount);
+  packetCount = 0;
+  console.log("Total KB captured per minute:", totalKB);
+  totalKB = 0;
+}
+
+jobs.schedule("log-packet-count-total-bytes", "0 */1 * * * *", logPacketCountTotalBytes);
+```
