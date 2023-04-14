@@ -37,7 +37,6 @@ var infOrg      = env.INFLUXDB_ORG;
 var infBucket   = env.INFLUXDB_BUCKET ?  env.INFLUXDB_BUCKET : "Kubeshark";
 var infMeasurement = env.INFLUXDB_MEASUREMENT ? "callKPIs";
 var ACTIVE     = true;  // change to false to disable this script
-console.log(JSON.stringify(this));
 
 function onItemCaptured(data) {
     return hookSendMetrics(data);
