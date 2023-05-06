@@ -24,7 +24,7 @@
 */
 
 // Set the kflQuery to meet your use-case
-var kflQuery    = "http"; // "gcl and (src.name == 'my-pod-name' or dst.name == 'my-pod-name')";
+var kflQuery    = "gql and (src.name == 'my-pod-name' or dst.name == 'my-pod-name')";
 var ACTIVE      = true;  // change to false to disable this script
 
 // Use environment variables (recommended) or change these variables locally

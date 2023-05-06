@@ -24,7 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 3,
+  "id": 8,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -111,7 +111,7 @@
             "type": "influxdb",
             "uid": "4M35W_x4z"
           },
-          "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => r[\"_field\"] == \"latency\")\n  |> filter(fn: (r) => contains(value: r[\"namespace\"], set: ${Namespace:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_name\"], set: ${DstName:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_name\"], set: ${SrcName:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_ip\"], set: ${DstIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_ip\"], set: ${SrcIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"path\"], set: ${Path:json}))\n  |> aggregateWindow(every: ${AggPer}, fn: sum, createEmpty: false)\n  |> yield(name: \"aggregated latency\")\n",
+          "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => r[\"_field\"] == \"latency\")\n  |> filter(fn: (r) => contains(value: r[\"src_ns\"], set: ${SrcNS:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_ns\"], set: ${DstNS:json}))\n  |> aggregateWindow(every: ${AggPer}, fn: sum, createEmpty: false)\n  |> yield(name: \"aggregated latency\")\n",
           "refId": "A"
         }
       ],
@@ -201,7 +201,7 @@
             "type": "influxdb",
             "uid": "4M35W_x4z"
           },
-          "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => r[\"_field\"] == \"bandwidth\")\n  |> filter(fn: (r) => contains(value: r[\"namespace\"], set: ${Namespace:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_name\"], set: ${DstName:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_name\"], set: ${SrcName:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_ip\"], set: ${DstIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_ip\"], set: ${SrcIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"path\"], set: ${Path:json}))\n  |> aggregateWindow(every: ${AggPer}, fn: sum, createEmpty: false)\n  |> yield(name: \"aggregated bandwidth\")\n",
+          "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => r[\"_field\"] == \"bandwidth\")\n  |> filter(fn: (r) => contains(value: r[\"src_ns\"], set: ${SrcNS:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_ns\"], set: ${DstNS:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_name\"], set: ${DstName:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_name\"], set: ${SrcName:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_ip\"], set: ${DstIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_ip\"], set: ${SrcIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"path\"], set: ${Path:json}))\n  |> aggregateWindow(every: ${AggPer}, fn: sum, createEmpty: false)\n  |> yield(name: \"aggregated bandwidth\")\n",
           "refId": "A"
         }
       ],
@@ -290,7 +290,7 @@
             "type": "influxdb",
             "uid": "4M35W_x4z"
           },
-          "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => r[\"_field\"] == \"latency\")\n  |> filter(fn: (r) => contains(value: r[\"namespace\"], set: ${Namespace:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_name\"], set: ${DstName:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_name\"], set: ${SrcName:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_ip\"], set: ${DstIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_ip\"], set: ${SrcIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"path\"], set: ${Path:json}))\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"latency\")\n\n\n\n\n  ",
+          "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => r[\"_field\"] == \"latency\")\n  |> filter(fn: (r) => contains(value: r[\"src_ns\"], set: ${SrcNS:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_ns\"], set: ${DstNS:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_name\"], set: ${DstName:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_name\"], set: ${SrcName:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_ip\"], set: ${DstIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_ip\"], set: ${SrcIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"path\"], set: ${Path:json}))\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"latency\")\n\n\n\n\n  ",
           "refId": "A"
         }
       ],
@@ -446,7 +446,7 @@
             "type": "influxdb",
             "uid": "4M35W_x4z"
           },
-          "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => r[\"_field\"] == \"status\")\n  |> filter(fn: (r) => contains(value: r[\"namespace\"], set: ${Namespace:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_name\"], set: ${DstName:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_name\"], set: ${SrcName:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_ip\"], set: ${DstIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_ip\"], set: ${SrcIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"path\"], set: ${Path:json}))\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"code\")\n\n\n\n\n  ",
+          "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => r[\"_field\"] == \"status\")\n  |> filter(fn: (r) => contains(value: r[\"src_ns\"], set: ${SrcNS:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_ns\"], set: ${DstNS:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_name\"], set: ${DstName:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_name\"], set: ${SrcName:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_ip\"], set: ${DstIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_ip\"], set: ${SrcIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"path\"], set: ${Path:json}))\n  |> aggregateWindow(every: v.windowPeriod, fn: last, createEmpty: false)\n  |> yield(name: \"code\")\n\n\n\n\n  ",
           "refId": "A"
         }
       ],
@@ -487,7 +487,7 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "callKPIs",
           "value": "callKPIs"
         },
@@ -511,26 +511,22 @@
       },
       {
         "current": {
-          "selected": true,
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": {
           "type": "influxdb",
           "uid": "4M35W_x4z"
         },
-        "definition": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: ${Bucket:doublequote}, tag: \"namespace\")",
+        "definition": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: ${Bucket:doublequote}, tag: \"node\")",
         "hide": 0,
         "includeAll": true,
-        "label": "Namespace",
+        "label": "Node",
         "multi": true,
-        "name": "Namespace",
+        "name": "Node",
         "options": [],
-        "query": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: ${Bucket:doublequote}, tag: \"namespace\")",
+        "query": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: ${Bucket:doublequote}, tag: \"node\")",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -539,27 +535,23 @@
       },
       {
         "current": {
-          "selected": true,
-          "text": [
-            "front-end.sock-shop"
-          ],
-          "value": [
-            "front-end.sock-shop"
-          ]
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": {
           "type": "influxdb",
           "uid": "4M35W_x4z"
         },
-        "definition": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"namespace\"], set: ${Namespace:json}))\n  |> keyValues(keyColumns: [\"dst_name\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"dst_name\"])\n  |> distinct(column: \"dst_name\")\n",
+        "definition": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: ${Bucket:doublequote}, tag: \"src_ns\")",
         "hide": 0,
         "includeAll": true,
-        "label": "Destination Name",
+        "label": "Source Namespace",
         "multi": true,
-        "name": "DstName",
+        "name": "SrcNS",
         "options": [],
-        "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"namespace\"], set: ${Namespace:json}))\n  |> keyValues(keyColumns: [\"dst_name\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"dst_name\"])\n  |> distinct(column: \"dst_name\")\n",
-        "refresh": 1,
+        "query": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: ${Bucket:doublequote}, tag: \"src_ns\")",
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
@@ -567,54 +559,22 @@
       },
       {
         "current": {
-          "selected": true,
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": {
           "type": "influxdb",
           "uid": "4M35W_x4z"
         },
-        "definition": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"namespace\"], set: ${Namespace:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_name\"], set: ${DstName:json}))\n  |> keyValues(keyColumns: [\"dst_ip\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"dst_ip\"])\n  |> distinct(column: \"dst_ip\")\n",
-        "hide": 0,
-        "includeAll": true,
-        "label": "Destination IP",
-        "multi": true,
-        "name": "DstIP",
-        "options": [],
-        "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"namespace\"], set: ${Namespace:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_name\"], set: ${DstName:json}))\n  |> keyValues(keyColumns: [\"dst_ip\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"dst_ip\"])\n  |> distinct(column: \"dst_ip\")\n",
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "type": "query"
-      },
-      {
-        "current": {
-          "selected": true,
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
-        },
-        "datasource": {
-          "type": "influxdb",
-          "uid": "4M35W_x4z"
-        },
-        "definition": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"namespace\"], set: ${Namespace:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_name\"], set: ${DstName:json}))\n  |> keyValues(keyColumns: [\"src_name\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"src_name\"])\n  |> distinct(column: \"src_name\")\n",
+        "definition": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"src_ns\"], set: ${SrcNS:json}))\n  |> keyValues(keyColumns: [\"src_name\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"src_name\"])\n  |> distinct(column: \"src_name\")\n",
         "hide": 0,
         "includeAll": true,
         "label": "Source Name",
         "multi": true,
         "name": "SrcName",
         "options": [],
-        "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"namespace\"], set: ${Namespace:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_name\"], set: ${DstName:json}))\n  |> keyValues(keyColumns: [\"src_name\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"src_name\"])\n  |> distinct(column: \"src_name\")\n",
+        "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"src_ns\"], set: ${SrcNS:json}))\n  |> keyValues(keyColumns: [\"src_name\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"src_name\"])\n  |> distinct(column: \"src_name\")\n",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -631,14 +591,14 @@
           "type": "influxdb",
           "uid": "4M35W_x4z"
         },
-        "definition": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"namespace\"], set: ${Namespace:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_name\"], set: ${SrcName:json}))\n  |> keyValues(keyColumns: [\"src_ip\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"src_ip\"])\n  |> distinct(column: \"src_ip\")\n",
+        "definition": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"src_ns\"], set: ${SrcNS:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_name\"], set: ${SrcName:json}))\n  |> keyValues(keyColumns: [\"src_ip\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"src_ip\"])\n  |> distinct(column: \"src_ip\")\n",
         "hide": 0,
         "includeAll": true,
         "label": "Source IP",
         "multi": true,
         "name": "SrcIP",
         "options": [],
-        "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"namespace\"], set: ${Namespace:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_name\"], set: ${SrcName:json}))\n  |> keyValues(keyColumns: [\"src_ip\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"src_ip\"])\n  |> distinct(column: \"src_ip\")\n",
+        "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"src_ns\"], set: ${SrcNS:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_name\"], set: ${SrcName:json}))\n  |> keyValues(keyColumns: [\"src_ip\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"src_ip\"])\n  |> distinct(column: \"src_ip\")\n",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -647,26 +607,94 @@
       },
       {
         "current": {
-          "selected": true,
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": {
           "type": "influxdb",
           "uid": "4M35W_x4z"
         },
-        "definition": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"dst_ip\"], set: ${DstIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_ip\"], set: ${SrcIP:json}))\n  |> keyValues(keyColumns: [\"path\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"path\"])\n  |> distinct(column: \"path\")",
+        "definition": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: ${Bucket:doublequote}, tag: \"dst_ns\")",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Destination Namespace",
+        "multi": true,
+        "name": "DstNS",
+        "options": [],
+        "query": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: ${Bucket:doublequote}, tag: \"dst_ns\")",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "4M35W_x4z"
+        },
+        "definition": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"dst_ns\"], set: ${DstNS:json}))\n  |> keyValues(keyColumns: [\"dst_name\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"dst_name\"])\n  |> distinct(column: \"dst_name\")\n",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Destination Name",
+        "multi": true,
+        "name": "DstName",
+        "options": [],
+        "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"dst_ns\"], set: ${DstNS:json}))\n  |> keyValues(keyColumns: [\"dst_name\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"dst_name\"])\n  |> distinct(column: \"dst_name\")\n",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "4M35W_x4z"
+        },
+        "definition": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"dst_ns\"], set: ${DstNS:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_name\"], set: ${DstName:json}))\n  |> keyValues(keyColumns: [\"dst_ip\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"dst_ip\"])\n  |> distinct(column: \"dst_ip\")\n",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Destination IP",
+        "multi": true,
+        "name": "DstIP",
+        "options": [],
+        "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"dst_ns\"], set: ${DstNS:json}))\n  |> filter(fn: (r) => contains(value: r[\"dst_name\"], set: ${DstName:json}))\n  |> keyValues(keyColumns: [\"dst_ip\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"dst_ip\"])\n  |> distinct(column: \"dst_ip\")\n",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "4M35W_x4z"
+        },
+        "definition": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"dst_ip\"], set: ${DstIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_ip\"], set: ${SrcIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"node\"], set: ${Node:json}))\n  |> keyValues(keyColumns: [\"path\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"path\"])\n  |> distinct(column: \"path\")",
         "hide": 0,
         "includeAll": true,
         "label": "Path",
         "multi": true,
         "name": "Path",
         "options": [],
-        "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"dst_ip\"], set: ${DstIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_ip\"], set: ${SrcIP:json}))\n  |> keyValues(keyColumns: [\"path\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"path\"])\n  |> distinct(column: \"path\")",
+        "query": "from(bucket: ${Bucket:doublequote})\n  |> range(start: v.timeRangeStart)\n  |> filter(fn: (r) => r[\"_measurement\"] == ${Measurement:doublequote})\n  |> filter(fn: (r) => contains(value: r[\"dst_ip\"], set: ${DstIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"src_ip\"], set: ${SrcIP:json}))\n  |> filter(fn: (r) => contains(value: r[\"node\"], set: ${Node:json}))\n  |> keyValues(keyColumns: [\"path\", \"_field\"])\n  |> group()\n  |> keep(columns: [\"path\"])\n  |> distinct(column: \"path\")",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -714,13 +742,13 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Kubeshark",
-  "uid": "nByE79b4z",
-  "version": 145,
+  "uid": "nByE79b41",
+  "version": 6,
   "weekStart": ""
 }
