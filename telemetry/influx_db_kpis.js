@@ -35,8 +35,9 @@ var infUrl      = env.INFLUXDB_URL;
 var infToken    = env.INFLUXDB_TOKEN;
 var infOrg      = env.INFLUXDB_ORG;
 var infBucket   = env.INFLUXDB_BUCKET ?  env.INFLUXDB_BUCKET : "Kubeshark";
-var infMeasurement = env.INFLUXDB_MEASUREMENT ? "callKPIs";
+var infMeasurement = env.INFLUXDB_MEASUREMENT ? env.INFLUXDB_MEASUREMENT: "callKPIs";
 var ACTIVE     = true;  // change to false to disable this script
+console.log(JSON.stringify(this));
 
 function onItemCaptured(data) {
     return hookSendMetrics(data);
@@ -47,6 +48,23 @@ function hookSendMetrics ( data ) {
     try{
         if (data.protocol.name !== "http") return;
         
+        var metrics = { 
+            latency:    data.elapsedTime, 
+            status:     data.response.status,
+            bandwidth:  data.requestSize + data.responseSize
+        };
+        var tags = { 
+            dst_name:   data.dst.name ? data.dst.name : "unresolved", 
+            dst_ip:     data.dst.ip, 
+            dst_port:   data.dst.port,
+            dst_ns:     data.dst.namespace ? data.dst.namespace : "unresolved",
+            src_name:   data.src.name ? data.src.name : "unresolved", 
+            src_ip:     data.src.ip,
+            src_ns:     data.src.namespace ? data.src.namespace : "unresolved",
+            path:       data.request.path,
+            node:       data.node.name
+        };
+
         // send KPI metrics on every API call
         vendor.influxdb(
             infUrl,
@@ -54,20 +72,11 @@ function hookSendMetrics ( data ) {
             infOrg,     
             infBucket,  
             infMeasurement , 
-            { 
-                latency:    data.elapsedTime, 
-                status:     data.response.status,
-                bandwidth:  data.requestSize + data.responseSize
-            },
-            { 
-                dst_name:   data.dst.name ? data.dst.name : "unresolved", 
-                dst_ip:     data.dst.ip, 
-                src_name:   data.src.name ? data.src.name : "unresolved", 
-                src_ip:     data.src.ip,
-                path:       data.request.path,
-                namespace:  data.namespace
-            }        
+            metrics,
+            tags
+                    
         ); 
+//        console.log("Wrote:", JSON.stringify({"metrics":  metrics, "tags": tags, "data": data }));
     }
     catch (err){
         console.error("hookSendMetrics",err);
