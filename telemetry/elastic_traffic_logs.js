@@ -1,4 +1,4 @@
-// HTTP API call KPIs to Influx DB
+// Send select traffic logs to Elasticsearch
 
 /*
  * Send Select Traffic Logs to Elasticsearch
