@@ -98,639 +98,954 @@ function onItemCaptured(data) {
 ```
 Here's an example of the `data` document that is provided:
 ```json
-    "data": {
-        "dst": {
-            "ip": "10.0.0.61",
-            "name": "",
-            "namespace": "",
-            "port": "8086"
-        },
-        "elapsedTime": 22,
-        "failed": false,
-        "id": "192.168.64.4:8897/000000000977.pcap-0",
-        "index": 0,
-        "node": {
-            "ip": "192.168.64.4",
-            "name": "mizu"
-        },
-        "outgoing": false,
-        "passed": false,
-        "protocol": {
-            "abbr": "HTTP",
-            "backgroundColor": "#326de6",
-            "fontSize": 12,
-            "foregroundColor": "#ffffff",
-            "layer4": "tcp",
-            "longName": "Hypertext Transfer Protocol -- HTTP/1.1",
-            "macro": "http",
-            "name": "http",
-            "ports": [
-                "80",
-                "443",
-                "8080"
-            ],
-            "priority": 0,
-            "referenceLink": "https://datatracker.ietf.org/doc/html/rfc2616",
-            "version": "1.1"
-        },
-        "request": {
-            "bodySize": 220,
-            "cookies": {},
-            "headers": {
-                "Accept-Encoding": "gzip",
-                "Authorization": "Token DUv0ItR7LCtn42pCwMO96..QfdgCCy0Q==",
-                "Content-Length": "220",
-                "Host": "10.0.0.61:8086",
-                "User-Agent": "influxdb-client-go/2.12.2 (linux; amd64)"
-            },
-            "headersSize": -1,
-            "httpVersion": "HTTP/1.1",
-            "method": "POST",
-            "path": "/api/v2/write",
-            "pathSegments": [
-                "api",
-                "v2",
-                "write"
-            ],
-            "postData": {
-                "mimeType": "",
-                "params": [],
-                "text": "callKPIs,dst_ip=10.0.0.61,dst_name=unresolved,dst_ns=unresolved,dst_port=8086,node=mizu,path=/api/v2/write,src_ip=192.168.64.4,src_name=kubernetes,src_ns=kubeshark bandwidth=584,latency=22,status=204 1683407112628832003\n"
-            },
-            "queryString": {
-                "bucket": "Intel",
-                "org": "Kubeshark",
-                "precision": "ns"
-            },
-            "targetUri": "/api/v2/write?bucket=Intel\u0026org=Kubeshark\u0026precision=ns",
-            "url": "/api/v2/write?bucket=Intel\u0026org=Kubeshark\u0026precision=ns"
-        },
-        "requestSize": 522,
-        "response": {
-            "bodySize": 0,
-            "content": {
-                "encoding": "base64",
-                "mimeType": "",
-                "size": 0
-            },
-            "cookies": {},
-            "headers": {
-                "Date": "Sat, 06 May 2023 21:05:12 GMT",
-                "X-Influxdb-Build": "OSS",
-                "X-Influxdb-Version": "2.6.1"
-            },
-            "headersSize": -1,
-            "httpVersion": "HTTP/1.1",
-            "redirectURL": "",
-            "status": 204,
-            "statusText": "No Content"
-        },
-        "responseSize": 114,
-        "src": {
-            "endpointSlice": {
-                "metadata": {
-                    "creationTimestamp": "2023-05-06T16:53:07Z",
-                    "labels": {
-                        "endpointslice.kubernetes.io/skip-mirror": "true"
-                    },
-                    "managedFields": [
-                        {
-                            "apiVersion": "v1",
-                            "fieldsType": "FieldsV1",
-                            "fieldsV1": {
-                                "f:metadata": {
-                                    "f:labels": {
-                                        ".": {},
-                                        "f:endpointslice.kubernetes.io/skip-mirror": {}
-                                    }
+{
+    "dst": {
+        "endpointSlice": {
+            "metadata": {
+                "annotations": {
+                    "endpoints.kubernetes.io/last-change-trigger-time": "2023-05-07T21:33:29Z"
+                },
+                "creationTimestamp": "2023-05-07T21:29:31Z",
+                "labels": {
+                    "name": "catalogue"
+                },
+                "managedFields": [
+                    {
+                        "apiVersion": "v1",
+                        "fieldsType": "FieldsV1",
+                        "fieldsV1": {
+                            "f:metadata": {
+                                "f:annotations": {
+                                    ".": {},
+                                    "f:endpoints.kubernetes.io/last-change-trigger-time": {}
                                 },
-                                "f:subsets": {}
+                                "f:labels": {
+                                    ".": {},
+                                    "f:name": {}
+                                }
                             },
-                            "manager": "kube-apiserver",
-                            "operation": "Update",
-                            "time": "2023-05-06T16:53:07Z"
+                            "f:subsets": {}
+                        },
+                        "manager": "kube-controller-manager",
+                        "operation": "Update",
+                        "time": "2023-05-07T21:33:29Z"
+                    }
+                ],
+                "name": "catalogue",
+                "namespace": "sock-shop",
+                "resourceVersion": "138187",
+                "uid": "55cec7bb-6fca-42e7-89f3-808934ffaa8c"
+            },
+            "subsets": [
+                {
+                    "addresses": [
+                        {
+                            "ip": "10.244.0.73",
+                            "nodeName": "mizu",
+                            "targetRef": {
+                                "kind": "Pod",
+                                "name": "catalogue-7d77c68bcf-tjg5c",
+                                "namespace": "sock-shop",
+                                "uid": "62bfc3a2-942a-4f5b-9ff4-e6015fb6fea2"
+                            }
                         }
                     ],
-                    "name": "kubernetes",
-                    "namespace": "default",
-                    "resourceVersion": "199",
-                    "uid": "058c0d40-50d9-4f60-93cc-bd5c49b3f57c"
+                    "ports": [
+                        {
+                            "port": 80,
+                            "protocol": "TCP"
+                        }
+                    ]
+                }
+            ]
+        },
+        "ip": "10.244.0.73",
+        "name": "catalogue",
+        "namespace": "sock-shop",
+        "pod": {
+            "metadata": {
+                "creationTimestamp": "2023-05-07T21:29:31Z",
+                "generateName": "catalogue-7d77c68bcf-",
+                "labels": {
+                    "name": "catalogue",
+                    "pod-template-hash": "7d77c68bcf"
                 },
-                "subsets": [
+                "managedFields": [
                     {
-                        "addresses": [
-                            {
-                                "ip": "192.168.64.4"
+                        "apiVersion": "v1",
+                        "fieldsType": "FieldsV1",
+                        "fieldsV1": {
+                            "f:metadata": {
+                                "f:generateName": {},
+                                "f:labels": {
+                                    ".": {},
+                                    "f:name": {},
+                                    "f:pod-template-hash": {}
+                                },
+                                "f:ownerReferences": {
+                                    ".": {},
+                                    "k:{\"uid\":\"3de1b9be-03fd-4dbd-a3c3-93d25d5290b9\"}": {}
+                                }
+                            },
+                            "f:spec": {
+                                "f:containers": {
+                                    "k:{\"name\":\"catalogue\"}": {
+                                        ".": {},
+                                        "f:args": {},
+                                        "f:command": {},
+                                        "f:image": {},
+                                        "f:imagePullPolicy": {},
+                                        "f:livenessProbe": {
+                                            ".": {},
+                                            "f:failureThreshold": {},
+                                            "f:httpGet": {
+                                                ".": {},
+                                                "f:path": {},
+                                                "f:port": {},
+                                                "f:scheme": {}
+                                            },
+                                            "f:initialDelaySeconds": {},
+                                            "f:periodSeconds": {},
+                                            "f:successThreshold": {},
+                                            "f:timeoutSeconds": {}
+                                        },
+                                        "f:name": {},
+                                        "f:ports": {
+                                            ".": {},
+                                            "k:{\"containerPort\":80,\"protocol\":\"TCP\"}": {
+                                                ".": {},
+                                                "f:containerPort": {},
+                                                "f:protocol": {}
+                                            }
+                                        },
+                                        "f:readinessProbe": {
+                                            ".": {},
+                                            "f:failureThreshold": {},
+                                            "f:httpGet": {
+                                                ".": {},
+                                                "f:path": {},
+                                                "f:port": {},
+                                                "f:scheme": {}
+                                            },
+                                            "f:initialDelaySeconds": {},
+                                            "f:periodSeconds": {},
+                                            "f:successThreshold": {},
+                                            "f:timeoutSeconds": {}
+                                        },
+                                        "f:resources": {
+                                            ".": {},
+                                            "f:limits": {
+                                                ".": {},
+                                                "f:cpu": {},
+                                                "f:memory": {}
+                                            },
+                                            "f:requests": {
+                                                ".": {},
+                                                "f:cpu": {},
+                                                "f:memory": {}
+                                            }
+                                        },
+                                        "f:securityContext": {
+                                            ".": {},
+                                            "f:capabilities": {
+                                                ".": {},
+                                                "f:add": {},
+                                                "f:drop": {}
+                                            },
+                                            "f:readOnlyRootFilesystem": {},
+                                            "f:runAsNonRoot": {},
+                                            "f:runAsUser": {}
+                                        },
+                                        "f:terminationMessagePath": {},
+                                        "f:terminationMessagePolicy": {}
+                                    }
+                                },
+                                "f:dnsPolicy": {},
+                                "f:enableServiceLinks": {},
+                                "f:nodeSelector": {},
+                                "f:restartPolicy": {},
+                                "f:schedulerName": {},
+                                "f:securityContext": {},
+                                "f:terminationGracePeriodSeconds": {}
                             }
+                        },
+                        "manager": "kube-controller-manager",
+                        "operation": "Update",
+                        "time": "2023-05-07T21:29:31Z"
+                    },
+                    {
+                        "apiVersion": "v1",
+                        "fieldsType": "FieldsV1",
+                        "fieldsV1": {
+                            "f:status": {
+                                "f:conditions": {
+                                    "k:{\"type\":\"ContainersReady\"}": {
+                                        ".": {},
+                                        "f:lastProbeTime": {},
+                                        "f:lastTransitionTime": {},
+                                        "f:status": {},
+                                        "f:type": {}
+                                    },
+                                    "k:{\"type\":\"Initialized\"}": {
+                                        ".": {},
+                                        "f:lastProbeTime": {},
+                                        "f:lastTransitionTime": {},
+                                        "f:status": {},
+                                        "f:type": {}
+                                    },
+                                    "k:{\"type\":\"Ready\"}": {
+                                        ".": {},
+                                        "f:lastProbeTime": {},
+                                        "f:lastTransitionTime": {},
+                                        "f:status": {},
+                                        "f:type": {}
+                                    }
+                                },
+                                "f:containerStatuses": {},
+                                "f:hostIP": {},
+                                "f:phase": {},
+                                "f:podIP": {},
+                                "f:podIPs": {
+                                    ".": {},
+                                    "k:{\"ip\":\"10.244.0.73\"}": {
+                                        ".": {},
+                                        "f:ip": {}
+                                    }
+                                },
+                                "f:startTime": {}
+                            }
+                        },
+                        "manager": "kubelet",
+                        "operation": "Update",
+                        "subresource": "status",
+                        "time": "2023-05-07T21:33:29Z"
+                    }
+                ],
+                "name": "catalogue-7d77c68bcf-tjg5c",
+                "namespace": "sock-shop",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "ReplicaSet",
+                        "name": "catalogue-7d77c68bcf",
+                        "uid": "3de1b9be-03fd-4dbd-a3c3-93d25d5290b9"
+                    }
+                ],
+                "resourceVersion": "138185",
+                "uid": "62bfc3a2-942a-4f5b-9ff4-e6015fb6fea2"
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "args": [
+                            "-port=80"
                         ],
+                        "command": [
+                            "/app"
+                        ],
+                        "image": "weaveworksdemos/catalogue:0.3.5",
+                        "imagePullPolicy": "IfNotPresent",
+                        "livenessProbe": {
+                            "failureThreshold": 3,
+                            "httpGet": {
+                                "path": "/health",
+                                "port": 80,
+                                "scheme": "HTTP"
+                            },
+                            "initialDelaySeconds": 300,
+                            "periodSeconds": 3,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 1
+                        },
+                        "name": "catalogue",
                         "ports": [
                             {
-                                "name": "https",
-                                "port": 8443,
+                                "containerPort": 80,
                                 "protocol": "TCP"
+                            }
+                        ],
+                        "readinessProbe": {
+                            "failureThreshold": 3,
+                            "httpGet": {
+                                "path": "/health",
+                                "port": 80,
+                                "scheme": "HTTP"
+                            },
+                            "initialDelaySeconds": 180,
+                            "periodSeconds": 3,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 1
+                        },
+                        "resources": {
+                            "limits": {
+                                "cpu": "200m",
+                                "memory": "200Mi"
+                            },
+                            "requests": {
+                                "cpu": "10m",
+                                "memory": "10Mi"
+                            }
+                        },
+                        "securityContext": {
+                            "capabilities": {
+                                "add": [
+                                    "NET_BIND_SERVICE"
+                                ],
+                                "drop": [
+                                    "all"
+                                ]
+                            },
+                            "readOnlyRootFilesystem": true,
+                            "runAsNonRoot": true,
+                            "runAsUser": 10001
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "kube-api-access-2hjtb",
+                                "readOnly": true
                             }
                         ]
                     }
-                ]
-            },
-            "ip": "192.168.64.4",
-            "name": "kubernetes",
-            "namespace": "kubeshark",
-            "pod": {
-                "metadata": {
-                    "creationTimestamp": "2023-05-06T16:54:36Z",
-                    "generateName": "kubeshark-worker-daemon-set-",
-                    "labels": {
-                        "app": "kubeshark-worker",
-                        "controller-revision-hash": "5644f7b6b",
-                        "kubeshark-created-by": "kubeshark",
-                        "kubeshark-managed-by": "kubeshark",
-                        "pod-template-generation": "1"
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "enableServiceLinks": true,
+                "nodeName": "mizu",
+                "nodeSelector": {
+                    "beta.kubernetes.io/os": "linux"
+                },
+                "preemptionPolicy": "PreemptLowerPriority",
+                "priority": 0,
+                "restartPolicy": "Always",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "serviceAccount": "default",
+                "serviceAccountName": "default",
+                "terminationGracePeriodSeconds": 30,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
                     },
-                    "managedFields": [
-                        {
-                            "apiVersion": "v1",
-                            "fieldsType": "FieldsV1",
-                            "fieldsV1": {
-                                "f:metadata": {
-                                    "f:generateName": {},
-                                    "f:labels": {
-                                        ".": {},
-                                        "f:app": {},
-                                        "f:controller-revision-hash": {},
-                                        "f:kubeshark-created-by": {},
-                                        "f:kubeshark-managed-by": {},
-                                        "f:pod-template-generation": {}
-                                    },
-                                    "f:ownerReferences": {
-                                        ".": {},
-                                        "k:{\"uid\":\"c80c3abf-3c97-4e63-84c9-ba5c3c430cd1\"}": {}
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "kube-api-access-2hjtb",
+                        "projected": {
+                            "defaultMode": 420,
+                            "sources": [
+                                {
+                                    "serviceAccountToken": {
+                                        "expirationSeconds": 3607,
+                                        "path": "token"
                                     }
                                 },
-                                "f:spec": {
-                                    "f:affinity": {
-                                        ".": {},
-                                        "f:nodeAffinity": {
-                                            ".": {},
-                                            "f:requiredDuringSchedulingIgnoredDuringExecution": {}
-                                        }
-                                    },
-                                    "f:containers": {
-                                        "k:{\"name\":\"kubeshark-worker\"}": {
-                                            ".": {},
-                                            "f:command": {},
-                                            "f:image": {},
-                                            "f:imagePullPolicy": {},
-                                            "f:name": {},
-                                            "f:resources": {
-                                                ".": {},
-                                                "f:limits": {
-                                                    ".": {},
-                                                    "f:cpu": {},
-                                                    "f:memory": {}
-                                                },
-                                                "f:requests": {
-                                                    ".": {},
-                                                    "f:cpu": {},
-                                                    "f:memory": {}
-                                                }
-                                            },
-                                            "f:securityContext": {
-                                                ".": {},
-                                                "f:capabilities": {
-                                                    ".": {},
-                                                    "f:add": {},
-                                                    "f:drop": {}
-                                                }
-                                            },
-                                            "f:terminationMessagePath": {},
-                                            "f:terminationMessagePolicy": {},
-                                            "f:volumeMounts": {
-                                                ".": {},
-                                                "k:{\"mountPath\":\"/app/data\"}": {
-                                                    ".": {},
-                                                    "f:mountPath": {},
-                                                    "f:name": {}
-                                                },
-                                                "k:{\"mountPath\":\"/hostproc\"}": {
-                                                    ".": {},
-                                                    "f:mountPath": {},
-                                                    "f:name": {},
-                                                    "f:readOnly": {}
-                                                },
-                                                "k:{\"mountPath\":\"/sys\"}": {
-                                                    ".": {},
-                                                    "f:mountPath": {},
-                                                    "f:name": {},
-                                                    "f:readOnly": {}
-                                                }
-                                            }
-                                        }
-                                    },
-                                    "f:dnsPolicy": {},
-                                    "f:enableServiceLinks": {},
-                                    "f:hostNetwork": {},
-                                    "f:restartPolicy": {},
-                                    "f:schedulerName": {},
-                                    "f:securityContext": {},
-                                    "f:serviceAccount": {},
-                                    "f:serviceAccountName": {},
-                                    "f:terminationGracePeriodSeconds": {},
-                                    "f:tolerations": {},
-                                    "f:volumes": {
-                                        ".": {},
-                                        "k:{\"name\":\"kubeshark-persistent-volume\"}": {
-                                            ".": {},
-                                            "f:name": {},
-                                            "f:persistentVolumeClaim": {
-                                                ".": {},
-                                                "f:claimName": {}
-                                            }
-                                        },
-                                        "k:{\"name\":\"proc\"}": {
-                                            ".": {},
-                                            "f:hostPath": {
-                                                ".": {},
-                                                "f:path": {},
-                                                "f:type": {}
-                                            },
-                                            "f:name": {}
-                                        },
-                                        "k:{\"name\":\"sys\"}": {
-                                            ".": {},
-                                            "f:hostPath": {
-                                                ".": {},
-                                                "f:path": {},
-                                                "f:type": {}
-                                            },
-                                            "f:name": {}
-                                        }
-                                    }
-                                }
-                            },
-                            "manager": "kube-controller-manager",
-                            "operation": "Update",
-                            "time": "2023-05-06T16:54:36Z"
-                        },
-                        {
-                            "apiVersion": "v1",
-                            "fieldsType": "FieldsV1",
-                            "fieldsV1": {
-                                "f:status": {
-                                    "f:conditions": {
-                                        ".": {},
-                                        "k:{\"type\":\"PodScheduled\"}": {
-                                            ".": {},
-                                            "f:lastProbeTime": {},
-                                            "f:lastTransitionTime": {},
-                                            "f:message": {},
-                                            "f:reason": {},
-                                            "f:status": {},
-                                            "f:type": {}
-                                        }
-                                    }
-                                }
-                            },
-                            "manager": "kube-scheduler",
-                            "operation": "Update",
-                            "subresource": "status",
-                            "time": "2023-05-06T16:54:36Z"
-                        },
-                        {
-                            "apiVersion": "v1",
-                            "fieldsType": "FieldsV1",
-                            "fieldsV1": {
-                                "f:status": {
-                                    "f:conditions": {
-                                        "k:{\"type\":\"ContainersReady\"}": {
-                                            ".": {},
-                                            "f:lastProbeTime": {},
-                                            "f:lastTransitionTime": {},
-                                            "f:status": {},
-                                            "f:type": {}
-                                        },
-                                        "k:{\"type\":\"Initialized\"}": {
-                                            ".": {},
-                                            "f:lastProbeTime": {},
-                                            "f:lastTransitionTime": {},
-                                            "f:status": {},
-                                            "f:type": {}
-                                        },
-                                        "k:{\"type\":\"Ready\"}": {
-                                            ".": {},
-                                            "f:lastProbeTime": {},
-                                            "f:lastTransitionTime": {},
-                                            "f:status": {},
-                                            "f:type": {}
-                                        }
-                                    },
-                                    "f:containerStatuses": {},
-                                    "f:hostIP": {},
-                                    "f:phase": {},
-                                    "f:podIP": {},
-                                    "f:podIPs": {
-                                        ".": {},
-                                        "k:{\"ip\":\"192.168.64.4\"}": {
-                                            ".": {},
-                                            "f:ip": {}
-                                        }
-                                    },
-                                    "f:startTime": {}
-                                }
-                            },
-                            "manager": "kubelet",
-                            "operation": "Update",
-                            "subresource": "status",
-                            "time": "2023-05-06T21:03:59Z"
-                        }
-                    ],
-                    "name": "kubeshark-worker-daemon-set-hvn25",
-                    "namespace": "kubeshark",
-                    "ownerReferences": [
-                        {
-                            "apiVersion": "apps/v1",
-                            "blockOwnerDeletion": true,
-                            "controller": true,
-                            "kind": "DaemonSet",
-                            "name": "kubeshark-worker-daemon-set",
-                            "uid": "c80c3abf-3c97-4e63-84c9-ba5c3c430cd1"
-                        }
-                    ],
-                    "resourceVersion": "20199",
-                    "uid": "465142ab-e5aa-4203-a2c4-8a53763b3db8"
-                },
-                "spec": {
-                    "affinity": {
-                        "nodeAffinity": {
-                            "requiredDuringSchedulingIgnoredDuringExecution": {
-                                "nodeSelectorTerms": [
-                                    {
-                                        "matchFields": [
+                                {
+                                    "configMap": {
+                                        "items": [
                                             {
-                                                "key": "metadata.name",
-                                                "operator": "In",
-                                                "values": [
-                                                    "mizu"
-                                                ]
+                                                "key": "ca.crt",
+                                                "path": "ca.crt"
+                                            }
+                                        ],
+                                        "name": "kube-root-ca.crt"
+                                    }
+                                },
+                                {
+                                    "downwardAPI": {
+                                        "items": [
+                                            {
+                                                "fieldRef": {
+                                                    "apiVersion": "v1",
+                                                    "fieldPath": "metadata.namespace"
+                                                },
+                                                "path": "namespace"
                                             }
                                         ]
                                     }
-                                ]
-                            }
-                        }
-                    },
-                    "containers": [
-                        {
-                            "command": [
-                                "./worker",
-                                "-i",
-                                "any",
-                                "-port",
-                                "8897",
-                                "-packet-capture",
-                                "libpcap",
-                                "-servicemesh",
-                                "-tls",
-                                "-procfs",
-                                "/hostproc"
-                            ],
-                            "image": "docker.io/kubeshark/worker:latest",
-                            "imagePullPolicy": "Always",
-                            "name": "kubeshark-worker",
-                            "resources": {
-                                "limits": {
-                                    "cpu": "750m",
-                                    "memory": "1Gi"
-                                },
-                                "requests": {
-                                    "cpu": "50m",
-                                    "memory": "50Mi"
-                                }
-                            },
-                            "securityContext": {
-                                "capabilities": {
-                                    "add": [
-                                        "NET_RAW",
-                                        "NET_ADMIN",
-                                        "SYS_ADMIN",
-                                        "SYS_PTRACE",
-                                        "DAC_OVERRIDE",
-                                        "SYS_RESOURCE"
-                                    ],
-                                    "drop": [
-                                        "ALL"
-                                    ]
-                                }
-                            },
-                            "terminationMessagePath": "/dev/termination-log",
-                            "terminationMessagePolicy": "File",
-                            "volumeMounts": [
-                                {
-                                    "mountPath": "/hostproc",
-                                    "name": "proc",
-                                    "readOnly": true
-                                },
-                                {
-                                    "mountPath": "/sys",
-                                    "name": "sys",
-                                    "readOnly": true
-                                },
-                                {
-                                    "mountPath": "/app/data",
-                                    "name": "kubeshark-persistent-volume"
-                                },
-                                {
-                                    "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
-                                    "name": "kube-api-access-5fkfq",
-                                    "readOnly": true
                                 }
                             ]
                         }
-                    ],
-                    "dnsPolicy": "ClusterFirstWithHostNet",
-                    "enableServiceLinks": true,
-                    "hostNetwork": true,
-                    "nodeName": "mizu",
-                    "preemptionPolicy": "PreemptLowerPriority",
-                    "priority": 0,
-                    "restartPolicy": "Always",
-                    "schedulerName": "default-scheduler",
-                    "securityContext": {},
-                    "serviceAccount": "kubeshark-service-account",
-                    "serviceAccountName": "kubeshark-service-account",
-                    "terminationGracePeriodSeconds": 0,
-                    "tolerations": [
-                        {
-                            "effect": "NoExecute",
-                            "operator": "Exists"
+                    }
+                ]
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2023-05-07T21:29:31Z",
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastTransitionTime": "2023-05-07T21:33:29Z",
+                        "status": "True",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastTransitionTime": "2023-05-07T21:33:29Z",
+                        "status": "True",
+                        "type": "ContainersReady"
+                    },
+                    {
+                        "lastTransitionTime": "2023-05-07T21:29:31Z",
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "containerID": "docker://edfe369bb52370c88838f84e5ec711511e288dfa5f4c8aaa097e9ddb8662c2eb",
+                        "image": "weaveworksdemos/catalogue:0.3.5",
+                        "imageID": "docker-pullable://weaveworksdemos/catalogue@sha256:0147a65b7116569439eefb1a6dbed455fe022464ef70e0c3cab75bc4a226b39b",
+                        "lastState": {},
+                        "name": "catalogue",
+                        "ready": true,
+                        "restartCount": 0,
+                        "started": true,
+                        "state": {
+                            "running": {
+                                "startedAt": "2023-05-07T21:30:29Z"
+                            }
+                        }
+                    }
+                ],
+                "hostIP": "192.168.64.4",
+                "phase": "Running",
+                "podIP": "10.244.0.73",
+                "podIPs": [
+                    {
+                        "ip": "10.244.0.73"
+                    }
+                ],
+                "qosClass": "Burstable",
+                "startTime": "2023-05-07T21:29:31Z"
+            }
+        },
+        "port": "80"
+    },
+    "elapsedTime": 2,
+    "failed": false,
+    "id": "192.168.64.4:8897/000000001497.pcap-0",
+    "index": 0,
+    "node": {
+        "ip": "192.168.64.4",
+        "name": "mizu"
+    },
+    "outgoing": false,
+    "passed": false,
+    "protocol": {
+        "abbr": "HTTP",
+        "backgroundColor": "#326de6",
+        "fontSize": 12,
+        "foregroundColor": "#ffffff",
+        "layer4": "tcp",
+        "longName": "Hypertext Transfer Protocol -- HTTP/1.1",
+        "macro": "http",
+        "name": "http",
+        "ports": [
+            "80",
+            "443",
+            "8080"
+        ],
+        "priority": 0,
+        "referenceLink": "https://datatracker.ietf.org/doc/html/rfc2616",
+        "version": "1.1"
+    },
+    "request": {
+        "bodySize": 0,
+        "cookies": {},
+        "headers": {
+            "Connection": "close",
+            "Host": "catalogue"
+        },
+        "headersSize": -1,
+        "httpVersion": "HTTP/1.1",
+        "method": "GET",
+        "path": "/catalogue/808a2de1-1aaa-4c25-a9b9-6612e8f29a38",
+        "pathSegments": [
+            "catalogue",
+            "808a2de1-1aaa-4c25-a9b9-6612e8f29a38"
+        ],
+        "queryString": {},
+        "targetUri": "/catalogue/808a2de1-1aaa-4c25-a9b9-6612e8f29a38",
+        "url": "/catalogue/808a2de1-1aaa-4c25-a9b9-6612e8f29a38"
+    },
+    "requestSize": 100,
+    "response": {
+        "bodySize": 275,
+        "content": {
+            "encoding": "base64",
+            "mimeType": "application/json; charset=utf-8",
+            "size": 275,
+            "text": "eyJpZCI6IjgwOGEyZGUxLTFhYWEtNGMyNS1hOWI5LTY2MTJlOGYyOWEzOCIsIm5hbWUiOiJDcm9zc2VkIiwiZGVzY3JpcHRpb24iOiJBIG1hdHVyZSBzb2NrLCBjcm9zc2VkLCB3aXRoIGFuIGFpciBvZiBub25jaGFsYW5jZS4iLCJpbWFnZVVybCI6WyIvY2F0YWxvZ3VlL2ltYWdlcy9jcm9zc18xLmpwZWciLCIvY2F0YWxvZ3VlL2ltYWdlcy9jcm9zc18yLmpwZWciXSwicHJpY2UiOjE3LjMyLCJjb3VudCI6NzM4LCJ0YWciOlsiYmx1ZSIsInJlZCIsImFjdGlvbiIsImZvcm1hbCJdfQo="
+        },
+        "cookies": {},
+        "headers": {
+            "Content-Length": "275",
+            "Content-Type": "application/json; charset=utf-8",
+            "Date": "Sun, 07 May 2023 21:36:40 GMT"
+        },
+        "headersSize": -1,
+        "httpVersion": "HTTP/1.1",
+        "redirectURL": "",
+        "status": 200,
+        "statusText": "OK"
+    },
+    "responseSize": 418,
+    "src": {
+        "endpointSlice": {
+            "metadata": {
+                "annotations": {
+                    "endpoints.kubernetes.io/last-change-trigger-time": "2023-05-07T21:30:17Z"
+                },
+                "creationTimestamp": "2023-05-07T21:29:32Z",
+                "labels": {
+                    "name": "front-end"
+                },
+                "managedFields": [
+                    {
+                        "apiVersion": "v1",
+                        "fieldsType": "FieldsV1",
+                        "fieldsV1": {
+                            "f:metadata": {
+                                "f:annotations": {
+                                    ".": {},
+                                    "f:endpoints.kubernetes.io/last-change-trigger-time": {}
+                                },
+                                "f:labels": {
+                                    ".": {},
+                                    "f:name": {}
+                                }
+                            },
+                            "f:subsets": {}
                         },
+                        "manager": "kube-controller-manager",
+                        "operation": "Update",
+                        "time": "2023-05-07T21:30:17Z"
+                    }
+                ],
+                "name": "front-end",
+                "namespace": "sock-shop",
+                "resourceVersion": "137831",
+                "uid": "edaf9764-8c74-4227-9d33-0b81d42361ae"
+            },
+            "subsets": [
+                {
+                    "addresses": [
                         {
-                            "effect": "NoSchedule",
-                            "operator": "Exists"
-                        },
-                        {
-                            "effect": "NoExecute",
-                            "key": "node.kubernetes.io/not-ready",
-                            "operator": "Exists"
-                        },
-                        {
-                            "effect": "NoExecute",
-                            "key": "node.kubernetes.io/unreachable",
-                            "operator": "Exists"
-                        },
-                        {
-                            "effect": "NoSchedule",
-                            "key": "node.kubernetes.io/disk-pressure",
-                            "operator": "Exists"
-                        },
-                        {
-                            "effect": "NoSchedule",
-                            "key": "node.kubernetes.io/memory-pressure",
-                            "operator": "Exists"
-                        },
-                        {
-                            "effect": "NoSchedule",
-                            "key": "node.kubernetes.io/pid-pressure",
-                            "operator": "Exists"
-                        },
-                        {
-                            "effect": "NoSchedule",
-                            "key": "node.kubernetes.io/unschedulable",
-                            "operator": "Exists"
-                        },
-                        {
-                            "effect": "NoSchedule",
-                            "key": "node.kubernetes.io/network-unavailable",
-                            "operator": "Exists"
+                            "ip": "10.244.0.148",
+                            "nodeName": "mizu",
+                            "targetRef": {
+                                "kind": "Pod",
+                                "name": "front-end-7d89d49d6b-n96mr",
+                                "namespace": "sock-shop",
+                                "uid": "ef550604-fea9-4a47-b8ab-53ef1904698b"
+                            }
                         }
                     ],
-                    "volumes": [
+                    "ports": [
                         {
-                            "hostPath": {
-                                "path": "/proc",
-                                "type": ""
-                            },
-                            "name": "proc"
-                        },
-                        {
-                            "hostPath": {
-                                "path": "/sys",
-                                "type": ""
-                            },
-                            "name": "sys"
-                        },
-                        {
-                            "name": "kubeshark-persistent-volume",
-                            "persistentVolumeClaim": {
-                                "claimName": "kubeshark-persistent-volume-claim"
-                            }
-                        },
-                        {
-                            "name": "kube-api-access-5fkfq",
-                            "projected": {
-                                "defaultMode": 420,
-                                "sources": [
-                                    {
-                                        "serviceAccountToken": {
-                                            "expirationSeconds": 3607,
-                                            "path": "token"
-                                        }
-                                    },
-                                    {
-                                        "configMap": {
-                                            "items": [
-                                                {
-                                                    "key": "ca.crt",
-                                                    "path": "ca.crt"
-                                                }
-                                            ],
-                                            "name": "kube-root-ca.crt"
-                                        }
-                                    },
-                                    {
-                                        "downwardAPI": {
-                                            "items": [
-                                                {
-                                                    "fieldRef": {
-                                                        "apiVersion": "v1",
-                                                        "fieldPath": "metadata.namespace"
-                                                    },
-                                                    "path": "namespace"
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
+                            "port": 8079,
+                            "protocol": "TCP"
                         }
                     ]
+                }
+            ]
+        },
+        "ip": "10.244.0.148",
+        "name": "front-end",
+        "namespace": "sock-shop",
+        "pod": {
+            "metadata": {
+                "creationTimestamp": "2023-05-07T21:29:32Z",
+                "generateName": "front-end-7d89d49d6b-",
+                "labels": {
+                    "name": "front-end",
+                    "pod-template-hash": "7d89d49d6b"
                 },
-                "status": {
-                    "conditions": [
-                        {
-                            "lastTransitionTime": "2023-05-06T16:54:37Z",
-                            "status": "True",
-                            "type": "Initialized"
-                        },
-                        {
-                            "lastTransitionTime": "2023-05-06T21:03:59Z",
-                            "status": "True",
-                            "type": "Ready"
-                        },
-                        {
-                            "lastTransitionTime": "2023-05-06T21:03:59Z",
-                            "status": "True",
-                            "type": "ContainersReady"
-                        },
-                        {
-                            "lastTransitionTime": "2023-05-06T16:54:37Z",
-                            "status": "True",
-                            "type": "PodScheduled"
-                        }
-                    ],
-                    "containerStatuses": [
-                        {
-                            "containerID": "docker://a679663ef486d6dc6f24e8157685eb561d26707193924555af537a158a34ec03",
-                            "image": "kubeshark/worker:latest",
-                            "imageID": "docker-pullable://kubeshark/worker@sha256:1a9b92dee7911f90384fb920d8663c59eb494031176d218a4d9f634298a25c06",
-                            "lastState": {
-                                "terminated": {
-                                    "containerID": "docker://9821ba51c94d650a7950daf2c32eb3d6582f84a3423ec555ad4b2e9161c4750b",
-                                    "exitCode": 137,
-                                    "finishedAt": "2023-05-06T21:03:57Z",
-                                    "reason": "OOMKilled",
-                                    "startedAt": "2023-05-06T16:54:42Z"
+                "managedFields": [
+                    {
+                        "apiVersion": "v1",
+                        "fieldsType": "FieldsV1",
+                        "fieldsV1": {
+                            "f:metadata": {
+                                "f:generateName": {},
+                                "f:labels": {
+                                    ".": {},
+                                    "f:name": {},
+                                    "f:pod-template-hash": {}
+                                },
+                                "f:ownerReferences": {
+                                    ".": {},
+                                    "k:{\"uid\":\"6bda5922-fdce-4d40-8bc5-25d6a9cc3911\"}": {}
                                 }
                             },
-                            "name": "kubeshark-worker",
-                            "ready": true,
-                            "restartCount": 1,
-                            "started": true,
-                            "state": {
-                                "running": {
-                                    "startedAt": "2023-05-06T21:03:58Z"
+                            "f:spec": {
+                                "f:containers": {
+                                    "k:{\"name\":\"front-end\"}": {
+                                        ".": {},
+                                        "f:env": {
+                                            ".": {},
+                                            "k:{\"name\":\"SESSION_REDIS\"}": {
+                                                ".": {},
+                                                "f:name": {},
+                                                "f:value": {}
+                                            }
+                                        },
+                                        "f:image": {},
+                                        "f:imagePullPolicy": {},
+                                        "f:livenessProbe": {
+                                            ".": {},
+                                            "f:failureThreshold": {},
+                                            "f:httpGet": {
+                                                ".": {},
+                                                "f:path": {},
+                                                "f:port": {},
+                                                "f:scheme": {}
+                                            },
+                                            "f:initialDelaySeconds": {},
+                                            "f:periodSeconds": {},
+                                            "f:successThreshold": {},
+                                            "f:timeoutSeconds": {}
+                                        },
+                                        "f:name": {},
+                                        "f:ports": {
+                                            ".": {},
+                                            "k:{\"containerPort\":8079,\"protocol\":\"TCP\"}": {
+                                                ".": {},
+                                                "f:containerPort": {},
+                                                "f:protocol": {}
+                                            }
+                                        },
+                                        "f:readinessProbe": {
+                                            ".": {},
+                                            "f:failureThreshold": {},
+                                            "f:httpGet": {
+                                                ".": {},
+                                                "f:path": {},
+                                                "f:port": {},
+                                                "f:scheme": {}
+                                            },
+                                            "f:initialDelaySeconds": {},
+                                            "f:periodSeconds": {},
+                                            "f:successThreshold": {},
+                                            "f:timeoutSeconds": {}
+                                        },
+                                        "f:resources": {
+                                            ".": {},
+                                            "f:limits": {
+                                                ".": {},
+                                                "f:cpu": {},
+                                                "f:memory": {}
+                                            },
+                                            "f:requests": {
+                                                ".": {},
+                                                "f:cpu": {},
+                                                "f:memory": {}
+                                            }
+                                        },
+                                        "f:securityContext": {
+                                            ".": {},
+                                            "f:capabilities": {
+                                                ".": {},
+                                                "f:drop": {}
+                                            },
+                                            "f:readOnlyRootFilesystem": {},
+                                            "f:runAsNonRoot": {},
+                                            "f:runAsUser": {}
+                                        },
+                                        "f:terminationMessagePath": {},
+                                        "f:terminationMessagePolicy": {}
+                                    }
+                                },
+                                "f:dnsPolicy": {},
+                                "f:enableServiceLinks": {},
+                                "f:nodeSelector": {},
+                                "f:restartPolicy": {},
+                                "f:schedulerName": {},
+                                "f:securityContext": {},
+                                "f:terminationGracePeriodSeconds": {}
+                            }
+                        },
+                        "manager": "kube-controller-manager",
+                        "operation": "Update",
+                        "time": "2023-05-07T21:29:32Z"
+                    },
+                    {
+                        "apiVersion": "v1",
+                        "fieldsType": "FieldsV1",
+                        "fieldsV1": {
+                            "f:status": {
+                                "f:conditions": {
+                                    "k:{\"type\":\"ContainersReady\"}": {
+                                        ".": {},
+                                        "f:lastProbeTime": {},
+                                        "f:lastTransitionTime": {},
+                                        "f:status": {},
+                                        "f:type": {}
+                                    },
+                                    "k:{\"type\":\"Initialized\"}": {
+                                        ".": {},
+                                        "f:lastProbeTime": {},
+                                        "f:lastTransitionTime": {},
+                                        "f:status": {},
+                                        "f:type": {}
+                                    },
+                                    "k:{\"type\":\"Ready\"}": {
+                                        ".": {},
+                                        "f:lastProbeTime": {},
+                                        "f:lastTransitionTime": {},
+                                        "f:status": {},
+                                        "f:type": {}
+                                    }
+                                },
+                                "f:containerStatuses": {},
+                                "f:hostIP": {},
+                                "f:phase": {},
+                                "f:podIP": {},
+                                "f:podIPs": {
+                                    ".": {},
+                                    "k:{\"ip\":\"10.244.0.148\"}": {
+                                        ".": {},
+                                        "f:ip": {}
+                                    }
+                                },
+                                "f:startTime": {}
+                            }
+                        },
+                        "manager": "kubelet",
+                        "operation": "Update",
+                        "subresource": "status",
+                        "time": "2023-05-07T21:30:17Z"
+                    }
+                ],
+                "name": "front-end-7d89d49d6b-n96mr",
+                "namespace": "sock-shop",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "ReplicaSet",
+                        "name": "front-end-7d89d49d6b",
+                        "uid": "6bda5922-fdce-4d40-8bc5-25d6a9cc3911"
+                    }
+                ],
+                "resourceVersion": "137830",
+                "uid": "ef550604-fea9-4a47-b8ab-53ef1904698b"
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "env": [
+                            {
+                                "name": "SESSION_REDIS",
+                                "value": "true"
+                            }
+                        ],
+                        "image": "weaveworksdemos/front-end:0.3.12",
+                        "imagePullPolicy": "IfNotPresent",
+                        "livenessProbe": {
+                            "failureThreshold": 3,
+                            "httpGet": {
+                                "path": "/",
+                                "port": 8079,
+                                "scheme": "HTTP"
+                            },
+                            "initialDelaySeconds": 300,
+                            "periodSeconds": 3,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 1
+                        },
+                        "name": "front-end",
+                        "ports": [
+                            {
+                                "containerPort": 8079,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "readinessProbe": {
+                            "failureThreshold": 3,
+                            "httpGet": {
+                                "path": "/",
+                                "port": 8079,
+                                "scheme": "HTTP"
+                            },
+                            "initialDelaySeconds": 30,
+                            "periodSeconds": 3,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 1
+                        },
+                        "resources": {
+                            "limits": {
+                                "cpu": "300m",
+                                "memory": "1000Mi"
+                            },
+                            "requests": {
+                                "cpu": "100m",
+                                "memory": "300Mi"
+                            }
+                        },
+                        "securityContext": {
+                            "capabilities": {
+                                "drop": [
+                                    "all"
+                                ]
+                            },
+                            "readOnlyRootFilesystem": true,
+                            "runAsNonRoot": true,
+                            "runAsUser": 10001
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "kube-api-access-9k72z",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "enableServiceLinks": true,
+                "nodeName": "mizu",
+                "nodeSelector": {
+                    "beta.kubernetes.io/os": "linux"
+                },
+                "preemptionPolicy": "PreemptLowerPriority",
+                "priority": 0,
+                "restartPolicy": "Always",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "serviceAccount": "default",
+                "serviceAccountName": "default",
+                "terminationGracePeriodSeconds": 30,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists",
+                        "tolerationSeconds": 300
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "kube-api-access-9k72z",
+                        "projected": {
+                            "defaultMode": 420,
+                            "sources": [
+                                {
+                                    "serviceAccountToken": {
+                                        "expirationSeconds": 3607,
+                                        "path": "token"
+                                    }
+                                },
+                                {
+                                    "configMap": {
+                                        "items": [
+                                            {
+                                                "key": "ca.crt",
+                                                "path": "ca.crt"
+                                            }
+                                        ],
+                                        "name": "kube-root-ca.crt"
+                                    }
+                                },
+                                {
+                                    "downwardAPI": {
+                                        "items": [
+                                            {
+                                                "fieldRef": {
+                                                    "apiVersion": "v1",
+                                                    "fieldPath": "metadata.namespace"
+                                                },
+                                                "path": "namespace"
+                                            }
+                                        ]
+                                    }
                                 }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2023-05-07T21:29:32Z",
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastTransitionTime": "2023-05-07T21:30:17Z",
+                        "status": "True",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastTransitionTime": "2023-05-07T21:30:17Z",
+                        "status": "True",
+                        "type": "ContainersReady"
+                    },
+                    {
+                        "lastTransitionTime": "2023-05-07T21:29:32Z",
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "containerID": "docker://55d10e65ae5b6ddd853f68f8c2898105d92a19382368f3eab7fc2c15f9e8c786",
+                        "image": "weaveworksdemos/front-end:0.3.12",
+                        "imageID": "docker-pullable://weaveworksdemos/front-end@sha256:26a2d9b6b291dee2dca32fca3f5bff6c2fa07bb5954359afcbc8001cc70eac71",
+                        "lastState": {},
+                        "name": "front-end",
+                        "ready": true,
+                        "restartCount": 0,
+                        "started": true,
+                        "state": {
+                            "running": {
+                                "startedAt": "2023-05-07T21:29:45Z"
                             }
                         }
-                    ],
-                    "hostIP": "192.168.64.4",
-                    "phase": "Running",
-                    "podIP": "192.168.64.4",
-                    "podIPs": [
-                        {
-                            "ip": "192.168.64.4"
-                        }
-                    ],
-                    "qosClass": "Burstable",
-                    "startTime": "2023-05-06T16:54:37Z"
-                }
-            },
-            "port": "40754"
+                    }
+                ],
+                "hostIP": "192.168.64.4",
+                "phase": "Running",
+                "podIP": "10.244.0.148",
+                "podIPs": [
+                    {
+                        "ip": "10.244.0.148"
+                    }
+                ],
+                "qosClass": "Burstable",
+                "startTime": "2023-05-07T21:29:32Z"
+            }
         },
-        "startTime": "2023-05-06T21:05:12.643129355Z",
-        "stream": "000000000977.pcap",
-        "timestamp": 1683407112643,
-        "tls": false,
-        "worker": "192.168.64.4:8897"
+        "port": "49090"
     },
+    "startTime": "2023-05-07T21:36:40.610593Z",
+    "stream": "000000001497.pcap",
+    "timestamp": 1683495400610,
+    "tls": false,
+    "worker": "192.168.64.4:8897"
+}
 ```
