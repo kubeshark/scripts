@@ -88,7 +88,15 @@ Once your Grafana instance is up and running, make sure you add InfluxDB as a da
 ![Adding InfluxDB as a new Data Source in Grafana](grafana-influxdb-new-data-source.png)
 
 ### What further information I can visualize
-Kubeshark sends metrics to InfluxDB from the schema-free document that is provided when a new message is dissected by the L7 hook: `onItemCaptured(data)`. Here's an example of the `data` document that is provided:
+Kubeshark provides protocol-level information related to any dissected L7 message in addition to complete Kuberenetes manifest information related to the involved pods. It sends metrics to InfluxDB from the schema-free document that is provided when a new message is dissected by the L7 hook: `onItemCaptured(data)`. 
+
+You can simply use the following code to see what information is available:
+```js
+function onItemCaptured(data) {
+    console.log(JSON.stringify(data));
+}
+```
+Here's an example of the `data` document that is provided:
 ```json
     "data": {
         "dst": {
