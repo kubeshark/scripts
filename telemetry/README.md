@@ -8,6 +8,7 @@ This is the telemetry script folder. Here you can find scripts that can be used 
 
 - **Script**: [influx_db_kpis.js](./influx_db_kpis.js)
 - **Grafana JSON Model**: [Grafana dashboard JSON model](assets/influx_db_kpis_grafana.json)
+- **Instructions**: [Adding Dashboard to Grafana](assets/grafana_instructions.md)
 
 #### Description
 
