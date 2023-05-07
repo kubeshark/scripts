@@ -138,7 +138,7 @@ Here's an example of the `data` document that is provided:
             "cookies": {},
             "headers": {
                 "Accept-Encoding": "gzip",
-                "Authorization": "Token DUv0ItR7LCtn42pCwMO96v6gWIL17RQKkXr-Gb5itbVUuqqPmapXacubsUX8HxSTUdlP3X2EW_yThQfdgCCy0Q==",
+                "Authorization": "Token DUv0ItR7LCtn42pCwMO96..QfdgCCy0Q==",
                 "Content-Length": "220",
                 "Host": "10.0.0.61:8086",
                 "User-Agent": "influxdb-client-go/2.12.2 (linux; amd64)"
