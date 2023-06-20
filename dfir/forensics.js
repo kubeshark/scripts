@@ -10,8 +10,8 @@ var KFL_ARR =[
 //TL;DR
 
 /*
- * Auto-generate and upload network traces to AWS S3 based on KFLs query 
- * =====================================================================
+ * Auto-generate and Upload Network Traces to AWS S3 based on KFLs Queries
+ * =======================================================================
  * 
  * Description:
  * -----------
