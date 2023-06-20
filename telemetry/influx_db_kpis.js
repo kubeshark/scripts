@@ -36,8 +36,12 @@ var infToken    = env.INFLUXDB_TOKEN;
 var infOrg      = env.INFLUXDB_ORG;
 var infBucket   = env.INFLUXDB_BUCKET ?  env.INFLUXDB_BUCKET : "Kubeshark";
 var infMeasurement = env.INFLUXDB_MEASUREMENT ? env.INFLUXDB_MEASUREMENT: "callKPIs";
-var ACTIVE     = true;  // change to false to disable this script
-console.log(JSON.stringify(this));
+var ACTIVE     = false;  // change to false to disable this script
+
+if (!infUrl || !infToken || !infOrg ){
+    console.error("One or more of the mandatory InfluxDB variables is missing. No point in continuing. Exiting script.");
+    ACTIVE = false;
+}
 
 function onItemCaptured(data) {
     return hookSendMetrics(data);

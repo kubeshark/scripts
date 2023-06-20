@@ -41,8 +41,8 @@ var APIs = [
 
 
 
-var slackAuthToken = env.SLACK_AUTH_TOKEN?env.SLACK_AUTH_TOKEN:"xoxb-5206540130417-5275764443315-4ss9WoVS04b3XSQXWXPnweii";
-var slackChannelID = env.SLACK_CHANNEL_ID?env.SLACK_CHANNEL_ID:"C057X8CCMGE";
+var slackAuthToken = env.SLACK_AUTH_TOKEN?env.SLACK_AUTH_TOKEN:"your-token";
+var slackChannelID = env.SLACK_CHANNEL_ID?env.SLACK_CHANNEL_ID:"your-channel";
 
 function onItemCaptured(data) {
     return hookAccumulateData(data);

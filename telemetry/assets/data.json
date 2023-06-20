@@ -1,0 +1,930 @@
+{
+    "dst": {
+        "ip": "192.168.4.120",
+        "name": "kubeshark-worker-daemon-set-5zc6q",
+        "namespace": "kubeshark",
+        "pod": {
+            "metadata": {
+                "annotations": {
+                    "kubernetes.io/psp": "eks.privileged"
+                },
+                "creationTimestamp": "2023-06-04T08:59:02Z",
+                "generateName": "kubeshark-worker-daemon-set-",
+                "labels": {
+                    "app": "kubeshark-worker",
+                    "controller-revision-hash": "79844ddf6d",
+                    "kubeshark-created-by": "kubeshark",
+                    "kubeshark-managed-by": "kubeshark",
+                    "pod-template-generation": "1"
+                },
+                "managedFields": [
+                    {
+                        "apiVersion": "v1",
+                        "fieldsType": "FieldsV1",
+                        "fieldsV1": {
+                            "f:metadata": {
+                                "f:generateName": {},
+                                "f:labels": {
+                                    ".": {},
+                                    "f:app": {},
+                                    "f:controller-revision-hash": {},
+                                    "f:kubeshark-created-by": {},
+                                    "f:kubeshark-managed-by": {},
+                                    "f:pod-template-generation": {}
+                                },
+                                "f:ownerReferences": {
+                                    ".": {},
+                                    "k:{\"uid\":\"8bb774f8-acaf-4ff3-b6ca-23293e66feb0\"}": {}
+                                }
+                            },
+                            "f:spec": {
+                                "f:affinity": {
+                                    ".": {},
+                                    "f:nodeAffinity": {
+                                        ".": {},
+                                        "f:requiredDuringSchedulingIgnoredDuringExecution": {}
+                                    }
+                                },
+                                "f:containers": {
+                                    "k:{\"name\":\"kubeshark-worker\"}": {
+                                        ".": {},
+                                        "f:command": {},
+                                        "f:image": {},
+                                        "f:imagePullPolicy": {},
+                                        "f:name": {},
+                                        "f:resources": {
+                                            ".": {},
+                                            "f:limits": {
+                                                ".": {},
+                                                "f:cpu": {},
+                                                "f:memory": {}
+                                            },
+                                            "f:requests": {
+                                                ".": {},
+                                                "f:cpu": {},
+                                                "f:memory": {}
+                                            }
+                                        },
+                                        "f:securityContext": {
+                                            ".": {},
+                                            "f:capabilities": {
+                                                ".": {},
+                                                "f:add": {},
+                                                "f:drop": {}
+                                            }
+                                        },
+                                        "f:terminationMessagePath": {},
+                                        "f:terminationMessagePolicy": {},
+                                        "f:volumeMounts": {
+                                            ".": {},
+                                            "k:{\"mountPath\":\"/hostproc\"}": {
+                                                ".": {},
+                                                "f:mountPath": {},
+                                                "f:name": {},
+                                                "f:readOnly": {}
+                                            },
+                                            "k:{\"mountPath\":\"/sys\"}": {
+                                                ".": {},
+                                                "f:mountPath": {},
+                                                "f:name": {},
+                                                "f:readOnly": {}
+                                            }
+                                        }
+                                    }
+                                },
+                                "f:dnsPolicy": {},
+                                "f:enableServiceLinks": {},
+                                "f:hostNetwork": {},
+                                "f:restartPolicy": {},
+                                "f:schedulerName": {},
+                                "f:securityContext": {},
+                                "f:serviceAccount": {},
+                                "f:serviceAccountName": {},
+                                "f:terminationGracePeriodSeconds": {},
+                                "f:tolerations": {},
+                                "f:volumes": {
+                                    ".": {},
+                                    "k:{\"name\":\"proc\"}": {
+                                        ".": {},
+                                        "f:hostPath": {
+                                            ".": {},
+                                            "f:path": {},
+                                            "f:type": {}
+                                        },
+                                        "f:name": {}
+                                    },
+                                    "k:{\"name\":\"sys\"}": {
+                                        ".": {},
+                                        "f:hostPath": {
+                                            ".": {},
+                                            "f:path": {},
+                                            "f:type": {}
+                                        },
+                                        "f:name": {}
+                                    }
+                                }
+                            }
+                        },
+                        "manager": "kube-controller-manager",
+                        "operation": "Update",
+                        "time": "2023-06-04T08:59:02Z"
+                    },
+                    {
+                        "apiVersion": "v1",
+                        "fieldsType": "FieldsV1",
+                        "fieldsV1": {
+                            "f:status": {
+                                "f:conditions": {
+                                    "k:{\"type\":\"ContainersReady\"}": {
+                                        ".": {},
+                                        "f:lastProbeTime": {},
+                                        "f:lastTransitionTime": {},
+                                        "f:status": {},
+                                        "f:type": {}
+                                    },
+                                    "k:{\"type\":\"Initialized\"}": {
+                                        ".": {},
+                                        "f:lastProbeTime": {},
+                                        "f:lastTransitionTime": {},
+                                        "f:status": {},
+                                        "f:type": {}
+                                    },
+                                    "k:{\"type\":\"Ready\"}": {
+                                        ".": {},
+                                        "f:lastProbeTime": {},
+                                        "f:lastTransitionTime": {},
+                                        "f:status": {},
+                                        "f:type": {}
+                                    }
+                                },
+                                "f:containerStatuses": {},
+                                "f:hostIP": {},
+                                "f:phase": {},
+                                "f:podIP": {},
+                                "f:podIPs": {
+                                    ".": {},
+                                    "k:{\"ip\":\"192.168.4.120\"}": {
+                                        ".": {},
+                                        "f:ip": {}
+                                    }
+                                },
+                                "f:startTime": {}
+                            }
+                        },
+                        "manager": "kubelet",
+                        "operation": "Update",
+                        "subresource": "status",
+                        "time": "2023-06-04T08:59:03Z"
+                    }
+                ],
+                "name": "kubeshark-worker-daemon-set-5zc6q",
+                "namespace": "kubeshark",
+                "ownerReferences": [
+                    {
+                        "apiVersion": "apps/v1",
+                        "blockOwnerDeletion": true,
+                        "controller": true,
+                        "kind": "DaemonSet",
+                        "name": "kubeshark-worker-daemon-set",
+                        "uid": "8bb774f8-acaf-4ff3-b6ca-23293e66feb0"
+                    }
+                ],
+                "resourceVersion": "4039020",
+                "uid": "f340f875-0aea-46c2-b36a-74dac5ae64b2"
+            },
+            "spec": {
+                "affinity": {
+                    "nodeAffinity": {
+                        "requiredDuringSchedulingIgnoredDuringExecution": {
+                            "nodeSelectorTerms": [
+                                {
+                                    "matchFields": [
+                                        {
+                                            "key": "metadata.name",
+                                            "operator": "In",
+                                            "values": [
+                                                "ip-192-168-4-120.us-east-2.compute.internal"
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                "containers": [
+                    {
+                        "command": [
+                            "./worker",
+                            "-i",
+                            "any",
+                            "-port",
+                            "8897",
+                            "-packet-capture",
+                            "libpcap",
+                            "-servicemesh",
+                            "-tls",
+                            "-procfs",
+                            "/hostproc"
+                        ],
+                        "image": "docker.io/kubeshark/worker:latest",
+                        "imagePullPolicy": "Always",
+                        "name": "kubeshark-worker",
+                        "resources": {
+                            "limits": {
+                                "cpu": "750m",
+                                "memory": "2Gi"
+                            },
+                            "requests": {
+                                "cpu": "50m",
+                                "memory": "50Mi"
+                            }
+                        },
+                        "securityContext": {
+                            "capabilities": {
+                                "add": [
+                                    "NET_RAW",
+                                    "NET_ADMIN",
+                                    "SYS_ADMIN",
+                                    "SYS_PTRACE",
+                                    "DAC_OVERRIDE",
+                                    "SYS_RESOURCE"
+                                ],
+                                "drop": [
+                                    "ALL"
+                                ]
+                            }
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/hostproc",
+                                "name": "proc",
+                                "readOnly": true
+                            },
+                            {
+                                "mountPath": "/sys",
+                                "name": "sys",
+                                "readOnly": true
+                            },
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "kube-api-access-2q4sd",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirstWithHostNet",
+                "enableServiceLinks": true,
+                "hostNetwork": true,
+                "nodeName": "ip-192-168-4-120.us-east-2.compute.internal",
+                "preemptionPolicy": "PreemptLowerPriority",
+                "priority": 0,
+                "restartPolicy": "Always",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "serviceAccount": "kubeshark-service-account",
+                "serviceAccountName": "kubeshark-service-account",
+                "terminationGracePeriodSeconds": 0,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "operator": "Exists"
+                    },
+                    {
+                        "effect": "NoSchedule",
+                        "operator": "Exists"
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/not-ready",
+                        "operator": "Exists"
+                    },
+                    {
+                        "effect": "NoExecute",
+                        "key": "node.kubernetes.io/unreachable",
+                        "operator": "Exists"
+                    },
+                    {
+                        "effect": "NoSchedule",
+                        "key": "node.kubernetes.io/disk-pressure",
+                        "operator": "Exists"
+                    },
+                    {
+                        "effect": "NoSchedule",
+                        "key": "node.kubernetes.io/memory-pressure",
+                        "operator": "Exists"
+                    },
+                    {
+                        "effect": "NoSchedule",
+                        "key": "node.kubernetes.io/pid-pressure",
+                        "operator": "Exists"
+                    },
+                    {
+                        "effect": "NoSchedule",
+                        "key": "node.kubernetes.io/unschedulable",
+                        "operator": "Exists"
+                    },
+                    {
+                        "effect": "NoSchedule",
+                        "key": "node.kubernetes.io/network-unavailable",
+                        "operator": "Exists"
+                    }
+                ],
+                "volumes": [
+                    {
+                        "hostPath": {
+                            "path": "/proc",
+                            "type": ""
+                        },
+                        "name": "proc"
+                    },
+                    {
+                        "hostPath": {
+                            "path": "/sys",
+                            "type": ""
+                        },
+                        "name": "sys"
+                    },
+                    {
+                        "name": "kube-api-access-2q4sd",
+                        "projected": {
+                            "defaultMode": 420,
+                            "sources": [
+                                {
+                                    "serviceAccountToken": {
+                                        "expirationSeconds": 3607,
+                                        "path": "token"
+                                    }
+                                },
+                                {
+                                    "configMap": {
+                                        "items": [
+                                            {
+                                                "key": "ca.crt",
+                                                "path": "ca.crt"
+                                            }
+                                        ],
+                                        "name": "kube-root-ca.crt"
+                                    }
+                                },
+                                {
+                                    "downwardAPI": {
+                                        "items": [
+                                            {
+                                                "fieldRef": {
+                                                    "apiVersion": "v1",
+                                                    "fieldPath": "metadata.namespace"
+                                                },
+                                                "path": "namespace"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2023-06-04T08:59:02Z",
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastTransitionTime": "2023-06-04T08:59:03Z",
+                        "status": "True",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastTransitionTime": "2023-06-04T08:59:03Z",
+                        "status": "True",
+                        "type": "ContainersReady"
+                    },
+                    {
+                        "lastTransitionTime": "2023-06-04T08:59:02Z",
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "containerID": "containerd://98b27d3abe48d846ba6033b590257abe40f355d4c8512c8ca331571644877db1",
+                        "image": "docker.io/kubeshark/worker:latest",
+                        "imageID": "docker.io/kubeshark/worker@sha256:831c60e4ce4b7315abd52f4d6be282272bb8e0077dce4c795026c2a082690867",
+                        "lastState": {},
+                        "name": "kubeshark-worker",
+                        "ready": true,
+                        "restartCount": 0,
+                        "started": true,
+                        "state": {
+                            "running": {
+                                "startedAt": "2023-06-04T08:59:03Z"
+                            }
+                        }
+                    }
+                ],
+                "hostIP": "192.168.4.120",
+                "phase": "Running",
+                "podIP": "192.168.4.120",
+                "podIPs": [
+                    {
+                        "ip": "192.168.4.120"
+                    }
+                ],
+                "qosClass": "Burstable",
+                "startTime": "2023-06-04T08:59:02Z"
+            }
+        },
+        "port": "8897"
+    },
+    "elapsedTime": 4,
+    "failed": false,
+    "id": "192.168.4.120:8897/000000003722.pcap-2",
+    "index": 2,
+    "node": {
+        "ip": "192.168.4.120",
+        "name": "ip-192-168-4-120.us-east-2.compute.internal"
+    },
+    "outgoing": false,
+    "passed": false,
+    "protocol": {
+        "abbr": "HTTP",
+        "backgroundColor": "#326de6",
+        "fontSize": 12,
+        "foregroundColor": "#ffffff",
+        "layer4": "tcp",
+        "longName": "Hypertext Transfer Protocol -- HTTP/1.1",
+        "macro": "http",
+        "name": "http",
+        "ports": [
+            "80",
+            "443",
+            "8080"
+        ],
+        "priority": 0,
+        "referenceLink": "https://datatracker.ietf.org/doc/html/rfc2616",
+        "version": "1.1"
+    },
+    "request": {
+        "bodySize": 16,
+        "cookies": {},
+        "headers": {
+            "Accept-Encoding": "gzip",
+            "Content-Length": "16",
+            "Content-Type": "application/json",
+            "Host": "192.168.4.120:8897",
+            "User-Agent": "Go-http-client/1.1"
+        },
+        "headersSize": -1,
+        "httpVersion": "HTTP/1.1",
+        "method": "POST",
+        "path": "/license",
+        "pathSegments": [
+            "license"
+        ],
+        "postData": {
+            "mimeType": "application/json",
+            "params": [],
+            "text": "{\"license\":true}"
+        },
+        "queryString": {},
+        "targetUri": "/license",
+        "url": "/license"
+    },
+    "requestSize": 427,
+    "response": {
+        "bodySize": 0,
+        "content": {
+            "encoding": "base64",
+            "mimeType": "",
+            "size": 0
+        },
+        "cookies": {},
+        "headers": {
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Headers": "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, accept, origin, Cache-Control, X-Requested-With, x-session-token",
+            "Access-Control-Allow-Methods": "POST, OPTIONS, GET, PUT, DELETE",
+            "Access-Control-Allow-Origin": "*",
+            "Content-Length": "0",
+            "Date": "Sun, 04 Jun 2023 09:09:34 GMT"
+        },
+        "headersSize": -1,
+        "httpVersion": "HTTP/1.1",
+        "redirectURL": "",
+        "status": 200,
+        "statusText": "OK"
+    },
+    "responseSize": 764,
+    "src": {
+        "endpointSlice": {
+            "metadata": {
+                "annotations": {
+                    "endpoints.kubernetes.io/last-change-trigger-time": "2023-06-04T08:59:00Z"
+                },
+                "creationTimestamp": "2023-06-04T08:58:59Z",
+                "labels": {
+                    "kubeshark-created-by": "kubeshark",
+                    "kubeshark-managed-by": "kubeshark"
+                },
+                "managedFields": [
+                    {
+                        "apiVersion": "v1",
+                        "fieldsType": "FieldsV1",
+                        "fieldsV1": {
+                            "f:metadata": {
+                                "f:annotations": {
+                                    ".": {},
+                                    "f:endpoints.kubernetes.io/last-change-trigger-time": {}
+                                },
+                                "f:labels": {
+                                    ".": {},
+                                    "f:kubeshark-created-by": {},
+                                    "f:kubeshark-managed-by": {}
+                                }
+                            },
+                            "f:subsets": {}
+                        },
+                        "manager": "kube-controller-manager",
+                        "operation": "Update",
+                        "time": "2023-06-04T08:59:00Z"
+                    }
+                ],
+                "name": "kubeshark-hub",
+                "namespace": "kubeshark",
+                "resourceVersion": "4038957",
+                "uid": "59794ff9-42ba-46f7-9730-14a2d7c7eacd"
+            },
+            "subsets": [
+                {
+                    "addresses": [
+                        {
+                            "ip": "192.168.30.6",
+                            "nodeName": "ip-192-168-4-120.us-east-2.compute.internal",
+                            "targetRef": {
+                                "kind": "Pod",
+                                "name": "kubeshark-hub",
+                                "namespace": "kubeshark",
+                                "uid": "b8602229-7117-4d7b-a9c1-e267b961c599"
+                            }
+                        }
+                    ],
+                    "ports": [
+                        {
+                            "name": "kubeshark-hub",
+                            "port": 80,
+                            "protocol": "TCP"
+                        }
+                    ]
+                }
+            ]
+        },
+        "ip": "192.168.30.6",
+        "name": "kubeshark-hub",
+        "namespace": "kubeshark",
+        "pod": {
+            "metadata": {
+                "annotations": {
+                    "kubernetes.io/psp": "eks.privileged"
+                },
+                "creationTimestamp": "2023-06-04T08:58:58Z",
+                "labels": {
+                    "app": "kubeshark-hub",
+                    "kubeshark-created-by": "kubeshark",
+                    "kubeshark-managed-by": "kubeshark"
+                },
+                "managedFields": [
+                    {
+                        "apiVersion": "v1",
+                        "fieldsType": "FieldsV1",
+                        "fieldsV1": {
+                            "f:metadata": {
+                                "f:labels": {
+                                    ".": {},
+                                    "f:app": {},
+                                    "f:kubeshark-created-by": {},
+                                    "f:kubeshark-managed-by": {}
+                                }
+                            },
+                            "f:spec": {
+                                "f:containers": {
+                                    "k:{\"name\":\"kubeshark-hub\"}": {
+                                        ".": {},
+                                        "f:command": {},
+                                        "f:env": {
+                                            ".": {},
+                                            "k:{\"name\":\"AUTH_APPROVED_DOMAINS\"}": {
+                                                ".": {},
+                                                "f:name": {},
+                                                "f:value": {}
+                                            },
+                                            "k:{\"name\":\"LICENSE\"}": {
+                                                ".": {},
+                                                "f:name": {},
+                                                "f:value": {}
+                                            },
+                                            "k:{\"name\":\"NAMESPACES\"}": {
+                                                ".": {},
+                                                "f:name": {}
+                                            },
+                                            "k:{\"name\":\"POD_REGEX\"}": {
+                                                ".": {},
+                                                "f:name": {},
+                                                "f:value": {}
+                                            },
+                                            "k:{\"name\":\"SCRIPTING_ENV\"}": {
+                                                ".": {},
+                                                "f:name": {},
+                                                "f:value": {}
+                                            },
+                                            "k:{\"name\":\"SCRIPTING_SCRIPTS\"}": {
+                                                ".": {},
+                                                "f:name": {},
+                                                "f:value": {}
+                                            }
+                                        },
+                                        "f:image": {},
+                                        "f:imagePullPolicy": {},
+                                        "f:name": {},
+                                        "f:ports": {
+                                            ".": {},
+                                            "k:{\"containerPort\":80,\"protocol\":\"TCP\"}": {
+                                                ".": {},
+                                                "f:containerPort": {},
+                                                "f:hostPort": {},
+                                                "f:protocol": {}
+                                            }
+                                        },
+                                        "f:resources": {
+                                            ".": {},
+                                            "f:limits": {
+                                                ".": {},
+                                                "f:cpu": {},
+                                                "f:memory": {}
+                                            },
+                                            "f:requests": {
+                                                ".": {},
+                                                "f:cpu": {},
+                                                "f:memory": {}
+                                            }
+                                        },
+                                        "f:terminationMessagePath": {},
+                                        "f:terminationMessagePolicy": {}
+                                    }
+                                },
+                                "f:dnsPolicy": {},
+                                "f:enableServiceLinks": {},
+                                "f:restartPolicy": {},
+                                "f:schedulerName": {},
+                                "f:securityContext": {},
+                                "f:serviceAccount": {},
+                                "f:serviceAccountName": {},
+                                "f:terminationGracePeriodSeconds": {},
+                                "f:tolerations": {}
+                            }
+                        },
+                        "manager": "Go-http-client",
+                        "operation": "Update",
+                        "time": "2023-06-04T08:58:58Z"
+                    },
+                    {
+                        "apiVersion": "v1",
+                        "fieldsType": "FieldsV1",
+                        "fieldsV1": {
+                            "f:status": {
+                                "f:conditions": {
+                                    "k:{\"type\":\"ContainersReady\"}": {
+                                        ".": {},
+                                        "f:lastProbeTime": {},
+                                        "f:lastTransitionTime": {},
+                                        "f:status": {},
+                                        "f:type": {}
+                                    },
+                                    "k:{\"type\":\"Initialized\"}": {
+                                        ".": {},
+                                        "f:lastProbeTime": {},
+                                        "f:lastTransitionTime": {},
+                                        "f:status": {},
+                                        "f:type": {}
+                                    },
+                                    "k:{\"type\":\"Ready\"}": {
+                                        ".": {},
+                                        "f:lastProbeTime": {},
+                                        "f:lastTransitionTime": {},
+                                        "f:status": {},
+                                        "f:type": {}
+                                    }
+                                },
+                                "f:containerStatuses": {},
+                                "f:hostIP": {},
+                                "f:phase": {},
+                                "f:podIP": {},
+                                "f:podIPs": {
+                                    ".": {},
+                                    "k:{\"ip\":\"192.168.30.6\"}": {
+                                        ".": {},
+                                        "f:ip": {}
+                                    }
+                                },
+                                "f:startTime": {}
+                            }
+                        },
+                        "manager": "kubelet",
+                        "operation": "Update",
+                        "subresource": "status",
+                        "time": "2023-06-04T08:59:00Z"
+                    }
+                ],
+                "name": "kubeshark-hub",
+                "namespace": "kubeshark",
+                "resourceVersion": "4038955",
+                "uid": "b8602229-7117-4d7b-a9c1-e267b961c599"
+            },
+            "spec": {
+                "containers": [
+                    {
+                        "command": [
+                            "./hub"
+                        ],
+                        "env": [
+                            {
+                                "name": "POD_REGEX",
+                                "value": ".*"
+                            },
+                            {
+                                "name": "NAMESPACES"
+                            },
+                            {
+                                "name": "LICENSE",
+                                "value": "FT7YKAYBAEDUY2LDMVXHGZIB76DAAAIDAECEIYLUMEAQUAABAFJAD74IAAAQCUYB76EAAAAABL7YOBIBAL7YUAAAAD7APZH7QYA74B3XPMRGK3LBNFWCEORCEIWCEZLENF2GS33OEI5CEUCSJ4RCYITFNZSCEORRGY4DONBWGQ3TIMRQGE3SYITON5SGK4ZCHIYTAOBMEJQXA4C7MNWGSZLOORPWSZBCHIRDCMRYMF2GG33NMY4TO3RXOZUTQM3DM5VDE2DNOIYWIIRMEJ2XGZLSL5YG633ML5UWIIR2EJ2XGLLFMFZXILJSL4ZGYOKVIJCWCNDHEIWCE4TFMZZGK43IL52G623FNYRDUITFPFFGUZCINNUU62KKJNLDCULJJRBUU3DCNVGWST3JJJBE22SVGJJDATSOJFUXO2KZK54G4SLKN5UVK3COIJGFKOKCKJLEC2LGKEXGCYZUJVTTE2LCINUUWNSJJ54W24SPNVDVQY2DJRRHQTBSOZWDIMSVHBJUQQRRME3DM3SENZ2XGOCHFVQWK23GI5KFIS2ZJFTUOYSQONYXKZZXOJHXK6CQNJCGISDKFV5HORKONB4UGX2ILJGVULLRIRXHGZ2WI5VHEVTEIFHUEQ3MIJJTOUKJOBREKVBSKF2GWMDZHBQTG5BTL5WUU3SBG44ECWDPKNIWGVTBK54XG3DJIVSU43S7IVYV6MKSJIYGUNTFJVFVC6KUM5DFI5KMIMYFAVLUJBFFO3LDGR4HUUCQKZRWS6DOLBVGMY3QNNKVCVRRKN4GSY2NFVHW63S7G43UYTKYG5NDOSDJJU4XCT2JMNGUYUT2PJGWQ6KFM5UGUVSOKNCUE5JNGRKG64KGNU2UQV3XKUYUI22VMZJDCOKVGZRGO4KQONZG44TCKFVWKRDENFUFI5LFJJCWM2ZXOBUGOWK7KJBU63TKJRIHCSDGOQ2TA6TGNJTUM4CTJFKVUSK7GJRF6QKIOF2DEVRTGJ4VMVDBJFRUSUJOGJDDQSSYMNLUGV2DGQ2HQ2KLKAXDSTZXKIWTQNJUJJFXMTJQJVMES6LMGN3UWNZTKFFEK5TBOVFU62KXNNEUYWRTNR2DITJTJBYXO6COJZNHO3DQK5YWYVCBMRDFC5BROBPVK6DCGFAV6T3KIRSEMU3JIVKE66CPGZTGCQSSMMYVS5S7KRCXI4TIOR2TIQ3JLFEDSS22GR5FSTTVKVZVEY3KOBXXKVRSPI3UUNRSKFSTM5CLGJ4UC3DMJBBDQ2JWOBDEUUTINFMXC6CMORBHSOCJLJKW6VCBFVIWWTTQMN2DCLJVMJJUIUSXGZUXS6JZLFYWUV32JBLEM5RXNBLHUTCIL5DXAR3SM5XVMTCQMRKW6WDBOJNC25KGHBJWONK2JJZTGMDNIRDXMWCKJ5FTS2CFOB4UCVDOJQ2XGT3EGVRVOTS7G5BUSQ32KBAXC43UFVHES2CJJNIEO6T2NI3TISKFIVWEEMCPKVXGITTBGZ5C22CNNJBXSQ2UNJLE6M2XMZFVETTHKFYXS5COGNFFQ3STMJVFE6RTNVZEMWDCLBAWY5CIIZ2GSZKCG53DAWJXPA3GUULZJE2WUTCXOM3TA33DOFNGS6SXGM2USX2HLJGXMYTHJRXDG4TPOBEVKVKYG5RWGN3PKN2HI5SCM5BG2T2QG5ZUE2JXPA4VAQLTJJVVS3LCNVGWENZTKNTG4STEMZZTIZSKKRGWS3DBMVYWQRJZOYWWOY3YKFNF6USQFVGWCWCUKNFGS3K2GJLTC53JOV3FA3S2MJ4W6SDUIFHEIVBUOVKHAVTWFU2WEVBWONMGGM32PFCWSNTBLFSG2NCLMV2FMNCBLBGXOQTTOEYHS6K2KZIXQ4DYJRNEC3TUGBGTOWTKJFSE222KJFCVSZ3BGBKWWNZZON4HKWTJLFKGGSTTMNITITTLNREHQ3LFLJ3VC2S7INKXGVBVNBIGMZDBMNFWGSDMGVGTS3DHMQ3GQTKDGZVVC5LZMI4VSTCBJ5STKLLXOBTDO3KDNMZE62LUMFCUSTJXIVTEEVBUJJSE62DNM5ATI4K2JJBGIOJYOBUUKOKULBRHASTSNRATQWLXL4WW2Z3KNZ4V6SDBGNJFI2SZGVFXGSLYIVFWUMLNIU2VESDFNV2GW5CPJFHWURLMHBUWCVDJJQYTE6CYIVEWU6CYJJMDKOCPGJHTGOKKLIZGUX2HKVZEINJQGNJHQ5DBNV5HEWBQLJXFOYSZKZYEGTSPK44U2LLVOJLVGSKUNVGVCX2NGZYVIY2FFVPTA3JQN5KUE2ZUNJAUE4TQN5UFUSKQNRSWSRLVOBEFQZ2ZPFSFGVDFJA2G2232J4YTERJVJBSXI2TVLF4UU3SYFVRV6WKLKA3VSNDMIZ5GY52IMQYV6RTLJMZE6Y3KNMYEMZ2QHBYXOUT2KJ2FKQTSMFIGY3LFMQYVS42VKBJXI4SOHA2VQ6LOIVBE66JQNJIV6YZNN43EUWLYKFJXOODBPBGHO5TWNJWUYYKLIJLGWQLFGVIWKLK2MIWXAV2JNA4WURBWMNHWWS3RJBYEUSRSORXG4X2BHE3VA4KLIZWXIX3VIY3DIMTMOJKGUWRRLFMDSWSKKI2VU4ZXGZ3UI52RKVCXMZ3UIYYHUZSVHBJVQ6LYG5KEIY2UPFTUYLLYOBBGSU3CIJWEWZBNGI4WG4DGPJTU2MKRL5LDEOCGKBXW2Y3ZJY4WIOLIPJIUCWCQGVIGIRTIKZFS2LJVINYHM42MMFAVGZTVJV5GY6TXMRYEU3TPKY4XU6LKHA4EC6KJGI3TE2CFMQ2DASKHGZ4UCULKORXVKLLMN53G6S2HPBKGY3CHPJNFIMKZKNGHQSDFNBJEEND2KIYVCQ2QFVETE4LMHFLXARLTLBWV643HNNTVM4THGM4XKYKOHFSUY5JTKJTFETSPNVBS2SCPKZEXSZJSIJKTSTLRORGVUTLXGN3HERTZNNBGGQ3LJJDVIM2SK5LEURRZME4EGTLVL42UUZSNPJHFAQL2IRJTO2TLIZRHQSCHFVWGINKSNRFWMWCUORTWQ2JXGRYHGYLRKRTUCZ3TGR5FQUSQNZSV6ZRTJM4XCZ3YPFKEGSTPKZUXI43KIZ5GEX2IKYXHIY2UJJYWKYSYKA4U623NKZHS2WCWKJPUM5ZCPUATCAXKWUJ7BLCRUDWCNG7UJOPM7D6RMVCV5AJ5LCGHBSKBZP4SCFIDIDU6IMP5YCMM7TPOFTQSEGQJHEWACMICKMSWJQZBXH7P3CP56C4TRD2H4Y34RIWXWNCBMBSLYAPJW72JP2KMOASPQYCH6KHQKWXGPWESWX7RKAA="
+                            },
+                            {
+                                "name": "SCRIPTING_ENV",
+                                "value": "{\"AWS_ACCESS_KEY_ID\":\"AKIAVAM4AO2BTX63M3U5\",\"AWS_REGION\":\"us-east-2\",\"AWS_SECRET_ACCESS_KEY\":\"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\",\"INFLUXDB_BUCKET\":\"Intel\",\"INFLUXDB_ORG\":\"Kubeshark\",\"INFLUXDB_TOKEN\":\"w2YdcihKE7eo3Fzx4fUdmL5GdcwCrmgI_ZqiEWpj6ogTyWLlDtnALayIoHezh2pG2QSO1k1oGkA7MmIiIpIplQ==\",\"INFLUXDB_URL\":\"http://10.0.0.58:8086/\",\"OPENAI_API_KEY\":\"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\",\"S3_BUCKET\":\"kubeshark-helper-test\",\"SLACK_AUTH_TOKEN\":\"xoxb-5206540130417-5275764443315-4ss9WoVS04b3XSQXWXPnweii\",\"SLACK_CHANNEL_ID\":\"C057X8CCMGE\",\"SLACK_WEBHOOK\":\"https://hooks.slack.com/services/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\"}"
+                            },
+                            {
+                                "name": "SCRIPTING_SCRIPTS",
+                                "value": "[{\"path\":\"/Users/alongir/work/GitHub/ks-scripts/influx_db_kpis.js\",\"title\":\" HTTP API call KPIs to Influx DB\",\"code\":\"// HTTP API call KPIs to Influx DB\\n\\n/*\\n * Send HTTP API call KPIs to Influx DB \\u0026 Grafana\\n * ==========================================================\\n * \\n * Description:\\n * -----------\\n * Send identity-aware API call KPIs to Influx DB and visualize in Grafana.\\n * KPIs: Latency, bandwidth, status code\\n * Identity data: namespace, source and destination service labels and IPs\\n * Available charts: \\n * - Latency, bandwidth and status codes over time\\n * - Aggregated latency and bandwidth per: 1m, 1h, 24h\\n * \\n * Environment Variables:\\n * ----------------------\\n * INFLUXDB_URL:    \\u003cinfluxdb-url\\u003e\\n * INFLUXDB_TOKEN:  \\u003cinfluxdb-token\\u003e\\n * INFLUXDB_ORG:    \\u003cinfluxdb-org\\u003e\\n * \\n * How to use:\\n * -----------\\n * - Include this file in the scripts folder\\n * - Make sure the environment variables are present in the config file\\n * - Build a Grafana dashboard based on the JSON model\\n * \\n * Assets:\\n * -------\\n * ./influx_db_kpis_grafana.json - Grafana's dashboard JSON model\\n*/\\n\\n// Use environment variables (recommended) or change these variables locally\\nvar infUrl      = env.INFLUXDB_URL;\\nvar infToken    = env.INFLUXDB_TOKEN;\\nvar infOrg      = env.INFLUXDB_ORG;\\nvar infBucket   = env.INFLUXDB_BUCKET ?  env.INFLUXDB_BUCKET : \\\"Kubeshark\\\";\\nvar infMeasurement = env.INFLUXDB_MEASUREMENT ? env.INFLUXDB_MEASUREMENT: \\\"callKPIs\\\";\\nvar ACTIVE     = false;  // change to false to disable this script\\n\\nif (!infUrl || !infToken || !infOrg ){\\n    console.error(\\\"One or more of the mandatory InfluxDB variables is missing. No point in continuing. Exiting script.\\\");\\n    ACTIVE = false;\\n}\\n\\nfunction onItemCaptured(data) {\\n    return hookSendMetrics(data);\\n}\\n\\nfunction hookSendMetrics ( data ) {\\n    if (!ACTIVE) return;\\n    try{\\n        if (data.protocol.name !== \\\"http\\\") return;\\n        \\n        var metrics = { \\n            latency:    data.elapsedTime, \\n            status:     data.response.status,\\n            bandwidth:  data.requestSize + data.responseSize\\n        };\\n        var tags = { \\n            dst_name:   data.dst.name ? data.dst.name : \\\"unresolved\\\", \\n            dst_ip:     data.dst.ip, \\n            dst_port:   data.dst.port,\\n            dst_ns:     data.dst.namespace ? data.dst.namespace : \\\"unresolved\\\",\\n            src_name:   data.src.name ? data.src.name : \\\"unresolved\\\", \\n            src_ip:     data.src.ip,\\n            src_ns:     data.src.namespace ? data.src.namespace : \\\"unresolved\\\",\\n            path:       data.request.path,\\n            node:       data.node.name\\n        };\\n\\n        // send KPI metrics on every API call\\n        vendor.influxdb(\\n            infUrl,\\n            infToken,\\n            infOrg,     \\n            infBucket,  \\n            infMeasurement , \\n            metrics,\\n            tags\\n                    \\n        ); \\n//        console.log(\\\"Wrote:\\\", JSON.stringify({\\\"metrics\\\":  metrics, \\\"tags\\\": tags, \\\"data\\\": data }));\\n    }\\n    catch (err){\\n        console.error(\\\"hookSendMetrics\\\",err);\\n    }\\n}\"},{\"path\":\"/Users/alongir/work/GitHub/ks-scripts/throughput.js\",\"title\":\" Detect throughput anomalies \",\"code\":\"// Detect throughput anomalies \\n\\nvar APIs = [\\n    {\\n        pathRegex: \\\"front.*\\\",\\n        throughputRange: {\\n            yellow: 40,\\n            red: 55\\n        },\\n        service: null,\\n        namespace: null,\\n        node: null\\n    },\\n    {\\n        pathRegex: \\\"catalo.*\\\",\\n        throughputRange: {\\n            yellow: 40,\\n            red: 55\\n        },\\n        service: null,\\n        namespace: null,\\n        node: null\\n    },\\n];\\n\\n/*\\n * Alert Slack when throughput anomaly is found\\n * ==========================================================\\n * \\n * Description:\\n * -----------\\n *\\n * \\n * Environment Variables:\\n * ----------------------\\n * \\n * How to use:\\n * -----------\\n * - Include this file in the scripts folder\\n * - Make sure the environment variables are present in the config file\\n * \\n * Assets:\\n * -------\\n*/\\n\\n// Use environment variables (recommended) or change these variables locally\\n\\n// Monitor certain APIs\\n// Accumulate throughput every one minute\\n// Check if over the limit. If yes report\\n\\nfunction onItemCaptured(data) {\\n    return hookAccumulateData(data);\\n}\\nvar monitoredAPIs= APIs;\\n\\nfunction hookAccumulateData(data){\\n    console.log(JSON.stringify(data));\\n    // if path in the list\\n    //increase tp counter\\n}\"}]"
+                            },
+                            {
+                                "name": "AUTH_APPROVED_DOMAINS",
+                                "value": "gmail.com"
+                            }
+                        ],
+                        "image": "docker.io/kubeshark/hub:latest",
+                        "imagePullPolicy": "Always",
+                        "name": "kubeshark-hub",
+                        "ports": [
+                            {
+                                "containerPort": 80,
+                                "hostPort": 8898,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "resources": {
+                            "limits": {
+                                "cpu": "750m",
+                                "memory": "1Gi"
+                            },
+                            "requests": {
+                                "cpu": "50m",
+                                "memory": "50Mi"
+                            }
+                        },
+                        "terminationMessagePath": "/dev/termination-log",
+                        "terminationMessagePolicy": "File",
+                        "volumeMounts": [
+                            {
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount",
+                                "name": "kube-api-access-2sdgk",
+                                "readOnly": true
+                            }
+                        ]
+                    }
+                ],
+                "dnsPolicy": "ClusterFirstWithHostNet",
+                "enableServiceLinks": true,
+                "nodeName": "ip-192-168-4-120.us-east-2.compute.internal",
+                "preemptionPolicy": "PreemptLowerPriority",
+                "priority": 0,
+                "restartPolicy": "Always",
+                "schedulerName": "default-scheduler",
+                "securityContext": {},
+                "serviceAccount": "kubeshark-service-account",
+                "serviceAccountName": "kubeshark-service-account",
+                "terminationGracePeriodSeconds": 0,
+                "tolerations": [
+                    {
+                        "effect": "NoExecute",
+                        "operator": "Exists"
+                    },
+                    {
+                        "effect": "NoSchedule",
+                        "operator": "Exists"
+                    }
+                ],
+                "volumes": [
+                    {
+                        "name": "kube-api-access-2sdgk",
+                        "projected": {
+                            "defaultMode": 420,
+                            "sources": [
+                                {
+                                    "serviceAccountToken": {
+                                        "expirationSeconds": 3607,
+                                        "path": "token"
+                                    }
+                                },
+                                {
+                                    "configMap": {
+                                        "items": [
+                                            {
+                                                "key": "ca.crt",
+                                                "path": "ca.crt"
+                                            }
+                                        ],
+                                        "name": "kube-root-ca.crt"
+                                    }
+                                },
+                                {
+                                    "downwardAPI": {
+                                        "items": [
+                                            {
+                                                "fieldRef": {
+                                                    "apiVersion": "v1",
+                                                    "fieldPath": "metadata.namespace"
+                                                },
+                                                "path": "namespace"
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            "status": {
+                "conditions": [
+                    {
+                        "lastTransitionTime": "2023-06-04T08:58:58Z",
+                        "status": "True",
+                        "type": "Initialized"
+                    },
+                    {
+                        "lastTransitionTime": "2023-06-04T08:59:00Z",
+                        "status": "True",
+                        "type": "Ready"
+                    },
+                    {
+                        "lastTransitionTime": "2023-06-04T08:59:00Z",
+                        "status": "True",
+                        "type": "ContainersReady"
+                    },
+                    {
+                        "lastTransitionTime": "2023-06-04T08:58:58Z",
+                        "status": "True",
+                        "type": "PodScheduled"
+                    }
+                ],
+                "containerStatuses": [
+                    {
+                        "containerID": "containerd://3a8501c8b2b28acaf5524d8a6a2b9fece4a7f0bc08f4309fbc4489b4179613ef",
+                        "image": "docker.io/kubeshark/hub:latest",
+                        "imageID": "docker.io/kubeshark/hub@sha256:7b380c4dc1c8df9026413c838baeb7acab545cd005b6245069d699cb6effc17f",
+                        "lastState": {},
+                        "name": "kubeshark-hub",
+                        "ready": true,
+                        "restartCount": 0,
+                        "started": true,
+                        "state": {
+                            "running": {
+                                "startedAt": "2023-06-04T08:58:59Z"
+                            }
+                        }
+                    }
+                ],
+                "hostIP": "192.168.4.120",
+                "phase": "Running",
+                "podIP": "192.168.30.6",
+                "podIPs": [
+                    {
+                        "ip": "192.168.30.6"
+                    }
+                ],
+                "qosClass": "Burstable",
+                "startTime": "2023-06-04T08:58:58Z"
+            }
+        },
+        "port": "40612"
+    },
+    "startTime": "2023-06-04T09:09:34.306330792Z",
+    "stream": "000000003722.pcap",
+    "timestamp": 1685869774306,
+    "tls": false,
+    "worker": "192.168.4.120:8897"
+}
