@@ -12,7 +12,7 @@ This script is useful when dealing with suspicious and random network behavior t
 #### Script: [forensics.js](forensics.js)
 
 ##### Description
-The `dfir.js` script utilizes a list of KFL (Kubeshark Filtering Language) queries to continuously capture network traffic and periodically upload the recorded files to AWS S3. Kubeshark can be run on your laptop, as astandalone application, to conveniently view the uploaded files.
+The `forensics.js` script utilizes a list of KFL (Kubeshark Filtering Language) queries to continuously capture network traffic and periodically upload the recorded files to AWS S3. Kubeshark can be run on your laptop, as a standalone application, to conveniently view the uploaded files.
 
 Here are a few examples of KFL queries:
 
@@ -42,40 +42,46 @@ scripting:
   watchScripts: true
 ```
 
-3. Run the following command: `kubeshark tap`
+3. Run Kubeshark. 
 
    It is considered a best practice to use a pod regex filter and/or a namespace flag with the `kubeshark tap` command to limit the amount of captured traffic.
 
-4. Verify that the script was uploaded to the hub by checking the scripting section.
+#### Troubleshooting and Playing Arround
+
+1. Verify that the script was uploaded to the hub by checking the scripting section.
 
 <img width="374" alt="image" src="https://github.com/kubeshark/scripts/assets/1990761/eed2d6fb-afc2-4aab-99a8-0450f5d3da2a">
 
-5. Set the `ACTIVE` variable to `true` and modify the KFL entries to match your desired queries.
+2. Set the `ACTIVE` variable to `true` and modify the KFL entries to match your desired queries.
 
 <img width="1132" alt="image" src="https://github.com/kubeshark/scripts/assets/1990761/d9bea4bc-4de6-44d3-9d6a-808aa897bb8d">
 
-6. Save the script. Every time you save the script, it will restart. If you cannot find the save button, try increasing the resolution, as it might be hidden.
+3. Save the script. Every time you save the script, it will restart. If you cannot find the save button, try increasing the resolution, as it might be hidden.
 
 <img width="519" alt="image" src="https://github.com/kubeshark/scripts/assets/1990761/3c8c91cd-23b5-40f1-ad9f-f999fe6a3d1f">
 
-7. You can adjust the upload time period by modifying the crontab pattern at the end of the script. By default, it is set to one hour.
+   You can also change the script, directly where you saved it. Kubeshark is monitoring that scripting folder for changes.
+   
+4. You can adjust the upload time period by modifying the crontab pattern at the end of the script. By default, it is set to one hour.
 
 <img width="563" alt="image" src="https://github.com/kubeshark/scripts/assets/1990761/bbca79e0-4c19-48cc-8980-4106e44ab536">
 
-8. To view the running script's logs, use the following command: `kubeshark console`.
+5. You can view the running script's logs by using: `kubeshark console`.
+   To do this from a different computer, use: `--proxy-host <ip-of-where-kubeshark-is-runing>`.
 
-### Offline Investigation
+#### Offline Investigation
 
-At this time, Kubeshark enables viewin gonly individual files by running:
+At this time, Kubeshark enables viewing only individual files by running:
 ```Shell
 kubeshark tap --pcap <file-nametar.gz>
 ```
-I like to download the entire bucket using this command: `aws s3 sync s3://<bucket-name .`.
+The above runs KUbeshark as a standalone application that feeds only from the file.
+**TIP:** I like to download the entire bucket using this command: `aws s3 sync s3://<bucket-name .`, with the same credentials that were used as environment variables.
 
-THIS IS WORK IN PROGRESS, PLEASE USE WITH CAUTION 
+Please keep in mind that this is WIP and as with any programming language, so many things can go wrong. Please use with caution!
 
-### Areas of Improvements
+#### Areas of Improvements
 - Files are stored individually for every node without consolidation
-- Files need to be downloaded individually You need to download the files in order to view them
-- There are no limits or way to make the strage act as a FIFO queue.
-We are effortelesy working on correcting the above 
+- Files can only be viewed individually
+- There is no storage limit
+We are effortlessly working on correcting the above 
