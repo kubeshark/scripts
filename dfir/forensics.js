@@ -15,8 +15,8 @@ var KFL_ARR =[
  * 
  * Description:
  * -----------
- * This script auto-generate PCAPs based on KFL queries and upload these PCAPs to AWS S3 once an hour.
- * The script expects AWS S3 authentication properties. Read more here: https://docs.kubeshark.co/en/integrations_aws_s3
+ * This script auto-generates PCAPs based on KFL queries and uploads these PCAPs to AWS S3 once every hour.
+ * It expects AWS S3 authentication properties. Read more here: https://docs.kubeshark.co/en/integrations_aws_s3.
  * 
  * Environment Variables:
  * ----------------------
@@ -28,8 +28,8 @@ var KFL_ARR =[
  * How to use:
  * -----------
  * - Include this file in the scripts folder or enter in the UI section
- * - Make sure the environment variables are present in the config file
- * - Add KFL queries to the KFL_ARR
+ * - Make sure the environment variables are present in the config file (or put them in the script file)
+ * - Add KFL queries to the KFL_ARR and change ACTIVE to true
  * 
  * Assets:
  * -------
