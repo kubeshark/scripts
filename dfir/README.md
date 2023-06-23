@@ -72,6 +72,8 @@ kubeshark tap --pcap <file-nametar.gz>
 ```
 I like to download the entire bucket using this command: `aws s3 sync s3://<bucket-name .`.
 
+THIS IS WORK IN PROGRESS, PLEASE USE WITH CAUTION 
+
 ### Areas of Improvements
 - Files are stored individually for every node without consolidation
 - Files need to be downloaded individually You need to download the files in order to view them
