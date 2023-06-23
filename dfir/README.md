@@ -66,13 +66,11 @@ scripting:
 
 ### Offline Investigation
 
-To perform offline investigation, follow these steps:
-
-1. Clone the latest development branch of Kubeshark by running the command: `git clone https://github.com/kubeshark/kubeshark.git`.
-
-2. Run the `make` command.
-
-Please note that the capability you are using is part of the development version
+At this time, Kubeshark enables viewin gonly individual files by running:
+```Shell
+kubeshark tap --pcap <file-nametar.gz>
+```
+I like to download the entire bucket using this command: `aws s3 sync s3://<bucket-name .`.
 
 ### Areas of Improvements
 - Files are stored individually for every node without consolidation
