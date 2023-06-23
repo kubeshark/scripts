@@ -1,58 +1,81 @@
 # DFIR Script Folder
 
-This is the DFIR script folder. Here you can find scripts that can be used to assist in DFIR professionals
+Welcome to the DFIR (Digital Forensics and Incident Response) script folder! This collection of scripts is designed to assist DFIR professionals, including DevOps, platform engineers, and developers, and of course incident responders in their investigations.
 
 ## Available Scripts
 
-### Longer traffic retention, ready for offline investigation
+### Longer Traffic Retention for Offline Investigation
 
-#### Why
+#### Purpose
+This script is useful when dealing with suspicious and random network behavior that cannot be predicted in advance. In such cases, it is recommended to record traffic for a longer period of time and analyze the recorded data offline.
 
-When investigating a suspecious and random network behgavior and can't predict when it will occure. In this case, it makes sense to record traffic for a longer period of time and investigate the recorded traffic offline.
+#### Script: [forensics.js](forensics.js)
 
-- **Script**: [dfir.js](forensics.js)
+##### Description
+The `dfir.js` script utilizes a list of KFL (Kubeshark Filtering Language) queries to continuously capture network traffic and periodically upload the recorded files to AWS S3. Kubeshark can be run on your laptop, as astandalone application, to conveniently view the uploaded files.
 
-#### What (Description)
+Here are a few examples of KFL queries:
 
-The DFIR script uses a list of KFL queries to continuously records traffic and periodically upload files to AWS S3.
-Kubeshark, can be used as a standalone application running on your laptop to view the uplaoded files at your descretion.
+- `dns` - record cluster-wide DNS traffic
+- `dst.name==r"cata.*" or src.name==r"cata.*"` - record all traffic going in and out of pods with names matching the provided regular expression
+- `node==r"my-node.*" and src.namespace==="my-namespace"` - record traffic originating from a specific namespace and belonging to a certain node
 
-Here're a few KFL examples:
+As traffic is recorded per node, it may make sense to limit the KFL queries to a certain node.
 
-- `dns` - record cluster-wide DNS traffic 
-- `dst.name==r"cata.*" or src.name==r"cata.*"` - record all traffic going in and out of all pods with resolved names that match the regular expression. 
-- `node==r"my-node.*" and src.namespace==="my-namespace"` - record traffic that belongs to a certain node only and that originate from a certain namespace.
+For more information on KFL, refer to the [Kubeshark Filtering documentation](https://docs.kubeshark.co/en/filtering).
 
-Read more about KFL here: https://docs.kubeshark.co/en/filtering
+##### Instructions
 
-#### How (Instructions)
-1. Make sure you're signed up to the Pro edition. If you haven't, please run: `kubeshark pro`. Pro edition is free.
-2. In the configuration file ensure you have the following four envrionemnt variables (at least):
+1. Make sure you are signed up for the Pro edition of Kubeshark. If you haven't done so, please run the following command: `kubeshark pro`. The Pro edition is free.
 
-```shell
+2. In the configuration file, ensure that you have the following environment variables (at least):
+
+```yaml
 license: FT7YKAYBAEDUY2LD.. your license here .. 65JQRQMNSYWAA=
 scripting:
-  env: 
+  env:
     AWS_ACCESS_KEY_ID: AKI..M3U5
     AWS_REGION: us-east-2-this-is-an-example
     AWS_SECRET_ACCESS_KEY: R4mJjgquy8..ONC6L
-    S3_BUCKET: give-it-a-name 
+    S3_BUCKET: give-it-a-name
   source: "/path/to/a/local/scripts/folder"
   watchScripts: true
-  ```
-3. Run `kubeshark tap; kubeshark clean`
-4. It is best practice to run `kubeshark tap` with a pod regex filter and/or a namespace flag to limit the amount of traffic that is captured.
-5. Make sure the script was uploaded by checking the `scripting section`
+```
+
+3. Run the following command: `kubeshark tap`
+
+   It is considered a best practice to use a pod regex filter and/or a namespace flag with the `kubeshark tap` command to limit the amount of captured traffic.
+
+4. Verify that the script was uploaded to the hub by checking the scripting section.
+
 <img width="374" alt="image" src="https://github.com/kubeshark/scripts/assets/1990761/eed2d6fb-afc2-4aab-99a8-0450f5d3da2a">
 
-6. Change the `ACTIVE` variable to `true` and change the KFL entries to suite the KFL queries you want.
+5. Set the `ACTIVE` variable to `true` and modify the KFL entries to match your desired queries.
+
 <img width="1132" alt="image" src="https://github.com/kubeshark/scripts/assets/1990761/d9bea4bc-4de6-44d3-9d6a-808aa897bb8d">
 
-7. Save the script. Everytime you save the script, it will restart. If you can't find the save button, incerase the resolution. It may be hiding.
+6. Save the script. Every time you save the script, it will restart. If you cannot find the save button, try increasing the resolution, as it might be hidden.
+
 <img width="519" alt="image" src="https://github.com/kubeshark/scripts/assets/1990761/3c8c91cd-23b5-40f1-ad9f-f999fe6a3d1f">
 
-8. You can play with the upload time period, by changing the crontab pattern at the end of the script. It is set to one hour by default.
+7. You can adjust the upload time period by modifying the crontab pattern at the end of the script. By default, it is set to one hour.
+
 <img width="563" alt="image" src="https://github.com/kubeshark/scripts/assets/1990761/bbca79e0-4c19-48cc-8980-4106e44ab536">
 
-Thanks for participating in our private beta program. You are basically using the developement version of this capability. Please do not use in production or any place it can do harm.
+8. To view the running script's logs, use the following command: `kubeshark console`.
 
+### Offline Investigation
+
+To perform offline investigation, follow these steps:
+
+1. Clone the latest development branch of Kubeshark by running the command: `git clone https://github.com/kubeshark/kubeshark.git`.
+
+2. Run the `make` command.
+
+Please note that the capability you are using is part of the development version
+
+### Areas of Improvements
+- Files are stored individually for every node without consolidation
+- Files need to be downloaded individually You need to download the files in order to view them
+- There are no limits or way to make the strage act as a FIFO queue.
+We are effortelesy working on correcting the above 
