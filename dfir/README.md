@@ -2,16 +2,14 @@
 
 Welcome to the DFIR (Digital Forensics and Incident Response) script folder! This collection of scripts is designed to assist DFIR professionals, including DevOps, platform engineers, and developers, and of course incident responders in their investigations.
 
-## Available Scripts
+# Longer Traffic Retention for Offline Investigation
 
-### Longer Traffic Retention for Offline Investigation
-
-#### Purpose
+## Purpose
 This script is useful when dealing with suspicious and random network behavior that cannot be predicted in advance. In such cases, it is recommended to record traffic for a longer period of time and analyze the recorded data offline.
 
-#### Script: [forensics.js](forensics.js)
+## Script: [forensics.js](forensics.js)
 
-##### Description
+## Description
 The `forensics.js` script utilizes a list of KFL (Kubeshark Filtering Language) queries to continuously capture network traffic and periodically upload the recorded files to AWS S3. Kubeshark can be run on your laptop, as a standalone application, to conveniently view the uploaded files.
 
 Here are a few examples of KFL queries:
@@ -24,7 +22,7 @@ As traffic is recorded per node, it may make sense to limit the KFL queries to a
 
 For more information on KFL, refer to the [Kubeshark Filtering documentation](https://docs.kubeshark.co/en/filtering).
 
-##### Instructions
+## Instructions
 
 1. Make sure you are signed up for the Pro edition of Kubeshark. If you haven't done so, please run the following command: `kubeshark pro`. The Pro edition is free.
 
@@ -46,7 +44,7 @@ scripting:
 
    It is considered a best practice to use a pod regex filter and/or a namespace flag with the `kubeshark tap` command to limit the amount of captured traffic.
 
-#### Troubleshooting and Playing Arround
+## Troubleshooting and Playing Arround
 
 1. Verify that the script was uploaded to the hub by checking the scripting section.
 
@@ -69,7 +67,7 @@ scripting:
 5. You can view the running script's logs by using: `kubeshark console`.
    To do this from a different computer, use: `--proxy-host <ip-of-where-kubeshark-is-runing>`.
 
-#### Offline Investigation
+## Offline Investigation
 
 At this time, Kubeshark enables viewing only individual files by running:
 ```Shell
@@ -80,7 +78,7 @@ The above runs KUbeshark as a standalone application that feeds only from the fi
 
 Please keep in mind that this is WIP and as with any programming language, so many things can go wrong. Please use with caution!
 
-#### Areas of Improvements
+## Areas of Improvements
 - Files are stored individually for every node without consolidation
 - Files can only be viewed individually
 - There is no storage limit
