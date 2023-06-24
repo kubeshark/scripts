@@ -78,7 +78,7 @@ The above runs KUbeshark as a standalone application that feeds only from the fi
 
 Please keep in mind that this is WIP and as with any programming language, so many things can go wrong. Please use with caution!
 
-## Areas of Improvements
+## Areas of Improvement
 - Files are stored individually for every node without consolidation
 - Files can only be viewed individually
 - There is no storage limit
