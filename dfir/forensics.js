@@ -94,7 +94,7 @@ function dfirJob(){
             pcapArr = [];
             file.mkdir(pcapFolder); 
             var newTmpPcapFolder = file.mkdirTemp("newTmpPcapFolder");
-            var snapshot = pcap.snapshot(tmpPcapFolder);
+            var snapshot = pcap.snapshot([], tmpPcapFolder);
             file.delete(tmpPcapFolder);
             file.move(snapshot,newTmpPcapFolder + "/");
             var nameResolutionHistory = pcap.nameResolutionHistory();
