@@ -1,6 +1,6 @@
 # DFIR Script Folder
 
-Welcome to the DFIR (Digital Forensics and Incident Response) script folder! This collection of scripts is designed to assist DFIR professionals, including DevOps, platform engineers, and developers, and of course incident responders in their investigations.
+Welcome to the DFIR (Digital Forensics and Incident Response) scripts folder! This collection of scripts is designed to assist DFIR professionals, including DevOps, platform engineers, and developers, and of course incident responders in their investigations.
 
 # Longer Traffic Retention for Offline Investigation
 
