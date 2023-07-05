@@ -26,7 +26,7 @@ For more information on KFL, refer to the [Kubeshark Filtering documentation](ht
 
 1. Make sure you are signed up for the Pro edition of Kubeshark. If you haven't done so, please run the following command: `kubeshark pro`. The Pro edition is free.
 
-2. In the configuration file, ensure that you have the following environment variables (at least):
+2. If you're not using IRSA or kube2iam perform this step: In the configuration file, ensure that you have the following environment variables (at least):
 
 ```yaml
 license: FT7YKAYBAEDUY2LD.. your license here .. 65JQRQMNSYWAA=
@@ -40,11 +40,27 @@ scripting:
   watchScripts: true
 ```
 
-3. Run Kubeshark. 
+3. If you are using a form of IRSA or kube2iam, you aren't required to have the AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID present, however, you need to provide the proper annotation:
+
+```yaml
+tap:
+   annotations:
+   - "eks.amazonaws.com/role-arn": "arn:aws:iam::145..380:role/s3-role"
+
+license: FT7YKAYBAEDUY2LD.. your license here .. 65JQRQMNSYWAA=
+scripting:
+  env:
+    AWS_REGION: us-east-2-this-is-an-example
+    S3_BUCKET: give-it-a-name
+  source: "/path/to/a/local/scripts/folder"
+  watchScripts: true
+```
+
+4. Run Kubeshark. 
 
    It is considered a best practice to use a pod regex filter and/or a namespace flag with the `kubeshark tap` command to limit the amount of captured traffic.
 
-## Troubleshooting and Playing Arround
+## Troubleshooting and Playing Around
 
 1. Verify that the script was uploaded to the hub by checking the scripting section.
 
@@ -69,17 +85,15 @@ scripting:
 
 ## Offline Investigation
 
-At this time, Kubeshark enables viewing only individual files by running:
+Files are continually uploaded to the provided S3 bucket. The bucket structure will include a folder per Worker where the folder name includes a run ID to denote restarted Workers. 
+
+You can view a specific folder or the entire bucket.
+
+To view the saved traffic files, you'd need to provide the S3 URL to Kubeshark's CLI:
 ```Shell
-kubeshark tap --pcap <file-nametar.gz>
+kubeshark tap --pcap s3://<bucket-name>/
 ```
-The above runs KUbeshark as a standalone application that feeds only from the file.
-**TIP:** I like to download the entire bucket using this command: `aws s3 sync s3://<bucket-name .`, with the same credentials that were used as environment variables.
+The above runs Kubeshark as a standalone application that feeds only from the file.
+Make sure your AWS configuration is similar to the one that was used to upload the files.
 
 Please keep in mind that this is WIP and as with any programming language, so many things can go wrong. Please use with caution!
-
-## Areas of Improvement
-- Files are stored individually for every node without consolidation
-- Files can only be viewed individually
-- There is no storage limit
-We are effortlessly working on correcting the above 
