@@ -93,7 +93,6 @@ function dfirJob(){
                     env.S3_BUCKET, nrh, env.AWS_REGION, 
                     env.AWS_ACCESS_KEY_ID, env.AWS_SECRET_ACCESS_KEY
             ); 
-            file.delete(nrh);   
         } catch  (error) {
             console.error(Date().toLocaleString() + "| " + "Caught an error!", error);
         }
