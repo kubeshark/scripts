@@ -1,25 +1,22 @@
-// Forensics
-
-var KFL_ARR =[
-    'http',
-    'dns'
-];
-
-var ACTIVE = false;
-var IRSA = true;
-
-//TL;DR
+// Traffic Recording
 
 /*
- * Auto-generate and Upload Network Traces to AWS S3 based on KFLs Queries
- * =======================================================================
+ * Record traffic and store in S3. Make available for offline view and analysis
+ * ============================================================================
  * 
  * Description:
  * -----------
- * This script auto-generates PCAPs based on KFL queries and uploads these PCAPs to AWS S3 once every hour.
- * It supports both use of S3 specific credentials and IRSA (shared authentication). Therefore if IRSA 
- * flag is set to false, it expects AWS S3 authentication properties in addition to region and bucket. 
- * If IRSA flag is set to true, no auth credentials nessasery. Read more here: https://docs.kubeshark.co/en/integrations_aws_s3.
+ * This script records traffic that matches a KFL statement. Recorded traffic is stored in AWS S3. 
+ * The operation is done by auto-generating PCAP files based on the KFL statement. 
+ * PCAP files are uploaded to AWS S3 once every hour.
+ * 
+ * The script expects AWS properties and support both: 
+ * a. S3 specific credentials; and 
+ * b. IRSA (shared authentication).
+ * 
+ * To use IRSA, include only: AWS_REGION, S3_BUCKET and RECORDING_KFL.
+ * To use specific AWS credentials include AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY in addition.
+ * Read more here: https://docs.kubeshark.co/en/integrations_aws_s3.
  * 
  * Environment Variables:
  * ----------------------
@@ -27,58 +24,47 @@ var IRSA = true;
  * S3_BUCKET:               <bucket-name>
  * AWS_ACCESS_KEY_ID:       <aws-access-key-id>         // not required if IRSA
  * AWS_SECRET_ACCESS_KEY:   <aws-secret-access-key>     // not required if IRSA
-
+ * RECORDING_KFL:           <KFL statement>             // e.g. 'http or dns'
+ *
  * 
  * How to use:
  * -----------
  * - Include this file in the scripts folder or enter in the UI section
- * - Make sure the environment variables are present in the config file (or put them in the script file)
- * - Add KFL queries to the KFL_ARR and change ACTIVE to true
+ * - Make sure the environment variables are present in the config file
+ * - To disable this script use and empty KFL statement.
  * 
  * Assets:
  * -------
  * N/A
 */
 
+var pcapArr             = [];
+var pcapFolder          = "dfir";
+var ACTIVE              = ( env.RECORDING_KFL && kfl.validate(env.RECORDING_KFL) ) ? true : false;
+
+if ( env.RECORDING_KFL && ! kfl.validate(env.RECORDING_KFL))
+    console.error(Date().toLocaleString() + "| Invalid KFL: " + env.RECORDING_KFL );
+
+if ( ACTIVE ){
+    console.log(Date().toLocaleString() + "| Recording Traffic Matching: " + env.RECORDING_KFL );
+    file.delete(pcapFolder);
+    file.mkdir(pcapFolder); 
+}
+
 function onItemCaptured(data) {
     if (!ACTIVE)
         return;
-    dfirDetect(data, KFL_ARR);
+    if (    kfl.match(env.RECORDING_KFL, data) && 
+            ( pcapArr.indexOf(data.stream)===-1   ) ){
+        pcapArr.push(data.stream);
+        try{
+            file.copy(pcap.path(data.stream), pcapFolder + "/" + data.stream);   
+        } catch(error){
+            console.error(Date().toLocaleString() + "| " + "Error copying file:" + pcap.path(data.stream) + "; Error: " + error + ";");
+        }
+    }    
 }
 
-
-// TL;DR
-
-var pcapArr = [];
-var awsRegion = env.AWS_REGION;
-var awsAccessKeyId = env.AWS_ACCESS_KEY_ID;
-var awsSecretAccessKey = env.AWS_SECRET_ACCESS_KEY;
-var s3Bucket = env.S3_BUCKET;
-var pcapFolder = "dfir";
-file.delete(pcapFolder);
-file.mkdir(pcapFolder); 
-
-if ( !awsRegion || awsRegion.length < 4)
-    console.error( Date().toLocaleString() + "| " + "AWS property awsRegion is missing");
-if ( !IRSA && (!awsAccessKeyId || awsAccessKeyId.length < 4))
-    console.error( Date().toLocaleString() + "| " + "AWS property awsAccessKeyId is missing");
-if ( !IRSA && (!awsSecretAccessKey || awsSecretAccessKey.length < 4))
-    console.error( Date().toLocaleString() + "| " + "AWS property awsSecretAccessKey is missing");
-if ( !s3Bucket || s3Bucket.length < 4)
-    console.error( Date().toLocaleString() + "| " + "AWS property s3Bucket is missing");
-
-function dfirDetect(data, kflArr) {
-    kflArr.forEach(function(kflQuery, idx){
-        if (kfl.match(kflQuery, data) && pcapArr.indexOf(data.stream)===-1){
-            pcapArr.push(data.stream);
-            try{
-                file.copy(pcap.path(data.stream), pcapFolder + "/" + data.stream);   
-            } catch(error){
-                console.error(Date().toLocaleString() + "| " + "Error copying file:" + pcap.path(data.stream) + "; Error: " + error + ";");
-            }
-        }    
-    });
-}
 
 function dfirJob(){
     console.log(Date().toLocaleString() + "| dfirJob");
@@ -91,24 +77,22 @@ function dfirJob(){
             file.mkdir(pcapFolder); 
             var snapshot = pcap.snapshot( [], tmpPcapFolder);
             file.delete(tmpPcapFolder);
-            if (IRSA)
-                var location = vendor.s3.put( s3Bucket, snapshot, awsRegion ); 
+            if (!env.AWS_SECRET_ACCESS_KEY)
+                vendor.s3.put( env.S3_BUCKET, snapshot, env.AWS_REGION ); 
             else
-                var location = vendor.s3.put(
-                    s3Bucket, snapshot, awsRegion, 
-                    awsAccessKeyId, awsSecretAccessKey
+                vendor.s3.put(
+                    env.S3_BUCKET, snapshot, env.AWS_REGION, 
+                    env.AWS_ACCESS_KEY_ID, env.AWS_SECRET_ACCESS_KEY
                 ); 
             file.delete(snapshot);   
-            var nameResolutionHistory = pcap.nameResolutionHistory();
             var nrh = "name_resolution_history.json";
-            file.write( nrh, JSON.stringify(nameResolutionHistory) );
-            if (IRSA)
-                location = vendor.s3.put( s3Bucket, nrh, awsRegion ); 
+            if (!env.AWS_SECRET_ACCESS_KEY)
+                vendor.s3.put( env.S3_BUCKET, nrh, env.AWS_REGION ); 
             else
-                location = vendor.s3.put(
-                    s3Bucket, nrh, awsRegion, 
-                    awsAccessKeyId,  awsSecretAccessKey
-                ); 
+                vendor.s3.put(
+                    env.S3_BUCKET, nrh, env.AWS_REGION, 
+                    env.AWS_ACCESS_KEY_ID, env.AWS_SECRET_ACCESS_KEY
+            ); 
             file.delete(nrh);   
         } catch  (error) {
             console.error(Date().toLocaleString() + "| " + "Caught an error!", error);
