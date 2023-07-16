@@ -2,8 +2,7 @@
 
 Welcome to the DFIR (Digital Forensics and Incident Response) scripts folder! This collection of scripts is designed to assist DFIR professionals, including DevOps, platform engineers, and developers, and of course incident responders in their investigations.
 
-# Traffic Recording and Long Retention Periods
-
+# Traffic Recording and Offline Investigation
 ## Purpose
 This script is useful when dealing with suspicious and random network behavior that cannot be predicted in advance. In such cases, it is recommended to record traffic for a longer period of time and analyze the recorded data offline.
 
@@ -18,15 +17,15 @@ Here are a few examples of KFL queries:
 - `dst.name==r"cata.*" or src.name==r"cata.*"` - record all traffic going in and out of pods with names matching the provided regular expression
 - `node==r"my-node.*" and src.namespace==="my-namespace"` - record traffic originating from a specific namespace and belonging to a certain node
 
-As traffic is recorded per node, it may make sense to limit the KFL queries to certain nodes.
-
 For more information on KFL, refer to the [Kubeshark Filtering documentation](https://docs.kubeshark.co/en/filtering).
 
 ## Instructions
 
 1. Make sure you are signed up for the Pro edition of Kubeshark. If you haven't done so, please run the following command: `kubeshark pro`. The Pro edition is free.
 
-2. If you're not using IRSA or kube2iam perform this step: In the configuration file, ensure that you have the following environment variables (at least):
+2. If you're not using [IRSA](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html) or [kube2iam](https://github.com/jtblin/kube2iam), perform this step:
+
+In the configuration file, ensure that you have the following environment variables (at least):
 
 ```yaml
 license: FT7YKAYBAEDUY2LD.. your license here .. 65JQRQMNSYWAA=
@@ -64,18 +63,14 @@ scripting:
 
 ## Offline Investigation
 
-Files are continually uploaded to the provided S3 bucket. The bucket structure will include a folder per Worker where the folder name includes a run ID to denote restarted Workers. 
-
-You can view a specific folder or the entire bucket.
-
 To view the saved traffic files, you'd need to provide the S3 URL to Kubeshark's CLI:
 ```Shell
 kubeshark tap --pcap s3://<bucket-name>/
 ```
-The above runs Kubeshark as a standalone application that feeds only from the file.
+The above runs Kubeshark as a standalone application that downloads and feeds only from the files.
 Make sure your AWS configuration is similar to the one that was used to upload the files.
 
-Please keep in mind that this is WIP and as with any programming language, so many things can go wrong. Please use with caution!
+Please keep in mind that this is WIP. Please use with caution!
 
 ## Troubleshooting
 
