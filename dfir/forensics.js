@@ -1,6 +1,11 @@
 // Traffic Recording
 
 /*
+ * TL;DR - Nothing do do here. This is an automatic script that feeds from the config.yaml's 
+ * environment variables.
+ * /
+ 
+/*
  * Record traffic and store in S3. Make available for offline view and analysis
  * ============================================================================
  * 

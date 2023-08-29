@@ -1,4 +1,9 @@
-// HTTP API call KPIs to Influx DB
+// Influx DB
+
+/*
+ * TL;DR - Nothing do do here. This is an automatic script that feeds from the config.yaml's 
+ * environment variables.
+ * /
 
 /*
  * Send HTTP API call KPIs to Influx DB & Grafana
@@ -30,24 +35,16 @@
  * ./influx_db_kpis_grafana.json - Grafana's dashboard JSON model
 */
 
-// Use environment variables (recommended) or change these variables locally
-var infUrl      = env.INFLUXDB_URL;
-var infToken    = env.INFLUXDB_TOKEN;
-var infOrg      = env.INFLUXDB_ORG;
-var infBucket   = env.INFLUXDB_BUCKET ?  env.INFLUXDB_BUCKET : "Kubeshark";
-var infMeasurement = env.INFLUXDB_MEASUREMENT ? env.INFLUXDB_MEASUREMENT: "callKPIs";
-var ACTIVE     = false;  // change to false to disable this script
+var infBucket   = "Kubeshark";
+var infMeasurement = "callKPIs";
+var ACTIVE     = true;  // change to false to disable this script
 
-if (!infUrl || !infToken || !infOrg ){
-    console.error("One or more of the mandatory InfluxDB variables is missing. No point in continuing. Exiting script.");
+if (!env.INFLUXDB_URL || !env.INFLUXDB_TOKEN || !env.INFLUXDB_ORG ){
+    console.error("InfluxDB script will not run: One or more of the mandatory InfluxDB variables is missing. No point in continuing. Exiting script.");
     ACTIVE = false;
 }
 
 function onItemCaptured(data) {
-    return hookSendMetrics(data);
-}
-
-function hookSendMetrics ( data ) {
     if (!ACTIVE) return;
     try{
         if (data.protocol.name !== "http") return;
@@ -71,9 +68,9 @@ function hookSendMetrics ( data ) {
 
         // send KPI metrics on every API call
         vendor.influxdb(
-            infUrl,
-            infToken,
-            infOrg,     
+            env.INFLUXDB_URL,
+            env.INFLUXDB_TOKEN,
+            env.INFLUXDB_ORG,     
             infBucket,  
             infMeasurement , 
             metrics,
