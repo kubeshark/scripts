@@ -1,11 +1,6 @@
 // Traffic Recording
 
 /*
- * TL;DR - Nothing do do here. This is an automatic script that feeds from the config.yaml's 
- * environment variables.
- * /
- 
-/*
  * Record traffic and store in S3. Make available for offline view and analysis
  * ============================================================================
  * 
@@ -51,7 +46,11 @@ if ( env.RECORDING_KFL && ! kfl.validate(env.RECORDING_KFL))
     console.error(Date().toLocaleString() + "| Invalid KFL: " + env.RECORDING_KFL );
 
 if ( ACTIVE ){
-    console.log(Date().toLocaleString() + "| Recording Traffic Matching: " + env.RECORDING_KFL );
+    try{
+        console.log(Date().toLocaleString() + "| Recording Traffic Matching: " + env.RECORDING_KFL );
+    } catch(error){
+        console.error(Date().toLocaleString() + "| " + "Error: " + error + ";");
+    }
     file.delete(pcapFolder);
     file.mkdir(pcapFolder); 
 }
@@ -72,7 +71,11 @@ function onItemCaptured(data) {
 
 
 function dfirJob(){
-    console.log(Date().toLocaleString() + "| dfirJob");
+    try{
+        console.log(Date().toLocaleString() + "| dfirJob");
+    } catch(error){
+        console.error(Date().toLocaleString() + "| " + "Error: " + error + ";");
+    }
     if (pcapArr.length > 0){
         var tmpPcapFolder = "dfir_tmp";
         file.delete(tmpPcapFolder);
@@ -84,11 +87,12 @@ function dfirJob(){
             file.delete(tmpPcapFolder);
             if (!env.AWS_SECRET_ACCESS_KEY)
                 vendor.s3.put( env.S3_BUCKET, snapshot, env.AWS_REGION ); 
-            else
+            else{
                 vendor.s3.put(
                     env.S3_BUCKET, snapshot, env.AWS_REGION, 
                     env.AWS_ACCESS_KEY_ID, env.AWS_SECRET_ACCESS_KEY
                 ); 
+            }
             file.delete(snapshot);   
             var nrh = "name_resolution_history.json";
             if (!env.AWS_SECRET_ACCESS_KEY)
@@ -97,7 +101,7 @@ function dfirJob(){
                 vendor.s3.put(
                     env.S3_BUCKET, nrh, env.AWS_REGION, 
                     env.AWS_ACCESS_KEY_ID, env.AWS_SECRET_ACCESS_KEY
-            ); 
+                ); 
         } catch  (error) {
             console.error(Date().toLocaleString() + "| " + "Caught an error!", error);
         }
