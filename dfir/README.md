@@ -21,14 +21,19 @@ For more information on KFL, refer to the [Kubeshark Filtering documentation](ht
 
 ## Instructions
 
-1. Make sure you are signed up for the Pro edition of Kubeshark. If you haven't done so, please run the following command: `kubeshark pro`. The Pro edition is free.
+1. Independent of your storage option you can set your recording pattern using the `RECORDING_KFL` environment variable. Recording will commence only if this variable is present. This variable should include the KFL pattern. For example:
+```yaml
+scripting:
+  env:
+    RECORDING_KFL: "http or dns" # To deactivated remove this field.
+```
+2. Choose an configure your storage option:
 
-2. If you're not using [IRSA](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html) or [kube2iam](https://github.com/jtblin/kube2iam), perform this step:
+### AWS S3
 
-In the configuration file, ensure that you have the following environment variables (at least):
+In `config.yaml` or `values.yaml`, ensure that you have the following environment variables (at least):
 
 ```yaml
-license: FT7YKAYBAEDUY2LD.. your license here .. 65JQRQMNSYWAA=
 scripting:
   env:
     AWS_ACCESS_KEY_ID: AKI..M3U5
@@ -39,6 +44,30 @@ scripting:
   source: "/path/to/a/local/scripts/folder"
   watchScripts: true
 ```
+Download an optionally customize the following script to the scripts folder: https://raw.githubusercontent.com/kubeshark/scripts/master/dfir/forensics_s3.js
+
+### AWS IRSA
+
+When using [IRSA](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html) or [kube2iam](https://github.com/jtblin/kube2iam), perform this step:
+
+In `config.yaml` or `values.yaml`, ensure that you have the following environment variables (at least):
+
+```yaml
+scripting:
+  env:
+    AWS_REGION: us-east-2-this-is-an-example
+    S3_BUCKET: give-it-a-name
+    RECORDING_KFL: "http or dns" # To deactivated remove this field.
+  source: "/path/to/a/local/scripts/folder"
+  watchScripts: true
+```
+Download an optionally customize the following script to the scripts folder: https://raw.githubusercontent.com/kubeshark/scripts/master/dfir/forensics_irsa.js
+
+### Google Cloud Storage
+
+
+
+
 
 3. If you are using a form of IRSA or kube2iam, you aren't required to have the AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID present, however, you need to provide the proper annotation:
 
