@@ -32,60 +32,74 @@
  * N/A
 */
 
-var pcapArr             = [];
-var pcapFolder          = "dfir";
-var ACTIVE              = ( env.RECORDING_KFL && kfl.validate(env.RECORDING_KFL) ) ? true : false;
+'use strict';
 
-if ( env.RECORDING_KFL && ! kfl.validate(env.RECORDING_KFL))
-    console.error(Date().toLocaleString() + "| Invalid KFL: " + env.RECORDING_KFL );
+// Global variables
+var pcapArr = []; // Array to store unique pcap data streams
+var pcapFolder = "dfir"; // Folder for storing pcap files
+var ACTIVE = env.RECORDING_KFL && kfl.validate(env.RECORDING_KFL); // Check if KFL statement is valid and set ACTIVE status
 
-if ( ACTIVE ){
-    try{
-        console.log(Date().toLocaleString() + "| Recording Traffic Matching: " + env.RECORDING_KFL );
-    } catch(error){
-        console.error(Date().toLocaleString() + "| " + "Error: " + error + ";");
-    }
-    file.delete(pcapFolder);
-    file.mkdir(pcapFolder); 
+// Validate KFL statement
+if (env.RECORDING_KFL && !kfl.validate(env.RECORDING_KFL)) {
+    console.error(currentDateTime() + "| Invalid KFL: " + env.RECORDING_KFL);
 }
 
+// Setup for recording if ACTIVE
+if (ACTIVE) {
+    try {
+        console.log(currentDateTime() + "| Recording Traffic Matching: " + env.RECORDING_KFL);
+        file.delete(pcapFolder); // Delete existing pcap folder
+        file.mkdir(pcapFolder);  // Create a new pcap folder
+    } catch (error) {
+        console.error(currentDateTime() + "| Error: " + error + ";");
+    }
+}
+
+// Function to get current date and time in a readable format
+function currentDateTime() {
+    return new Date().toLocaleString();
+}
+
+// Function called when an item is captured
 function onItemCaptured(data) {
-    if (!ACTIVE)
-        return;
-    if (    kfl.match(env.RECORDING_KFL, data) && 
-            ( pcapArr.indexOf(data.stream)===-1   ) ){
-        pcapArr.push(data.stream);
-        try{
-            file.copy(pcap.path(data.stream), pcapFolder + "/" + data.stream);   
-        } catch(error){
-            console.error(Date().toLocaleString() + "| " + "Error copying file:" + pcap.path(data.stream) + "; Error: " + error + ";");
-        }
-    }    
-}
+    if (!ACTIVE) return;
 
-function dfirJob_gcs(){
-    try{
-        console.log(Date().toLocaleString() + "| dfirJob_gcs");
-    } catch(error){
-        console.error(Date().toLocaleString() + "| " + "Error: " + error + ";");
-    }
-    if (pcapArr.length > 0){
-        var tmpPcapFolder = "dfir_tmp";
-        file.delete(tmpPcapFolder);
-        try{
-            file.move(pcapFolder, tmpPcapFolder);
-            pcapArr = [];
-            file.mkdir(pcapFolder); 
-            var snapshot = pcap.snapshot( [], tmpPcapFolder);
-            file.delete(tmpPcapFolder);
-            vendor.gcs.put( env.GCS_BUCKET, snapshot, JSON.parse(env.GCS_SA_KEY_JSON )); 
-            file.delete(snapshot);   
-            var nrh = "name_resolution_history.json";
-            vendor.gcs.put( env.GCS_BUCKET, nrh, JSON.parse(env.GCS_SA_KEY_JSON )); 
-        } catch  (error) {
-            console.error(Date().toLocaleString() + "| " + "Caught an error!", error);
+    // Check if data matches KFL and hasn't been captured before
+    if (kfl.match(env.RECORDING_KFL, data) && pcapArr.indexOf(data.stream) === -1) {
+        pcapArr.push(data.stream); // Add new stream to the array
+        try {
+            file.copy(pcap.path(data.stream), pcapFolder + "/" + data.stream); // Copy pcap file to the folder
+        } catch (error) {
+            console.error(currentDateTime() + "| Error copying file: " + pcap.path(data.stream) + "; Error: " + error + ";");
         }
     }
 }
 
-jobs.schedule("dfir_fcs", "0 */5 * * * *" , dfirJob_gcs);    
+// Function to handle GCS job
+function dfirJob_gcs() {
+    if (pcapArr.length === 0) return; // Exit if no pcap files are captured
+
+    var tmpPcapFolder = "dfir_tmp"; // Temporary folder for pcap files
+    var serviceAccountKey = JSON.parse(env.GCS_SA_KEY_JSON); // Parse GCS service account key
+
+    try {
+        console.log(currentDateTime() + "| dfirJob_gcs");
+        file.delete(tmpPcapFolder); // Delete existing temporary folder
+        file.move(pcapFolder, tmpPcapFolder); // Move pcap files to temporary folder
+        pcapArr = []; // Clear the array
+        file.mkdir(pcapFolder); // Create a new empty pcap folder
+
+        var snapshot = pcap.snapshot([], tmpPcapFolder); // Create a snapshot of pcap files
+        file.delete(tmpPcapFolder); // Delete the temporary folder
+        vendor.gcs.put(env.GCS_BUCKET, snapshot, serviceAccountKey); // Upload snapshot to GCS
+        file.delete(snapshot); // Delete the local snapshot
+
+        var nrh = "name_resolution_history.json";
+        vendor.gcs.put(env.GCS_BUCKET, nrh, serviceAccountKey); // Upload name resolution history to GCS
+    } catch (error) {
+        console.error(currentDateTime() + "| " + "Caught an error!", error);
+    }
+}
+
+// Schedule the GCS job to run periodically
+jobs.schedule("dfir_fcs", "0 */5 * * * *", dfirJob_gcs);

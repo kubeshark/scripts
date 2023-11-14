@@ -1,19 +1,24 @@
-# DFIR Script Folder
+# DFIR Script Folder (Traffic Recording & Offline Analysis)
 
-Welcome to the DFIR (Digital Forensics and Incident Response) scripts folder! This collection of scripts is designed to assist DFIR professionals, including DevOps, platform engineers, and developers, and of course incident responders in their investigations.
+Welcome to the DFIR (Digital Forensics and Incident Response) scripts folder! 
+This collection of scripts is designed to assist DFIR professionals, including DevOps, platform engineers, and developers, and of course incident responders in their investigations.
+While these scripts are ready-to-go as-is, they are made as examples and for the purpose of customization. If you choose to use these scripts as-is you do it on your own risk.
 
 # Traffic Recording and Offline Investigation
 ## Purpose
 This script is useful when dealing with suspicious and random network behavior that cannot be predicted in advance. In such cases, it is recommended to record traffic for a longer period of time and analyze the recorded data offline.
 
-## Script: [forensics.js](forensics.js)
+## Scripts: 
+- [forensics_s3.js](forensics_s3.js)
+- [forensics_IRSA.js](forensics_irsa.js)
+- [forensics_gcs.js](forensics_gcs.js)
 
 ## Description
-The `forensics.js` script utilizes a KFL (Kubeshark Filtering Language) statement to continuously capture network traffic and periodically upload the recorded files to AWS S3. The recorded traffic can be investigated offline at the investigator's discretion.
+The `forensics_XXXX.js` script utilizes a KFL (Kubeshark Filtering Language) statement to continuously capture network traffic and periodically upload the recorded files to an immutable datastore. The recorded traffic can be investigated offline at the investigator's discretion.
 
 Here are a few examples of KFL queries:
 
-- `dns` - record cluster-wide DNS traffic
+- `dns or http` - record cluster-wide DNS **and** HTTP traffic
 - `dst.name==r"cata.*" or src.name==r"cata.*"` - record all traffic going in and out of pods with names matching the provided regular expression
 - `node==r"my-node.*" and src.namespace==="my-namespace"` - record traffic originating from a specific namespace and belonging to a certain node
 
@@ -29,7 +34,7 @@ scripting:
 ```
 2. Choose an configure your storage option:
 
-### AWS S3
+#### AWS S3
 
 In `config.yaml` or `values.yaml`, ensure that you have the following environment variables (at least):
 
@@ -46,13 +51,16 @@ scripting:
 ```
 Download an optionally customize the following script to the scripts folder: https://raw.githubusercontent.com/kubeshark/scripts/master/dfir/forensics_s3.js
 
-### AWS IRSA
+#### AWS IRSA
 
 When using [IRSA](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html) or [kube2iam](https://github.com/jtblin/kube2iam), perform this step:
 
 In `config.yaml` or `values.yaml`, ensure that you have the following environment variables (at least):
 
 ```yaml
+tap:
+   annotations:
+   - "eks.amazonaws.com/role-arn": "arn:aws:iam::145..380:role/s3-role"
 scripting:
   env:
     AWS_REGION: us-east-2-this-is-an-example
@@ -63,30 +71,33 @@ scripting:
 ```
 Download an optionally customize the following script to the scripts folder: https://raw.githubusercontent.com/kubeshark/scripts/master/dfir/forensics_irsa.js
 
-### Google Cloud Storage
+#### Google Cloud Storage (GCS)
 
-
-
-
-
-3. If you are using a form of IRSA or kube2iam, you aren't required to have the AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID present, however, you need to provide the proper annotation:
+In `config.yaml` or `values.yaml`, ensure that you have the following environment variables (at least):
 
 ```yaml
-tap:
-   annotations:
-   - "eks.amazonaws.com/role-arn": "arn:aws:iam::145..380:role/s3-role"
-
-license: FT7YKAYBAEDUY2LD.. your license here .. 65JQRQMNSYWAA=
 scripting:
   env:
-    AWS_REGION: us-east-2-this-is-an-example
-    S3_BUCKET: give-it-a-name
-    RECORDING_KFL: "http or dns" # To deactivated remove this field.
+    GCS_BUCKET: give-it-a-name
+    GCS_SA_KEY_JSON : '{
+  "type": "service_account",
+  "project_id": "clou..on",
+  "private_key_id": "14..81",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIB...tDAYZxgNB0=\n-----END PRIVATE KEY-----\n",
+  "client_email": "k..on.iam.gserviceaccount.com",
+  "client_id": "10..72",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/k..ion.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}'
+    RECORDING_KFL: http or dns
   source: "/path/to/a/local/scripts/folder"
   watchScripts: true
 ```
 
-4. Run Kubeshark. 
+3. Run Kubeshark. 
 
   Run `kubeshark tap`.
 
