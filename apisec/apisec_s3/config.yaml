@@ -1,0 +1,10 @@
+tap:
+ scripting:
+  env:
+    AWS_REGION:              us-east-1
+    APICALLS_S3_BUCKET:      apisec
+    AWS_ACCESS_KEY_ID:       AK..BF
+    AWS_SECRET_ACCESS_KEY:   Af..2v
+    APICALLS_KFL:            http
+  source: /path/to/scripts/
+  watchScripts: true
