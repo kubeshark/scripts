@@ -1,14 +1,12 @@
 ## Record API Calls and Store Their Metadata in an S3 Bucket
 
-This script records API calls that match a KFL statement. 
-Recorded API calls' metadata are stored in JSON arrays, in files, in AWS S3. 
-Files are uploaded to AWS S3 once every hour.
+This script is designed to record API calls that satisfy a specific KFL (Keyword Filtering Language) criterion. The metadata of these recorded API calls are stored as JSON arrays within files in an AWS S3 bucket. The system automatically uploads these files to AWS S3 once every hour. 
 
-Script is simple and is provided more as an example than anything else.
+The script is straightforward and intended primarily as an illustrative example.
 
 ### Required Configuration
 
-```yanl
+```yaml
 tap:
  scripting:
   env:
@@ -23,10 +21,31 @@ tap:
 
 ### Script
 
-See [here](apisec_s3.js)
+Refer to [here](apisec_s3.js) for the script.
 
-## How to use:
+## How to Use:
 
-- Include this file in the scripts folder or enter in the UI section
-- Make sure the environment variables are present in the config file
-- To disable this script use and empty KFL statement or remove the APICALLS_KFL env variable.
+- Place this file in the scripts directory or input it in the UI section.
+- Ensure the necessary environment variables are configured in the file.
+- To deactivate this script, either use an empty KFL statement or omit the `APICALLS_KFL` environment variable.
+
+## Troubleshooting
+
+### Verify the Script Upload
+
+Check the scripting dashboard to confirm the script has been loaded.
+
+### Manually Trigger the Job
+
+To bypass the hourly schedule and trigger the job immediately, navigate to the Jobs dashboard and execute the job manually.
+
+### Make Sure You Start Clean
+
+Other than the first time, make sure you use the `clean` command before restarting Kubeshark:
+
+```yaml
+kubeshark clean
+kubeshark tap
+```
+
+
