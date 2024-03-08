@@ -34,10 +34,12 @@ Refer to [here](apisec_s3.js) for the script.
 ### Verify the Script Upload
 
 Check the scripting dashboard to confirm the script has been loaded.
+<img width="1050" alt="image" src="https://github.com/kubeshark/scripts/assets/1990761/51ad16d8-a05c-4eaf-8c52-8d100f8c987d">
 
 ### Manually Trigger the Job
 
-To bypass the hourly schedule and trigger the job immediately, navigate to the Jobs dashboard and execute the job manually.
+To bypass the hourly schedule and trigger the job immediately, navigate to the Jobs dashboard and execute the job manually. You can use the Jobs dashboard to trigger a job and ensure all is functioning well:
+<img width="1563" alt="image" src="https://github.com/kubeshark/scripts/assets/1990761/7c543b46-d2d5-409f-a551-2a2f4b56a9eb">
 
 ### Make Sure You Start Clean
 
@@ -47,5 +49,11 @@ Other than the first time, make sure you use the `clean` command before restarti
 kubeshark clean
 kubeshark tap
 ```
+
+## Check That the Envrionment VAriable Were Succssfuly Loaded
+
+Use the `Print Environment Variables` example script to make sure the envrionment variable weer susscesfuly loaded
+<img width="1312" alt="image" src="https://github.com/kubeshark/scripts/assets/1990761/0c86a29e-ecb0-4f8f-93ac-1236039cc546">
+
 
 
