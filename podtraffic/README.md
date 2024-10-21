@@ -1,11 +1,11 @@
 ## Traffic Threshold Demo
 
-This script demonstrates how measure egress and ingress pod traffic and present both a short and a long report.
+This script demonstrates how to measure egress and ingress pod traffic and presents both a short and a long report.
 
 #### Prerequisites:
 
-1. Ensure you have the latest Kubeshark Helm chart release installed (hint: use `helm repo update kubeshark`)
-2. Ensure you have the latest Kubeshark CLI (hint: use `brew upgrade kubeshark`)
+1. Ensure you have the latest Kubeshark Helm chart release installed (hint: use `helm repo update kubeshark`).
+2. Ensure you have the latest Kubeshark CLI (hint: use `brew upgrade kubeshark`).
 
 ### Steps
 
@@ -49,13 +49,13 @@ This command watches the scripts folder and synchronizes any changes to the `kub
 
 ## Viewing the reports
 
-The short report is scheduled to print every 10 seconds and the long report to print once per minute. The `console`'s log will show both the short and long report
+The short report is scheduled to print every 10 seconds and the long report every minute. The `console` log will show both the short and long reports.
 
 <img width="837" alt="image" src="https://github.com/user-attachments/assets/41a561da-36e2-4ddf-8b38-c8bde3ef3646">
 
-## Targeting a sepcific set of pods or namespace(s)
+## Targeting a specific set of pods or namespaces
 
-YOu can use Kubeshark to target specific namespaces and/or pods of interest, by using its backend filters. The backend filters can be changed from the UI or from the configuration file:
+You can use Kubeshark to target specific namespaces and/or pods of interest by using its backend filters. The backend filters can be changed from the UI or the configuration file:
 
 ```yaml
 tap:
