@@ -27,7 +27,7 @@ scripting:
     AWS_SECRET_ACCESS_KEY: <secret>
     KINESIS_STREAM_NAME: <stream-name>
     KINESIS_MIN_BATCH_SIZE: 10
-license: <license>
+license: <enterprise-license>
 ```
 
 ### Using with the CLI
