@@ -4,7 +4,8 @@ This script demonstrates how measure egress and ingress pod traffic and present 
 
 #### Prerequisites:
 
-1. Ensure you have the latest Kubeshark Helm chart release installed.
+1. Ensure you have the latest Kubeshark Helm chart release installed (hint: use `helm repo update kubeshark`)
+2. Ensure you have the latest Kubeshark CLI (hint: use `brew upgrade kubeshark`)
 
 ### Steps
 
@@ -45,3 +46,23 @@ kubeshark scripts & kubeshark console
 ```
 
 This command watches the scripts folder and synchronizes any changes to the `kubeshark-config-map`.
+
+## Viewing the reports
+
+The short report is scheduled to print every 10 seconds and the long report to print once per minute. The `console`'s log will show both the short and long report
+
+<img width="837" alt="image" src="https://github.com/user-attachments/assets/41a561da-36e2-4ddf-8b38-c8bde3ef3646">
+
+## Targeting a sepcific set of pods or namespace(s)
+
+YOu can use Kubeshark to target specific namespaces and/or pods of interest, by using its backend filters. The backend filters can be changed from the UI or from the configuration file:
+
+```yaml
+tap:
+  regex: catal.*
+  namespaces:
+  - ks-load
+  - sock-shop
+  excludeNamespaces:
+  - kube-system
+```
