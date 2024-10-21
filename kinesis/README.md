@@ -26,6 +26,7 @@ scripting:
     AWS_ACCESS_KEY_ID: <key>
     AWS_SECRET_ACCESS_KEY: <secret>
     KINESIS_STREAM_NAME: <stream-name>
+    KINESIS_MIN_BATCH_SIZE: 10
 license: <license>
 ```
 
@@ -35,8 +36,9 @@ To use with the CLI, simply run:
 ```shell
 kubeshark clean; kubeshark tap
 ```
-
 You should see the script's log in the console output.
+![image](https://github.com/user-attachments/assets/729bd45a-d504-4ed4-9b12-656519448f8b)
+
 
 ### Using with Helm
 
