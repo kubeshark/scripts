@@ -60,3 +60,4 @@ This command watches the scripts folder and synchronizes any changes to the `kub
 ### Viewing the uploaded traffic
 
 This folder includes the `show.sh` utility, which prints out the latest payloads uploaded to the Kinesis stream.
+<img width="1667" alt="image" src="https://github.com/user-attachments/assets/0ab713a4-554b-4b97-ab35-cd0fe485ab21">
