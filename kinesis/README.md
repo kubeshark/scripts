@@ -51,8 +51,9 @@ helm install kubeshark kubeshark/kubeshark -f ~/.kubeshark/config.yaml
 Next, you need to run the CLI to sync the script to the `kubeshark-config-map` by running the following command:
 
 ```shell
-kubeshark scripts
+kubeshark scripts & kubeshark console
 ```
+Adding the `kubeshark console` command is optional and will show the `console`'s log output.
 
 This command watches the scripts folder and synchronizes any changes to the `kubeshark-config-map`.
 
