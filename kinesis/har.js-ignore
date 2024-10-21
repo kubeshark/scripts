@@ -1,0 +1,111 @@
+//buildHAR
+function buildHAR(dataArr) {
+    console.log("Found " + dataArr.length + " HTTP requests");
+
+    // Initialize the HAR structure with required fields
+    var har = {
+        log: {
+            version: '1.2',
+            creator: {
+                name: 'Custom HAR Builder',
+                version: '1.0'
+            },
+            entries: []
+        }
+    };
+
+    // Helper function to convert headers to name-value pairs
+    function buildHeaders(headers) {
+        var headerArray = [];
+        for (var key in headers) {
+            if (headers.hasOwnProperty(key)) {
+                headerArray.push({ name: key, value: headers[key] });
+            }
+        }
+        return headerArray;
+    }
+
+    // Helper function to convert cookies to name-value pairs
+    function buildCookies(cookies) {
+        var cookieArray = [];
+        for (var key in cookies) {
+            if (cookies.hasOwnProperty(key)) {
+                cookieArray.push({ name: key, value: cookies[key].value });
+            }
+        }
+        return cookieArray;
+    }
+
+    // Helper function to convert query strings to name-value pairs
+    function buildQueryString(queryString) {
+        var queryArray = [];
+        for (var key in queryString) {
+            if (queryString.hasOwnProperty(key)) {
+                queryArray.push({ name: key, value: queryString[key] });
+            }
+        }
+        return queryArray;
+    }
+
+    // Build entries from the data array
+    for (var i = 0; i < dataArr.length; i++) {
+        var data = dataArr[i];
+
+        // Validation checks
+        if (!data.request || typeof data.request.method === 'undefined') {
+            console.error("Warning: Missing request.method for entry: " + i);
+            continue;
+        }
+        if (!data.dst || typeof data.dst.name === 'undefined') {
+            console.error("Warning: Missing dst.name for entry", i);
+            continue;
+        }
+        if (!data.response || typeof data.response.status === 'undefined') {
+            console.error("Warning: Missing response.status for entry", i);
+            continue;
+        }
+
+        // Create an entry
+        var entry = {
+            startedDateTime: data.startTime,
+            time: data.elapsedTime,
+            request: {
+                method: data.request.method,
+                url: "http://" + data.dst.name + data.request.url,
+                httpVersion: data.request.httpVersion || 'HTTP/1.1',
+                headers: buildHeaders(data.request.headers),
+                queryString: buildQueryString(data.request.queryString),
+                cookies: buildCookies(data.request.cookies),
+                headersSize: data.request.headersSize || -1,
+                bodySize: data.request.bodySize || 0
+            },
+            response: {
+                status: data.response.status,
+                statusText: data.response.statusText || 'OK',
+                httpVersion: data.response.httpVersion || 'HTTP/1.1',
+                headers: buildHeaders(data.response.headers),
+                content: {
+                    size: data.response.content.size || 0,
+                    mimeType: data.response.content.mimeType || '',
+                    text: data.response.content.text ? String.fromCharCode.apply(null, data.response.content.text) : ''
+                },
+                cookies: buildCookies(data.response.cookies),
+                redirectURL: data.response.redirectURL || '',
+                headersSize: data.response.headersSize || -1,
+                bodySize: data.response.bodySize || 0
+            },
+            cache: {},
+            timings: {
+                send: 0,
+                wait: data.elapsedTime || 0,
+                receive: 0
+            }
+        };
+
+        // Push entry to HAR log entries
+        har.log.entries.push(entry);
+    }
+
+    // Return the HAR as a JSON string
+    return JSON.stringify(har, null, 2);
+}
