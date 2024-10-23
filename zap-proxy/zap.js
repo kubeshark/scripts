@@ -7,7 +7,7 @@ function onItemCaptured(data) {
         dataArr.push(data);
 }
 
-jobs.schedule("zap-export", "*/6 * * * * *", zapExportJob);  
+jobs.schedule("zap-export", "*/60 * * * * *", zapExportJob);  
 
 function zapExportJob() {
     try{
