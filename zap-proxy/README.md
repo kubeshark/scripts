@@ -9,7 +9,7 @@ By leveraging **Kubeshark** for traffic capture and ZAP’s scanning capabilitie
 
 This proactive approach helps mitigate risks before they lead to breaches, providing real-time insights into potential weaknesses. ZAP’s rich UI simplifies vulnerability management, enabling quick identification and remediation of critical issues—essential for maintaining secure and reliable Kubernetes environments.
 
-> TODO: Show an image of ZAP + Alerts
+<img width="1661" alt="image" src="https://github.com/user-attachments/assets/a1f260f6-d5b3-47ef-b57a-f63764e93ff4">
 
 ## Recipe
 
@@ -27,7 +27,7 @@ While there are many options to run ZAP, this document describes how to run ZAP 
 - Ensure the localhost address is whitelisted.
 - Identify and note the main proxy port.
 
-> TODO: Add an image of the settings window
+<img width="821" alt="image" src="https://github.com/user-attachments/assets/7303d8f5-178e-4091-a650-00d39cfec5a4">
 
 ### Expose Public IP
 
@@ -38,6 +38,8 @@ ngrok http 8082 --request-header-remove "X-Forwarded-For,X-Forwarded-Host,X-Forw
 ```
 
 > The above command assumes the ZAP proxy API port is 8082.
+
+<img width="481" alt="image" src="https://github.com/user-attachments/assets/96183ddd-228d-4cfb-a7ef-9ffdc6abb902">
 
 Note the public API endpoint.
 
@@ -51,6 +53,8 @@ Use the following configuration for **Kubeshark**:
 tap:
   scripting:
     source: /path/to/script
+    active:
+    - zap                     # for the script to start automatically. otherwise you'd need to activate it.
     env:
       ZAP_SERVER: <public-api-endpoint>
       ZAP_APIKEY: <API key>   # only if you set one
@@ -67,7 +71,8 @@ kubeshark clean; kubeshark tap
 
 You should see the script's log in the console output.
 
-> TODO: Show logs
+<img width="1328" alt="image" src="https://github.com/user-attachments/assets/16778462-cc29-49f6-92ae-fae1dccb293c">
+
 
 ### Running Kubeshark with Helm
 
