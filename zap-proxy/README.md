@@ -8,6 +8,8 @@ By leveraging **Kubeshark** for traffic capture and ZAP’s scanning capabilitie
 
 This proactive approach helps mitigate risks before they lead to breaches, providing real-time insights into potential weaknesses. ZAP’s rich UI simplifies vulnerability management, enabling quick identification and remediation of critical issues—essential for maintaining secure and reliable Kubernetes environments.
 
+> The following screenshot is from running [this script](https://github.com/kubeshark/scripts/blob/master/zap-proxy/zap.js) and using ZAP on a local desktop
+
 <img width="1661" alt="image" src="https://github.com/user-attachments/assets/a1f260f6-d5b3-47ef-b57a-f63764e93ff4">
 
 ## Recipe
