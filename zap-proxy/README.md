@@ -3,9 +3,9 @@ Here is a proof-edited version of your text:
 
 **About ZAP**: ZAP (Zed Attack Proxy) is an open-source web application security scanner developed and maintained by OWASP (Open Web Application Security Project). It is widely used by developers, security professionals, and SREs to identify vulnerabilities in web applications and APIs. ZAP’s main benefits include the ability to automatically detect common security flaws like SQL injection, XSS, and insecure configurations. Its rich UI facilitates easy vulnerability management, and its support for both manual and automated security testing makes it a versatile tool for securing web applications.
 
-Security professionals and SREs managing Kubernetes clusters can greatly benefit from integrating Kubeshark with ZAP, which provides significant advantages in maintaining robust security. Kubeshark enables deep inspection of inter-cluster HTTP API traffic, capturing every communication between services. ZAP is then used to identify vulnerabilities in this captured traffic.
+Security professionals and SREs managing Kubernetes clusters can greatly benefit from integrating **Kubeshark** with ZAP, which provides significant advantages in maintaining robust security. **Kubeshark** enables deep inspection of inter-cluster HTTP API traffic, capturing every communication between services. ZAP is then used to identify vulnerabilities in this captured traffic.
 
-By leveraging Kubeshark for traffic capture and ZAP’s scanning capabilities, security teams can automatically detect vulnerabilities such as **SQL Injection**, which can allow manipulation of database queries, and **Cross-Site Scripting (XSS)**, which enables attackers to inject harmful scripts into web pages. ZAP also flags **Cross-Site Request Forgery (CSRF)** risks, insecure cookies that lack `HttpOnly` or `Secure` attributes, and misconfigured **Content Security Policies (CSP)** and **Strict-Transport-Security (HSTS)** headers. Additionally, ZAP identifies **insecure HTTP methods**, like `PUT` or `DELETE`, and **information disclosure** vulnerabilities, where sensitive data, such as API keys or server error messages, might be exposed.
+By leveraging **Kubeshark** for traffic capture and ZAP’s scanning capabilities, security teams can automatically detect vulnerabilities such as **SQL Injection**, which can allow manipulation of database queries, and **Cross-Site Scripting (XSS)**, which enables attackers to inject harmful scripts into web pages. ZAP also flags **Cross-Site Request Forgery (CSRF)** risks, insecure cookies that lack `HttpOnly` or `Secure` attributes, and misconfigured **Content Security Policies (CSP)** and **Strict-Transport-Security (HSTS)** headers. Additionally, ZAP identifies **insecure HTTP methods**, like `PUT` or `DELETE`, and **information disclosure** vulnerabilities, where sensitive data, such as API keys or server error messages, might be exposed.
 
 This proactive approach helps mitigate risks before they lead to breaches, providing real-time insights into potential weaknesses. ZAP’s rich UI simplifies vulnerability management, enabling quick identification and remediation of critical issues—essential for maintaining secure and reliable Kubernetes environments.
 
@@ -13,7 +13,7 @@ This proactive approach helps mitigate risks before they lead to breaches, provi
 
 ## Recipe
 
-This process is straightforward: Kubeshark captures inter-cluster HTTP API calls and, using its scripting mechanism, exports them in HAR format to ZAP. These HAR files are then periodically uploaded to ZAP using its `importHAR` feature, where ZAP scans the traffic and generates alerts based on its findings.
+This process is straightforward: **Kubeshark** captures inter-cluster HTTP API calls and, using its scripting mechanism, exports them in HAR format to ZAP. These HAR files are then periodically uploaded to ZAP using its `importHAR` feature, where ZAP scans the traffic and generates alerts based on its findings.
 
 ### Running ZAP Proxy on a Desktop
 
@@ -45,7 +45,7 @@ Note the public API endpoint.
 
 ### Kubeshark Configuration
 
-Use the following configuration for Kubeshark:
+Use the following configuration for **Kubeshark**:
 
 ```yaml
 tap:
@@ -89,4 +89,4 @@ This command watches the scripts folder and synchronizes any changes to the `kub
 
 ## In Summary
 
-Kubeshark and ZAP can work together to scan API calls of interest, detecting and alerting on threats and vulnerabilities. This document demonstrates Kubeshark’s scripting capabilities and presents a potential use case for this integration.
+**Kubeshark** and ZAP can work together to scan API calls of interest, detecting and alerting on threats and vulnerabilities. This document demonstrates **Kubeshark**’s scripting capabilities and presents a potential use case for this integration.
