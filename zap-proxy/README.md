@@ -1,5 +1,4 @@
-Here is a proof-edited version of your text:
-## ZAP & Kubeshark Integration
+# ZAP & Kubeshark Integration: East-West Vulnerability Scanning
 
 **About ZAP**: ZAP (Zed Attack Proxy) is an open-source web application security scanner developed and maintained by OWASP (Open Web Application Security Project). It is widely used by developers, security professionals, and SREs to identify vulnerabilities in web applications and APIs. ZAP’s main benefits include the ability to automatically detect common security flaws like SQL injection, XSS, and insecure configurations. Its rich UI facilitates easy vulnerability management, and its support for both manual and automated security testing makes it a versatile tool for securing web applications.
 
