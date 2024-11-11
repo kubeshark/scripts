@@ -1,0 +1,74 @@
+// perf
+
+var nodeName = utils.nodeName(); 
+var pods = {};
+
+console.log("starting");
+
+function onItemCaptured(data) {  
+    // Push metric
+    try {
+        if (data && 
+            data.protocol && data.protocol.name === "http" && 
+            data.elapsedTime && 
+            data.dst && data.dst.name) {
+
+            // Initialize latencyArr if it doesn't exist
+            if (!pods[data.dst.name]) {
+                pods[data.dst.name] = { latencyArr: [] };
+            } else if (!pods[data.dst.name].latencyArr) {
+                pods[data.dst.name].latencyArr = [];
+            }
+
+            // Push the elapsed time into latencyArr
+            pods[data.dst.name].latencyArr.push(data.elapsedTime);
+            // console.log("pushing", data.dst.name);
+
+            // Update namespace if available
+            if (data.dst.namespace) {
+                pods[data.dst.name].namespace = data.dst.namespace;
+            }
+        }
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+if (nodeName !== "hub") {
+    jobs.schedule("push-to-prom", "0 * * * * *", pushProm);
+}
+
+function convertToValidMetricName(input) {
+    return input.replace(/[^a-zA-Z0-9_]/g, '_');
+}
+
+function pushProm() {
+    try {
+        for (var pod in pods) {
+            if (pods[pod].latencyArr && pods[pod].latencyArr.length > 0) {  // Ensure array exists and is not empty
+                // Calculate the sum of the array
+                var sum = pods[pod].latencyArr.reduce(function(a, b) { return a + b; }, 0);
+                
+                // Calculate the average
+                var avg = sum / pods[pod].latencyArr.length;
+                
+                console.log("pushing to prom", pod);
+                // Report the average latency
+
+                var metric = convertToValidMetricName(pod);
+
+                prometheus.metric(metric, "Pod getting traffic", 1, avg, {
+                    namespace: pods[pod].namespace || "external",
+                    script: "perf"
+                });
+                
+                // Reset the latency array
+                pods[pod].latencyArr = [];
+            } else {
+                console.log("No data to report for pod: ", pod);
+            }
+        }
+    } catch (e) {
+        console.error(e);
+    }
+}

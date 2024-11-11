@@ -1,0 +1,22 @@
+tap:
+  proxy:
+    worker:
+      srvPort: 31001
+  namespaces: 
+  - sock-shop
+  stopped: false
+  docker:
+    # imagePullPolicy: IfNotPresent
+    tag:  master
+    overrideTag:
+      worker:  helper-webhook-form
+      # hub: network-policies-api
+      # front: license-fetch-300s
+scripting:
+  source: /Users/alongir/work/GitHub/scripts/ndr
+  active: 
+    - podtraffic
+  env:
+    ZAP_SERVER: "https://6dd1-162-227-165-8.ngrok-free.app"
+    ZAP_APIKEY: "alon"
+license: <your-license-key>
