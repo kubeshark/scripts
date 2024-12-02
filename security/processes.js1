@@ -1,5 +1,7 @@
-    var processes = {};
-    function onItemCaptured(data) {  
+// processes
+return;
+var processes = {};
+function onItemCaptured(data) {  
         try{
             if (data && data.src && (data.src.cgroupId>0)){
                 var idx = data.src.processName + data.src.processId + data.src.name;
