@@ -13,16 +13,16 @@
  * the namespace.
  * 
  * This script uses the following helpers:
- * - `utils.nodeName`: Retrieves the Kubeshark component node name. It is either the Worker hostname or the keyword "hub".
- * - `jobs.schedule`: Schedules a job to run at a specific time or interval.
- * - `kfl.match`: Filters data based on a KFL string.
- * - `console.log`: Logs a message to the console.
- * - `console.clear`: Clears all logged messages from the console.
+ * - 'utils.nodeName': Retrieves the Kubeshark component node name. It is either the Worker hostname or the keyword 'hub'.
+ * - 'jobs.schedule': Schedules a job to run at a specific time or interval.
+ * - 'kfl.match': Filters data based on a KFL string.
+ * - 'console.log': Logs a message to the console.
+ * - 'console.clear': Clears all logged messages from the console.
  * 
  * **Configuration Options:**
- * - `showOnlyExternal`: When set to `true`, shows only connections going outside the cluster. 
- *   When `false`, includes connections going outside the namespace.
- * - `matchStr`: A KFL string to narrow the search scope (e.g., `"http"`, `"tcp"`, `"http and tls"`).
+ * - 'showOnlyExternal': When set to 'true', shows only connections going outside the cluster. 
+ *   When 'false', includes connections going outside the namespace.
+ * - 'matchStr': A KFL string to narrow the search scope (e.g., 'http', 'tcp', 'http and tls').
  * 
  * **Captured Data:**
  * - Source process name
@@ -32,14 +32,14 @@
  * - Count of connections to each destination
  * 
  * **Scheduler:**
- * If running on a Worker node, the `printProcesses` function is scheduled to execute every 20 seconds, 
+ * If running on a Worker node, the 'printProcesses' function is scheduled to execute every 20 seconds, 
  * logging details of active processes and their destinations.
  * 
  * @file ReportExternalConnection.js
  * @example
  * // Configuration
  * var showOnlyExternal = true; // true: show only external cluster connections
- * var matchStr = "http"; // Show only HTTP traffic
+ * var matchStr = 'http'; // Show only HTTP traffic
  */
 
 // Configuration variables
@@ -48,19 +48,17 @@ var showOnlyExternal = true; // true: show only connections going outside the cl
 // Store process data
 var processes = {};
 var processNamesToBlock = [
-    // "curl",
+    // 'curl',
 ];
 
-
 // Color variables
-var blue = "[34m"; // Blue color for keys
-var green = "[32m"; // Green color for values
-var reset = "[0m"; // Reset to default color
-var bold = "[1m"; // Bold text
-var red = "[31m"; // Red color for error messages
-var yellow = "[33m"; // Yellow color for warnings
-var orange = "[38;5;214m"; // Approximation for orange in 256-color palette
-
+var blue = '[34m'; // Blue color for keys
+var green = '[32m'; // Green color for values
+var reset = '[0m'; // Reset to default color
+var bold = '[1m'; // Bold text
+var red = '[31m'; // Red color for error messages
+var yellow = '[33m'; // Yellow color for warnings
+var orange = '[38;5;214m'; // Approximation for orange in 256-color palette
 
 /**
  * Checks if an IP address is public or private within the context of a Kubernetes cluster.
@@ -94,11 +92,10 @@ function isPublicIP(ip) {
         // If no private ranges matched, the IP is public
         return true;
     } catch (e) {
-        console.error("Error checking IP:", e);
+        console.error('Error checking IP:', e);
         return false;
     }
 }
-
 
 /**
  * Captures and logs external connections based on the configured filters.
@@ -110,10 +107,10 @@ function onItemCaptured(data) {
         // Filter data based on match string and connection type
         if (data && data.src && data.dst && data.dst.ip &&
             ((!showOnlyExternal && (data.src.namespace !== data.dst.namespace)) || 
-            (showOnlyExternal && (data.dst.namespace === "") && isPublicIP(data.dst.ip))
+            (showOnlyExternal && (data.dst.namespace === '') && isPublicIP(data.dst.ip))
         )) {
              
-            var idx = data.src.processName + "|" + (data.src.name || data.src.ip) + "|" + (data.dst.name || data.dst.ip);
+            var idx = data.src.processName + '|' + (data.src.name || data.src.ip) + '|' + (data.dst.name || data.dst.ip);
 
             // Initialize process data if not already tracked
             if (!processes[idx]) {
@@ -121,7 +118,7 @@ function onItemCaptured(data) {
                     processName: data.src.processName,
                     ids: [],
                     podName: data.src.name || data.src.ip,
-                    namespace: (data.src.namespace || "External"),
+                    namespace: (data.src.namespace || 'External'),
                     destinations: {}
                 };
             }
@@ -136,19 +133,18 @@ function onItemCaptured(data) {
             if (!processes[idx].destinations[dstName]) {
                 processes[idx].destinations[dstName] = {
                     count: 0,
-                    namespace: (data.dst.namespace || "External")
+                    namespace: (data.dst.namespace || 'External')
                 };
             }
             processes[idx].destinations[dstName].count++;
 
-
             // Block the pod if the process name is in the block list
             if (data.src.processName && data.src.pod && processNamesToBlock.indexOf(data.src.processName) !== -1) {
-                console.log(red + "Action Triggered: " + bold + "Block Pod\n" + reset +
-                    "Process: " + red + data.src.processName + reset +
-                    "\nPod: " + red + data.src.name + reset +
-                    "\nDestination: " + red + dstName + reset +
-                    "\nServer response: " + blue + hub.blockPod(data.src.name, data.src.namespace) + reset); 
+                console.log(red + 'Action Triggered: ' + bold + 'Block Pod\n' + reset +
+                    'Process: ' + red + data.src.processName + reset +
+                    '\nPod: ' + red + data.src.name + reset +
+                    '\nDestination: ' + red + dstName + reset +
+                    '\nServer response: ' + blue + hub.blockPod(data.src.name, data.src.namespace) + reset); 
             }
         }
     } catch (e) {
@@ -163,31 +159,31 @@ function printProcesses() {
     try {
         // If no processes are tracked, skip logging
         if (Object.keys(processes).length === 0) {
-            logMsg = "No processes to log.";
-        } else{
+            logMsg = 'No processes to log.';
+        } else {
             var currentDate = new Date();
-            var logMsg = "[31m" + currentDate.toString() + "[0m\n";
+            var logMsg = '[31m' + currentDate.toString() + '[0m\n';
 
             for (var idx in processes) {
                 if (processes[idx].processName) {
-                    logMsg += "[31m" + processes[idx].processName + "[0m.";
+                    logMsg += '[31m' + processes[idx].processName + '[0m.';
                 }
-                logMsg += processes[idx].podName + ".[32m" + processes[idx].namespace + "[0m";
-                logMsg += " => ";
+                logMsg += processes[idx].podName + '.[32m' + processes[idx].namespace + '[0m';
+                logMsg += ' => ';
                 for (var dest in processes[idx].destinations) {
-                    logMsg += dest + ".[32m" + processes[idx].destinations[dest].namespace + "[0m (count: " +
-                        processes[idx].destinations[dest].count + "), ";
+                    logMsg += dest + '.[32m' + processes[idx].destinations[dest].namespace + '[0m (count: ' +
+                        processes[idx].destinations[dest].count + '), ';
                 }
-                logMsg += "\n";
+                logMsg += '\n';
             }
+            console.log(logMsg);
         }
-        console.log(logMsg);
     } catch (e) {
         console.error(e);
     }
 }
 
 // Schedule the process printing job if running on a Worker node
-if (utils.nodeName() !== "hub") {
-    jobs.schedule("print-processes", "*/20 * * * * *", printProcesses);
+if (utils.nodeName() !== 'hub') {
+    jobs.schedule('print-processes', '*/20 * * * * *', printProcesses);
 }

@@ -3,6 +3,8 @@
 var workerDnsCounts = {};
 var hubDnsCounts = {};
 
+var scriptId = "dns2"; // Unique identifier for this script - very important to be unique. DO NOT DUPLICATE THIS FIELD TO ANOTHER SCRIPT
+
 // Color variables
 var blue = "\x1b[34m"; // Blue color for keys
 var green = "\x1b[32m"; // Green color for values
@@ -18,16 +20,10 @@ var orange = "\x1b[38;5;214m"; // Approximation for orange in 256-color palette
  */
 function onItemCaptured(data) {
     try {
-        // Check if the protocol is DNS
         if (data.protocol && data.protocol.name === "dns" && data.src && data.src.name) {
             var podName = data.src.name;
-
-            // Initialize the count for the pod if not already present
-            if (!workerDnsCounts[podName]) {
+            if (!workerDnsCounts[podName])
                 workerDnsCounts[podName] = 0;
-            }
-
-            // Increment the DNS request count for the pod
             workerDnsCounts[podName]++;
         }
     } catch (e) {
@@ -35,14 +31,28 @@ function onItemCaptured(data) {
     }
 }
 
-// Hub action handler
+/**
+ * Hook: onHubAction
+ * 
+ * This hook is called when the `hub.action(action, object)` helper is invoked. While the helper
+ * can be called from either the Hub or Workers, the hook is triggered exclusively on the Hub.
+ *
+ * This hook is particularly useful to consolidate objects created by the workers into a single object, ready for further processing.
+ * In this example, we are consolidating the DNS counts from each worker into a single object, to generate a single report.
+ *
+ * This hook works only on the Hub.
+ *
+ * @param {string} action - A string indicating the type of action being performed (nothing really to do with this arg).
+ * @param {Object} object - The object transmitted using the helper.
+ *
+ * @returns {void} - This function does not return any value.
+ *
+ */
+
 function onHubAction(action, object) {
-    // Validate input structure
-    if (object) {
-        // Merge new values into the map
-        hubDnsCounts = joinMaps(hubDnsCounts, object);
-        // console.log(action,JSON.stringify(object));
-    }
+    // important to use the unique identifier to not mix up data with other scripts
+    if (action == scriptId)
+        hubDnsCounts = wrapper.joinMaps(hubDnsCounts, object);
 }
 
 // Function to merge two maps
@@ -55,11 +65,10 @@ function joinMaps(map1, map2) {
     }
     for (var key in map2) {
         if (map2.hasOwnProperty(key)) {
-            if (result[key]) {
+            if (result[key])
                 result[key] += map2[key]; // Add counts if the key already exists
-            } else {
+            else
                 result[key] = map2[key];
-            }
         }
     }
     return result;
@@ -72,8 +81,6 @@ function reportToPrometheus() {
     try {
         for (var podName in workerDnsCounts) {
             var dnsCount = workerDnsCounts[podName];
-
-            // Prometheus label and metric reporting
             var labels = { s_pod: podName };
             prometheus.vector("dns_requests", "DNS request count per pod", 1, dnsCount, labels);
         }
@@ -87,12 +94,9 @@ function reportToPrometheus() {
  */
 function getTopDNSConsumers(dnsCounts, topN) {
     try {
-        // Create an array of pod names sorted by their DNS counts in descending order
         var sortedPods = Object.keys(dnsCounts).sort(function (a, b) {
             return dnsCounts[b] - dnsCounts[a];
         });
-
-        // Create a new map for the top N pods
         var topPods = {};
         for (var i = 0; i < Math.min(topN, sortedPods.length); i++) {
             var podName = sortedPods[i];
@@ -110,7 +114,7 @@ function getTopDNSConsumers(dnsCounts, topN) {
 /**
  * Create a log message for the top DNS consumers.
  */
-function createLogMessage(dnsCounts) {
+function createReport(dnsCounts) {
     try {
         var logMessage = bold + "Top Pods Consuming DNS Requests:" + reset + "\n";
 
@@ -124,7 +128,7 @@ function createLogMessage(dnsCounts) {
             }
         }
 
-        return logMessage;
+        return (i>0) ? logMessage : "Waiting for data ..";
     } catch (e) {
         console.error(red + "Error creating log message for DNS consumers:" + reset, e);
         return "";
@@ -136,25 +140,25 @@ function createLogMessage(dnsCounts) {
 if (utils.nodeName() === "hub") 
     jobs.schedule("report-dns-consumers", "*/20 * * * * *", reportTopDNSConsumers);
 else
-    jobs.schedule("report-dns-consumers-to-hub", "*/20 * * * * *", workerReportTopDNSConsumers);
+    jobs.schedule("report-dns-consumers-to-hub", "*/20 * * * * *", workerReportToHub);
         
         
 function reportTopDNSConsumers() {
     try {
         console.clear();
         var dnsCounts = getTopDNSConsumers(hubDnsCounts, 5);
-        console.log(createLogMessage(dnsCounts));
+        console.log(createReport(dnsCounts));
     } catch (e) {
         console.error(red + "Error in hub reporting job:" + reset, e);
     }
 }
 
 
-function workerReportTopDNSConsumers() {
+function workerReportToHub() {
     try {
         reportToPrometheus();
         var dnsCounts = getTopDNSConsumers(workerDnsCounts, 5);
-        hub.action(utils.nodeName(), dnsCounts);
+        hub.action(scriptId, dnsCounts);
     } catch (e) {
         console.error(red + "Error in worker reporting job:" + reset, e);
     }

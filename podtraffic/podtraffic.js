@@ -6,7 +6,8 @@
 
 var nodeName = utils.nodeName(); // Current node name
 var threshold = 0; // Threshold for identifying inactive pods
-var activePods = {}; // Tracks network activity per pod
+var workerActivePods = {}; // Tracks network activity per pod
+var hubActivePods = {}; // Tracks network activity per pod
 var metricName = "pod_traffic"; // Prometheus metric name
 
 // Color variables
@@ -24,22 +25,43 @@ var bold = "\x1b[1m";
 function onItemCaptured(data) {
     try {
         if (data.src && data.src.name) {
-            activePods[data.src.name] = (activePods[data.src.name] || 0) + 1;
+            workerActivePods[data.src.name] = (workerActivePods[data.src.name] || 0) + 1;
         }
         if (data.dst && data.dst.name) {
-            activePods[data.dst.name] = (activePods[data.dst.name] || 0) + 1;
+            workerActivePods[data.dst.name] = (workerActivePods[data.dst.name] || 0) + 1;
         }
     } catch (e) {
         console.error(red + "Error processing captured data:" + reset, e);
     }
+}
+/**
+ * Hook: onHubAction
+ * 
+ * This hook is called when the `hub.action(action, object)` helper is invoked. While the helper
+ * can be called from either the Hub or Workers, the hook is triggered exclusively on the Hub.
+ *
+ * This hook is particularly useful to consolidate objects created by the workers into a single object, ready for further processing.
+ * In this example, we are consolidating the DNS counts from each worker into a single object, to generate a single report.
+ *
+ * This hook works only on the Hub.
+ *
+ * @param {string} action - A string indicating the type of action being performed (nothing really to do with this arg).
+ * @param {Object} object - The object transmitted using the helper.
+ *
+ * @returns {void} - This function does not return any value.
+ *
+ */
+
+function onHubAction(action, object) {
+    hubActivePods = joinMaps(hubActivePods, object);
 }
 
 /**
  * Periodically print a report of pods with low activity.
  * @param {boolean} isLongReport - Flag for detailed vs summary report.
  */
-function printReport(isLongReport) {
-    var thresholdPods = [];
+
+function preparePods(activePods) {
     var nodePods = {};
 
     try {
@@ -49,34 +71,46 @@ function printReport(isLongReport) {
             if (target.spec.nodeName === nodeName) {
                 var podName = target.metadata.name;
                 nodePods[podName] = activePods[podName] || 0;
+                reportPrometheus(podName, nodePods[podName]);
             }
         });
-
-        for (var pod in nodePods) {
-            var isActive = nodePods[pod] > threshold;
-            if (!isActive) thresholdPods.push(pod);
-            reportPrometheus(pod, isActive, nodePods[pod]);
-        }
-
-        if (isLongReport) {
-            console.log(bold + red + "Pods With No Traffic Report" + reset + "\n" + utils.json2Yaml(JSON.stringify({
-                node: nodeName,
-                totalPodsInNode: Object.keys(nodePods).length,
-                podsUnderThreshold: thresholdPods.length,
-                threshold: threshold,
-                pods: thresholdPods
-            })));
-        } else {
-            console.log(
-                "Found " + yellow + thresholdPods.length + reset + "/" + blue +
-                Object.keys(nodePods).length + reset +
-                " pods under threshold (" + green + threshold + reset + ")."
-            );
-        }
+        return nodePods;
     } catch (e) {
         console.error(red + "Error generating report:" + reset, e);
     }
 }
+
+function printReport(nodePods) {
+    try {
+        var logMessage =  "";
+        var logTempMessage = "";
+        var count = 0;
+
+        for (var pod in nodePods) {
+            if (pod <= threshold) {
+                var podDisplayName = red + pod + reset;
+                var podActivity = blue + nodePods[pod] + reset;
+                logTempMessage += "Pod: " + podDisplayName + ", Activity: " + podActivity + "\n";
+                count++;
+            }
+        }
+        if (count>0)
+            logMessage = bold + "Pod Activity Report:" + reset + "\n" +
+                "Total pods: " + blue + Object.keys(nodePods).length + reset + "\n" +
+                "Inactive pods: " + red + count + reset + "\n" +
+                "Inactivity threshold: " + green + threshold + reset + "\n" +
+                bold + "Pods with activity under threshold: " + reset + "\n" + logTempMessage;
+        else
+             logMessage = bold + "Pod Activity Report:" + reset + "\n" +
+                "Total pods: " + blue + Object.keys(nodePods).length + reset + "\n" +
+                "Inactive pods: " + red + "None!" + reset + "\n" +
+                "Inactivity threshold: " + green + threshold + reset + "\n";
+        return logMessage;
+    } catch (e) {
+        console.error(red + "Error generating report:" + reset, e);
+    }
+}
+
 
 /**
  * Report pod activity metrics to Prometheus.
@@ -84,10 +118,9 @@ function printReport(isLongReport) {
  * @param {boolean} isActive - Whether the pod is active.
  * @param {number} value - Traffic count for the pod.
  */
-function reportPrometheus(podName, isActive, value) {
+function reportPrometheus(podName, value) {
     var labels = {
         s_pod: podName,
-        s_active: isActive,
     };
     prometheus.vector(metricName, "Pod traffic activity", 1, value, labels);
 }
@@ -98,3 +131,33 @@ if (nodeName !== "hub") {
     jobs.schedule("shortReport", "*/10 * * * * *", printReport, 0, false); // Summary report every 10 seconds
 } else
     console.clear();
+
+
+
+    // Scheduled reporting jobs
+if (utils.nodeName() === "hub") 
+    jobs.schedule("report-dns-consumers", "*/20 * * * * *", reportTopDNSConsumers);
+else
+    jobs.schedule("report-dns-consumers-to-hub", "*/20 * * * * *", workerReportToHub);
+        
+        
+function reportTopDNSConsumers() {
+    try {
+        console.clear();
+        var dnsCounts = getTopDNSConsumers(hubDnsCounts, 5);
+        console.log(createReport(dnsCounts));
+    } catch (e) {
+        console.error(red + "Error in hub reporting job:" + reset, e);
+    }
+}
+
+
+function workerReportToHub() {
+    try {
+        reportToPrometheus();
+        var dnsCounts = getTopDNSConsumers(workerDnsCounts, 5);
+        hub.action(utils.nodeName(), dnsCounts);
+    } catch (e) {
+        console.error(red + "Error in worker reporting job:" + reset, e);
+    }
+}
