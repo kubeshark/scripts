@@ -44,10 +44,61 @@
 
 // Configuration variables
 var showOnlyExternal = true; // true: show only connections going outside the cluster. false: outside the namespace
-var matchStr = ""; // KFL filter for narrowing down search (e.g., "http", "tcp", "http and tls", etc)
 
 // Store process data
 var processes = {};
+var processNamesToBlock = [
+    // "curl",
+];
+
+
+// Color variables
+var blue = "[34m"; // Blue color for keys
+var green = "[32m"; // Green color for values
+var reset = "[0m"; // Reset to default color
+var bold = "[1m"; // Bold text
+var red = "[31m"; // Red color for error messages
+var yellow = "[33m"; // Yellow color for warnings
+var orange = "[38;5;214m"; // Approximation for orange in 256-color palette
+
+
+/**
+ * Checks if an IP address is public or private within the context of a Kubernetes cluster.
+ * Private includes traditional private IP ranges, link-local addresses, and metadata service IPs.
+ * 
+ * @param {string} ip - The IP address to check.
+ * @returns {boolean} - Returns true if the IP is public, otherwise false.
+ */
+function isPublicIP(ip) {
+    try {
+        var privateRanges = [
+            /^10\./, // 10.0.0.0 - 10.255.255.255
+            /^172\.(1[6-9]|2[0-9]|3[0-1])\./, // 172.16.0.0 - 172.31.255.255
+            /^192\.168\./, // 192.168.0.0 - 192.168.255.255
+            /^127\./, // 127.0.0.0 - 127.255.255.255 (loopback)
+            // /^169\.254\./, // 169.254.0.0 - 169.254.255.255 (link-local, including 169.254.169.254)
+            /^::1$/, // IPv6 loopback
+            /^fc00:/, // IPv6 unique local address
+            /^fe80:/, // IPv6 link-local address
+            /^100\.64\./, // 100.64.0.0 - 100.127.255.255 (Carrier-Grade NAT)
+            /^198\.18\./ // 198.18.0.0 - 198.19.255.255 (network testing)
+        ];
+
+        // Check if the IP matches any private or reserved range
+        for (var i = 0; i < privateRanges.length; i++) {
+            if (privateRanges[i].test(ip)) {
+                return false; // IP is private or reserved
+            }
+        }
+
+        // If no private ranges matched, the IP is public
+        return true;
+    } catch (e) {
+        console.error("Error checking IP:", e);
+        return false;
+    }
+}
+
 
 /**
  * Captures and logs external connections based on the configured filters.
@@ -57,11 +108,12 @@ var processes = {};
 function onItemCaptured(data) {
     try {
         // Filter data based on match string and connection type
-        if (kfl.match(matchStr, data) && data && data.src && data.dst &&
+        if (data && data.src && data.dst && data.dst.ip &&
             ((!showOnlyExternal && (data.src.namespace !== data.dst.namespace)) || 
-            (showOnlyExternal && (data.dst.namespace === "")))) {
-                
-            var idx = data.src.processName + (data.src.name || data.src.ip) + (data.dst.name || data.dst.ip);
+            (showOnlyExternal && (data.dst.namespace === "") && isPublicIP(data.dst.ip))
+        )) {
+             
+            var idx = data.src.processName + "|" + (data.src.name || data.src.ip) + "|" + (data.dst.name || data.dst.ip);
 
             // Initialize process data if not already tracked
             if (!processes[idx]) {
@@ -88,6 +140,16 @@ function onItemCaptured(data) {
                 };
             }
             processes[idx].destinations[dstName].count++;
+
+
+            // Block the pod if the process name is in the block list
+            if (data.src.processName && data.src.pod && processNamesToBlock.indexOf(data.src.processName) !== -1) {
+                console.log(red + "Action Triggered: " + bold + "Block Pod\n" + reset +
+                    "Process: " + red + data.src.processName + reset +
+                    "\nPod: " + red + data.src.name + reset +
+                    "\nDestination: " + red + dstName + reset +
+                    "\nServer response: " + blue + hub.blockPod(data.src.name, data.src.namespace) + reset); 
+            }
         }
     } catch (e) {
         console.error(e);
@@ -101,25 +163,24 @@ function printProcesses() {
     try {
         // If no processes are tracked, skip logging
         if (Object.keys(processes).length === 0) {
-            return;
-        }
+            logMsg = "No processes to log.";
+        } else{
+            var currentDate = new Date();
+            var logMsg = "[31m" + currentDate.toString() + "[0m\n";
 
-        var currentDate = new Date();
-        var logMsg = "[31m" + currentDate.toString() + "[0m";
-
-        for (var idx in processes) {
-            if (processes[idx].processName) {
-                logMsg += "[31m" + processes[idx].processName + "[0m.";
+            for (var idx in processes) {
+                if (processes[idx].processName) {
+                    logMsg += "[31m" + processes[idx].processName + "[0m.";
+                }
+                logMsg += processes[idx].podName + ".[32m" + processes[idx].namespace + "[0m";
+                logMsg += " => ";
+                for (var dest in processes[idx].destinations) {
+                    logMsg += dest + ".[32m" + processes[idx].destinations[dest].namespace + "[0m (count: " +
+                        processes[idx].destinations[dest].count + "), ";
+                }
+                logMsg += "\n";
             }
-            logMsg += processes[idx].podName + ".[32m" + processes[idx].namespace + "[0m";
-            logMsg += " => ";
-            for (var dest in processes[idx].destinations) {
-                logMsg += dest + ".[32m" + processes[idx].destinations[dest].namespace + "[0m (count: " +
-                    processes[idx].destinations[dest].count + "), ";
-            }
-            logMsg += "\n";
         }
-
         console.log(logMsg);
     } catch (e) {
         console.error(e);
